@@ -1,0 +1,62 @@
+{
+  "id": "rgpd",
+  "name": "RGPD / GDPR",
+  "version": "2018",
+  "description": "Règlement Général sur la Protection des Données — Conformité et obligations",
+  "color": "#8b5cf6",
+  "domains": [
+    {
+      "id": "BASE",
+      "name": "Bases légales et principes",
+      "weight": 1.5,
+      "controls": [
+        { "id": "R.1.1", "name": "Base légale du traitement", "description": "Chaque traitement de données personnelles repose sur une base légale valide (consentement, contrat, obligation légale, intérêt vital, mission d'intérêt public, intérêt légitime).", "criticality": "critical", "weight": 2.0 },
+        { "id": "R.1.2", "name": "Principe de minimisation", "description": "Les données collectées sont adéquates, pertinentes et limitées à ce qui est nécessaire au regard des finalités.", "criticality": "high", "weight": 1.5 },
+        { "id": "R.1.3", "name": "Limitation des finalités", "description": "Les données sont collectées pour des finalités déterminées, explicites et légitimes, et ne sont pas traitées ultérieurement de manière incompatible.", "criticality": "high", "weight": 1.5 },
+        { "id": "R.1.4", "name": "Exactitude des données", "description": "Les données sont exactes et tenues à jour. Toutes les mesures raisonnables sont prises pour effacer ou rectifier les données inexactes.", "criticality": "medium", "weight": 1.0 }
+      ]
+    },
+    {
+      "id": "DROITS",
+      "name": "Droits des personnes",
+      "weight": 1.3,
+      "controls": [
+        { "id": "R.2.1", "name": "Droit d'information (transparence)", "description": "Les personnes concernées sont informées de manière claire, transparente et accessible sur le traitement de leurs données.", "criticality": "high", "weight": 1.5 },
+        { "id": "R.2.2", "name": "Droit d'accès", "description": "Les personnes concernées peuvent obtenir confirmation que leurs données sont traitées et en recevoir une copie.", "criticality": "high", "weight": 1.3 },
+        { "id": "R.2.3", "name": "Droit à l'effacement", "description": "Les personnes peuvent demander l'effacement de leurs données dans les cas prévus par le RGPD.", "criticality": "high", "weight": 1.3 },
+        { "id": "R.2.4", "name": "Droit à la portabilité", "description": "Les personnes peuvent recevoir leurs données dans un format structuré et lisible par machine, ou les faire transmettre à un autre responsable.", "criticality": "medium", "weight": 1.0 },
+        { "id": "R.2.5", "name": "Droit d'opposition et de rectification", "description": "Les personnes peuvent s'opposer au traitement et demander la rectification de données inexactes.", "criticality": "high", "weight": 1.3 }
+      ]
+    },
+    {
+      "id": "OBLIG",
+      "name": "Obligations du responsable",
+      "weight": 1.4,
+      "controls": [
+        { "id": "R.3.1", "name": "Registre des traitements (Art. 30)", "description": "Un registre des activités de traitement est tenu et tenu à jour. Il contient toutes les informations requises par l'article 30.", "criticality": "critical", "weight": 2.0 },
+        { "id": "R.3.2", "name": "Analyse d'Impact (AIPD / Art. 35)", "description": "Une analyse d'impact est réalisée pour les traitements susceptibles d'engendrer un risque élevé pour les droits et libertés.", "criticality": "critical", "weight": 2.0 },
+        { "id": "R.3.3", "name": "Désignation d'un DPO", "description": "Un délégué à la protection des données est désigné lorsque cela est obligatoire (Art. 37) ou à titre volontaire.", "criticality": "high", "weight": 1.3 },
+        { "id": "R.3.4", "name": "Privacy by Design et by Default", "description": "La protection des données est intégrée dès la conception et par défaut dans les traitements.", "criticality": "high", "weight": 1.5 }
+      ]
+    },
+    {
+      "id": "SECU",
+      "name": "Sécurité et violations",
+      "weight": 1.5,
+      "controls": [
+        { "id": "R.4.1", "name": "Mesures techniques et organisationnelles", "description": "Des mesures techniques et organisationnelles appropriées sont mises en œuvre pour garantir un niveau de sécurité adapté au risque (chiffrement, pseudonymisation, contrôles d'accès, etc.).", "criticality": "critical", "weight": 2.0 },
+        { "id": "R.4.2", "name": "Notification des violations (Art. 33)", "description": "En cas de violation de données, la CNIL est notifiée dans les 72h. Si risque élevé, les personnes concernées sont également informées.", "criticality": "critical", "weight": 2.0 },
+        { "id": "R.4.3", "name": "Sous-traitance (Art. 28)", "description": "Les sous-traitants présentent des garanties suffisantes. Un contrat de traitement de données conforme est en place.", "criticality": "high", "weight": 1.5 }
+      ]
+    },
+    {
+      "id": "TRANS",
+      "name": "Transferts internationaux",
+      "weight": 1.1,
+      "controls": [
+        { "id": "R.5.1", "name": "Transferts hors UE", "description": "Les transferts de données vers des pays tiers reposent sur une décision d'adéquation, des clauses contractuelles types, ou d'autres garanties appropriées.", "criticality": "high", "weight": 1.5 },
+        { "id": "R.5.2", "name": "Binding Corporate Rules", "description": "Pour les groupes multinationaux, des règles contraignantes d'entreprise sont approuvées par les autorités compétentes si applicable.", "criticality": "medium", "weight": 1.0 }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,155 @@
+{
+  "id": "anssi-tpe",
+  "name": "Diagnostic TPE — ANSSI (12 mesures)",
+  "version": "v2",
+  "description": "Sélection de 12 mesures prioritaires du guide d'hygiène ANSSI pour un diagnostic rapide d'une TPE, avec questions d'entretien.",
+  "color": "#22c55e",
+  "domains": [
+    {
+      "id": "H-G",
+      "name": "Gouvernance et sensibilisation",
+      "weight": 1,
+      "controls": [
+        {
+          "id": "H.2",
+          "name": "Sensibiliser les utilisateurs aux bonnes pratiques élémentaires de sécurité",
+          "description": "Sensibilisation régulière du personnel (phishing, mots de passe, signalement), avec une charte ou des règles connues de tous.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Les salariés ont-ils déjà été sensibilisés (phishing, mots de passe, clés USB) ? Quand et comment ?"
+        }
+      ]
+    },
+    {
+      "id": "H-C",
+      "name": "Connaissance du système d'information",
+      "weight": 1,
+      "controls": [
+        {
+          "id": "H.4",
+          "name": "Identifier les informations et serveurs les plus sensibles et maintenir un schéma du réseau",
+          "description": "Les données et serveurs critiques sont identifiés ; un schéma du réseau est tenu à jour.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Savez-vous où sont vos données les plus sensibles (clients, comptabilité, RH) et sur quels équipements ? Existe-t-il un schéma du réseau ?"
+        }
+      ]
+    },
+    {
+      "id": "H-A",
+      "name": "Authentification et contrôle d'accès",
+      "weight": 1.3,
+      "controls": [
+        {
+          "id": "H.8",
+          "name": "Identifier nommément chaque personne ayant accès au système et distinguer les rôles utilisateur/administrateur",
+          "description": "Comptes nominatifs, pas de compte partagé ; comptes d'administration distincts des comptes de travail courant.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Chaque personne a-t-elle son propre compte nominatif ? Les comptes administrateur sont-ils séparés des comptes de tous les jours ?"
+        },
+        {
+          "id": "H.10",
+          "name": "Définir et vérifier des règles de choix et de dimensionnement des mots de passe",
+          "description": "Longueur et complexité minimales, pas de réutilisation, vérification par outil ou politique de domaine.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Existe-t-il une règle sur les mots de passe (longueur, renouvellement) ? Utilisez-vous un gestionnaire de mots de passe ?"
+        },
+        {
+          "id": "H.12",
+          "name": "Changer les éléments d'authentification par défaut sur les équipements et services",
+          "description": "Aucun équipement (box, routeur, caméra, imprimante, NAS) ne conserve ses identifiants d'usine.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Les mots de passe par défaut de la box, des routeurs, imprimantes, caméras et NAS ont-ils été changés ?"
+        },
+        {
+          "id": "H.13",
+          "name": "Privilégier lorsque c'est possible une authentification forte",
+          "description": "Double authentification (MFA) activée au minimum sur la messagerie, les accès distants et les comptes d'administration.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "La double authentification est-elle activée sur la messagerie, le VPN/accès distant et les comptes d'administration ?"
+        }
+      ]
+    },
+    {
+      "id": "H-P",
+      "name": "Sécurité des postes",
+      "weight": 1.1,
+      "controls": [
+        {
+          "id": "H.29",
+          "name": "Limiter les droits d'administration sur les postes de travail",
+          "description": "Les utilisateurs ne travaillent pas en administrateur local ; les droits élevés sont accordés au cas par cas.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Les utilisateurs travaillent-ils avec des droits administrateur sur leur poste ? Peuvent-ils installer des logiciels librement ?"
+        }
+      ]
+    },
+    {
+      "id": "H-R",
+      "name": "Sécurité des réseaux",
+      "weight": 1.2,
+      "controls": [
+        {
+          "id": "H.20",
+          "name": "S'assurer de la sécurité des réseaux d'accès Wi-Fi et de la séparation des usages",
+          "description": "Wi-Fi en WPA2/WPA3, mot de passe robuste, réseau invité séparé du réseau interne.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Le Wi-Fi est-il protégé en WPA2/WPA3 avec un mot de passe robuste ? Les visiteurs ont-ils un réseau invité séparé ?"
+        },
+        {
+          "id": "H.24",
+          "name": "Protéger la messagerie professionnelle",
+          "description": "Filtrage antispam/antiphishing, SPF/DKIM/DMARC configurés, MFA sur les boîtes mail.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Quelle messagerie utilisez-vous ? Y a-t-il un filtrage antispam/antiphishing et la double authentification sur les boîtes ?"
+        }
+      ]
+    },
+    {
+      "id": "H-M",
+      "name": "Maintien en condition de sécurité",
+      "weight": 1.2,
+      "controls": [
+        {
+          "id": "H.34",
+          "name": "Définir une politique de mise à jour des composants du système d'information",
+          "description": "Mises à jour du système, des applications et des équipements réseau appliquées dans des délais définis.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Les postes, serveurs et équipements réseau (box, pare-feu) sont-ils mis à jour régulièrement ? Qui s'en occupe ?"
+        }
+      ]
+    },
+    {
+      "id": "H-S",
+      "name": "Supervision, sauvegarde et incidents",
+      "weight": 1.2,
+      "controls": [
+        {
+          "id": "H.37",
+          "name": "Définir et appliquer une politique de sauvegarde des composants critiques",
+          "description": "Sauvegardes régulières, dont une copie hors ligne ou externalisée, avec tests de restauration.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Les données sont-elles sauvegardées ? À quelle fréquence, où, avec une copie hors ligne ? Une restauration a-t-elle déjà été testée ?"
+        },
+        {
+          "id": "H.40",
+          "name": "Définir une procédure de gestion des incidents de sécurité",
+          "description": "Procédure documentée : qui alerter, quoi faire, comment isoler, quand notifier (CNIL, assurance, ANSSI/CERT).",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Que se passe-t-il si un poste est infecté ou si un mail frauduleux est cliqué ? Qui est prévenu et que faites-vous ?"
+        }
+      ]
+    }
+  ],
+  "badge": "TPE"
+}

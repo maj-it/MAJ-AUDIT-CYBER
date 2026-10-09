@@ -1,0 +1,109 @@
+{
+  "id": "iso27001",
+  "name": "ISO 27001:2022",
+  "version": "2022",
+  "description": "Système de management de la sécurité de l'information",
+  "color": "#00c9d4",
+  "domains": [
+    {
+      "id": "A5",
+      "name": "Politiques de sécurité",
+      "weight": 1.2,
+      "controls": [
+        { "id": "A.5.1", "name": "Politique de sécurité de l'information", "description": "Une politique de sécurité de l'information et des politiques spécifiques doivent être définies, approuvées par la direction, publiées, communiquées et reconnues par le personnel concerné.", "criticality": "high", "weight": 1.5 },
+        { "id": "A.5.2", "name": "Rôles et responsabilités en matière de sécurité", "description": "Les rôles et responsabilités en matière de sécurité de l'information doivent être définis et attribués.", "criticality": "high", "weight": 1.3 },
+        { "id": "A.5.9", "name": "Inventaire des actifs informationnels", "description": "Un inventaire des actifs d'information associés aux informations et aux installations de traitement de l'information doit être élaboré et tenu à jour.", "criticality": "medium", "weight": 1.0 },
+        { "id": "A.5.14", "name": "Transfert d'information", "description": "Des règles, procédures ou accords de transfert d'informations doivent être mis en place pour tous les types de transferts au sein de l'organisation et entre l'organisation et des tiers.", "criticality": "medium", "weight": 1.0 }
+      ]
+    },
+    {
+      "id": "A6",
+      "name": "Organisation de la sécurité",
+      "weight": 1.0,
+      "controls": [
+        { "id": "A.6.1", "name": "Télétravail", "description": "Des mesures de sécurité doivent être mises en œuvre lorsque le personnel travaille à distance pour protéger les informations consultées, traitées ou stockées en dehors des locaux de l'organisation.", "criticality": "medium", "weight": 1.0 },
+        { "id": "A.6.2", "name": "Sécurité du personnel", "description": "Les processus de vérification des antécédents de tous les candidats doivent être effectués avant de rejoindre l'organisation.", "criticality": "medium", "weight": 1.0 },
+        { "id": "A.6.3", "name": "Sensibilisation et formation", "description": "Le personnel doit recevoir une sensibilisation, une éducation et une formation appropriées à la sécurité de l'information et à la politique de sécurité.", "criticality": "high", "weight": 1.2 },
+        { "id": "A.6.8", "name": "Signalement des événements de sécurité", "description": "L'organisation doit fournir un mécanisme permettant au personnel de signaler les événements de sécurité de l'information observés ou suspectés.", "criticality": "high", "weight": 1.2 }
+      ]
+    },
+    {
+      "id": "A7",
+      "name": "Sécurité des ressources humaines",
+      "weight": 0.9,
+      "controls": [
+        { "id": "A.7.1", "name": "Périmètre de sécurité physique", "description": "Des périmètres de sécurité doivent être définis et utilisés pour protéger les zones contenant des informations sensibles et les installations de traitement.", "criticality": "medium", "weight": 1.0 },
+        { "id": "A.7.2", "name": "Contrôle d'accès physique", "description": "Les zones sécurisées doivent être protégées par des contrôles d'entrée appropriés et des points d'accès.", "criticality": "medium", "weight": 1.0 },
+        { "id": "A.7.4", "name": "Surveillance de la sécurité physique", "description": "Les locaux doivent faire l'objet d'une surveillance continue afin de prévenir tout accès physique non autorisé.", "criticality": "low", "weight": 0.8 }
+      ]
+    },
+    {
+      "id": "A8",
+      "name": "Gestion des actifs",
+      "weight": 1.3,
+      "controls": [
+        { "id": "A.8.1", "name": "Terminaux utilisateurs", "description": "Les informations stockées sur des terminaux portables, mobiles et fixes doivent être protégées.", "criticality": "high", "weight": 1.2 },
+        { "id": "A.8.2", "name": "Droits d'accès privilégiés", "description": "L'attribution et l'utilisation de droits d'accès privilégiés doivent être restreints et gérés.", "criticality": "critical", "weight": 2.0 },
+        { "id": "A.8.3", "name": "Restriction d'accès aux informations", "description": "L'accès aux informations et aux autres actifs associés doit être restreint conformément à la politique de contrôle d'accès.", "criticality": "high", "weight": 1.5 },
+        { "id": "A.8.5", "name": "Authentification sécurisée", "description": "Des technologies et procédures d'authentification sécurisées doivent être mises en œuvre sur la base des restrictions d'accès aux informations et de la politique de contrôle d'accès.", "criticality": "critical", "weight": 2.0 },
+        { "id": "A.8.7", "name": "Protection contre les maliciels", "description": "La protection contre les maliciels doit être mise en œuvre et soutenue par une sensibilisation appropriée des utilisateurs.", "criticality": "high", "weight": 1.5 },
+        { "id": "A.8.8", "name": "Gestion des vulnérabilités techniques", "description": "Des informations sur les vulnérabilités techniques des systèmes d'information utilisés doivent être obtenues, l'exposition de l'organisation à ces vulnérabilités doit être évaluée.", "criticality": "high", "weight": 1.5 },
+        { "id": "A.8.13", "name": "Sauvegarde des informations", "description": "Des copies de sauvegarde des informations, des logiciels et des systèmes doivent être effectuées et testées régulièrement conformément à la politique de sauvegarde.", "criticality": "critical", "weight": 2.0 },
+        { "id": "A.8.15", "name": "Journalisation", "description": "Des journaux enregistrant les activités, les exceptions, les défaillances et d'autres événements pertinents doivent être produits, stockés, protégés et analysés.", "criticality": "high", "weight": 1.5 },
+        { "id": "A.8.16", "name": "Surveillance des activités", "description": "Les réseaux, systèmes et applications doivent être surveillés pour détecter les comportements anormaux et des mesures appropriées doivent être prises.", "criticality": "high", "weight": 1.5 },
+        { "id": "A.8.24", "name": "Utilisation de la cryptographie", "description": "Des règles relatives à l'utilisation correcte et efficace de la cryptographie, y compris la gestion des clés cryptographiques, doivent être définies et mises en œuvre.", "criticality": "high", "weight": 1.3 },
+        { "id": "A.8.28", "name": "Codage sécurisé", "description": "Des principes de codage sécurisé doivent être appliqués au développement de logiciels.", "criticality": "medium", "weight": 1.0 }
+      ]
+    },
+    {
+      "id": "A9",
+      "name": "Contrôle d'accès",
+      "weight": 1.4,
+      "controls": [
+        { "id": "A.9.1", "name": "Politique de contrôle d'accès", "description": "Une politique de contrôle d'accès doit être établie, documentée et revue sur la base des exigences métier et de sécurité de l'information.", "criticality": "high", "weight": 1.5 },
+        { "id": "A.9.2", "name": "Gestion des accès utilisateurs", "description": "Un processus formel d'enregistrement et de désinscription des utilisateurs doit être mis en œuvre pour attribuer des droits d'accès.", "criticality": "high", "weight": 1.5 },
+        { "id": "A.9.3", "name": "Gestion des droits d'accès privilégiés", "description": "L'attribution et l'utilisation des droits d'accès privilégiés doivent être restreintes et contrôlées.", "criticality": "critical", "weight": 2.0 },
+        { "id": "A.9.4", "name": "Gestion des informations secrètes d'authentification", "description": "L'attribution des informations secrètes d'authentification doit être contrôlée par un processus de gestion formel.", "criticality": "high", "weight": 1.5 }
+      ]
+    },
+    {
+      "id": "A10",
+      "name": "Cryptographie",
+      "weight": 1.1,
+      "controls": [
+        { "id": "A.10.1", "name": "Politique d'utilisation des contrôles cryptographiques", "description": "Une politique sur l'utilisation des contrôles cryptographiques pour la protection des informations doit être développée et mise en œuvre.", "criticality": "high", "weight": 1.3 },
+        { "id": "A.10.2", "name": "Gestion des clés", "description": "Une politique sur l'utilisation, la protection et la durée de vie des clés cryptographiques doit être développée et mise en œuvre tout au long de leur cycle de vie.", "criticality": "high", "weight": 1.3 }
+      ]
+    },
+    {
+      "id": "A12",
+      "name": "Sécurité opérationnelle",
+      "weight": 1.2,
+      "controls": [
+        { "id": "A.12.1", "name": "Procédures d'exploitation documentées", "description": "Les procédures d'exploitation doivent être documentées et mises à la disposition de tous les utilisateurs qui en ont besoin.", "criticality": "medium", "weight": 1.0 },
+        { "id": "A.12.3", "name": "Gestion des capacités", "description": "L'utilisation des ressources doit être surveillée, optimisée, et des projections doivent être faites pour les futurs besoins en capacités.", "criticality": "medium", "weight": 1.0 },
+        { "id": "A.12.6", "name": "Gestion des vulnérabilités techniques", "description": "Des informations sur les vulnérabilités techniques des systèmes d'information doivent être obtenues en temps utile, l'exposition à ces vulnérabilités doit être évaluée.", "criticality": "high", "weight": 1.5 }
+      ]
+    },
+    {
+      "id": "A16",
+      "name": "Gestion des incidents",
+      "weight": 1.3,
+      "controls": [
+        { "id": "A.16.1", "name": "Responsabilités et procédures", "description": "Les responsabilités et procédures de gestion doivent être établies pour assurer une réponse rapide, efficace et ordonnée aux incidents de sécurité.", "criticality": "high", "weight": 1.5 },
+        { "id": "A.16.2", "name": "Signalement des événements", "description": "Les événements de sécurité de l'information doivent être signalés dans les meilleurs délais.", "criticality": "high", "weight": 1.3 },
+        { "id": "A.16.6", "name": "Collecte de preuves", "description": "Des procédures pour l'identification, la collecte, l'acquisition et la préservation d'informations doivent être définies et appliquées.", "criticality": "medium", "weight": 1.0 }
+      ]
+    },
+    {
+      "id": "A17",
+      "name": "Continuité d'activité",
+      "weight": 1.2,
+      "controls": [
+        { "id": "A.17.1", "name": "Planification de la continuité", "description": "L'organisation doit déterminer ses exigences en matière de sécurité de l'information et de continuité de la gestion de la sécurité dans des situations défavorables.", "criticality": "critical", "weight": 2.0 },
+        { "id": "A.17.2", "name": "Mise en œuvre de la continuité", "description": "L'organisation doit établir, documenter, mettre en œuvre et tenir à jour des processus, procédures et contrôles pour assurer le niveau requis de continuité.", "criticality": "high", "weight": 1.5 },
+        { "id": "A.17.3", "name": "Vérification et évaluation de la continuité", "description": "L'organisation doit vérifier périodiquement les contrôles de continuité de la sécurité de l'information.", "criticality": "high", "weight": 1.3 }
+      ]
+    }
+  ]
+}

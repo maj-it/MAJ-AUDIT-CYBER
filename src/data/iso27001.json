@@ -1,0 +1,688 @@
+{
+  "id": "iso27001",
+  "name": "ISO 27001:2022",
+  "version": "2022",
+  "description": "Système de management de la sécurité de l'information — Annexe A (93 mesures)",
+  "color": "#00c9d4",
+  "domains": [
+    {
+      "id": "A5",
+      "name": "Mesures organisationnelles",
+      "weight": 1.2,
+      "controls": [
+        {
+          "id": "A.5.1",
+          "name": "Politiques de sécurité de l'information",
+          "description": "Définir, approuver par la direction, publier, communiquer et réviser à intervalles planifiés la politique de sécurité et les politiques spécifiques.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.5.2",
+          "name": "Fonctions et responsabilités liées à la sécurité",
+          "description": "Définir et attribuer les rôles et responsabilités de sécurité de l'information selon les besoins de l'organisation.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.5.3",
+          "name": "Séparation des tâches",
+          "description": "Séparer les tâches et domaines de responsabilité incompatibles pour limiter fraude et erreur.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.5.4",
+          "name": "Responsabilités de la direction",
+          "description": "La direction exige de tout le personnel l'application des règles de sécurité conformément aux politiques établies.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.5.5",
+          "name": "Contacts avec les autorités",
+          "description": "Établir et maintenir des contacts avec les autorités compétentes (CERT-FR, CNIL, ANSSI, police).",
+          "criticality": "low",
+          "weight": 0.6
+        },
+        {
+          "id": "A.5.6",
+          "name": "Contacts avec des groupes d'intérêt",
+          "description": "Maintenir des contacts avec groupes de spécialistes, forums et associations professionnelles de sécurité.",
+          "criticality": "low",
+          "weight": 0.6
+        },
+        {
+          "id": "A.5.7",
+          "name": "Renseignements sur les menaces",
+          "description": "Collecter et analyser les informations relatives aux menaces pour produire du renseignement exploitable.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.5.8",
+          "name": "Sécurité de l'information dans la gestion de projet",
+          "description": "Intégrer la sécurité de l'information dans la gestion de projet, quel que soit le type de projet.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.5.9",
+          "name": "Inventaire des informations et autres actifs associés",
+          "description": "Établir et tenir à jour un inventaire des informations et actifs associés, avec propriétaires identifiés.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.5.10",
+          "name": "Utilisation correcte de l'information et des actifs",
+          "description": "Identifier, documenter et appliquer les règles d'utilisation acceptable des informations et actifs.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.5.11",
+          "name": "Restitution des actifs",
+          "description": "Le personnel et tiers restituent tous les actifs de l'organisation à la fin de l'emploi, du contrat ou de l'accord.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.5.12",
+          "name": "Classification des informations",
+          "description": "Classifier l'information selon les besoins de confidentialité, d'intégrité, de disponibilité et les exigences des parties intéressées.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.5.13",
+          "name": "Marquage des informations",
+          "description": "Élaborer et mettre en œuvre des procédures de marquage conformes au schéma de classification.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.5.14",
+          "name": "Transfert de l'information",
+          "description": "Règles, procédures ou accords de transfert pour tous les types de transferts internes et avec des tiers.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.5.15",
+          "name": "Contrôle d'accès",
+          "description": "Établir et mettre en œuvre des règles de contrôle d'accès physique et logique fondées sur les exigences métier et de sécurité.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.5.16",
+          "name": "Gestion des identités",
+          "description": "Gérer le cycle de vie complet des identités (création, modification, suppression).",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.5.17",
+          "name": "Informations d'authentification",
+          "description": "Gérer l'attribution et la gestion des informations d'authentification (mots de passe, MFA, jetons).",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.5.18",
+          "name": "Droits d'accès",
+          "description": "Attribuer, réviser, modifier et supprimer les droits d'accès selon la politique et le principe du moindre privilège.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.5.19",
+          "name": "Sécurité de l'information dans les relations avec les fournisseurs",
+          "description": "Définir et appliquer des processus pour gérer les risques liés à l'utilisation des produits et services de fournisseurs.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.5.20",
+          "name": "Sécurité de l'information dans les accords avec les fournisseurs",
+          "description": "Établir avec chaque fournisseur les exigences de sécurité pertinentes dans des accords contractuels.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.5.21",
+          "name": "Sécurité de l'information dans la chaîne d'approvisionnement TIC",
+          "description": "Gérer les risques de sécurité associés à la chaîne d'approvisionnement des produits et services TIC.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.5.22",
+          "name": "Suivi, revue et gestion des changements des services fournisseurs",
+          "description": "Surveiller, réviser, évaluer et gérer régulièrement les changements des pratiques et services des fournisseurs.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.5.23",
+          "name": "Sécurité de l'information pour l'utilisation de services cloud",
+          "description": "Établir des processus d'acquisition, d'utilisation, de gestion et de sortie des services cloud.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.5.24",
+          "name": "Planification et préparation de la gestion des incidents",
+          "description": "Planifier et préparer la gestion des incidents : processus, rôles et responsabilités définis et communiqués.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.5.25",
+          "name": "Appréciation des événements et décision sur les incidents",
+          "description": "Évaluer les événements de sécurité et décider s'ils sont à classer comme incidents.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.5.26",
+          "name": "Réponse aux incidents de sécurité",
+          "description": "Répondre aux incidents conformément aux procédures documentées.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.5.27",
+          "name": "Tirer des enseignements des incidents",
+          "description": "Utiliser les connaissances issues des incidents pour renforcer les mesures de sécurité.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.5.28",
+          "name": "Collecte des preuves",
+          "description": "Établir des procédures d'identification, collecte, acquisition et préservation des preuves.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.5.29",
+          "name": "Sécurité de l'information durant une perturbation",
+          "description": "Planifier le maintien de la sécurité de l'information à un niveau approprié durant une perturbation.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.5.30",
+          "name": "Préparation des TIC pour la continuité d'activité",
+          "description": "Planifier, mettre en œuvre, maintenir et tester la préparation des TIC selon les objectifs de continuité (RTO/RPO).",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.5.31",
+          "name": "Exigences légales, statutaires, réglementaires et contractuelles",
+          "description": "Identifier, documenter et tenir à jour les exigences applicables (RGPD, PCI-DSS, NIS2, etc.).",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.5.32",
+          "name": "Droits de propriété intellectuelle",
+          "description": "Mettre en œuvre des procédures de protection des droits de propriété intellectuelle (licences, logiciels).",
+          "criticality": "low",
+          "weight": 0.6
+        },
+        {
+          "id": "A.5.33",
+          "name": "Protection des enregistrements",
+          "description": "Protéger les enregistrements contre la perte, destruction, falsification, accès et divulgation non autorisés.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.5.34",
+          "name": "Vie privée et protection des DCP",
+          "description": "Identifier et satisfaire les exigences de protection de la vie privée et des données à caractère personnel.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.5.35",
+          "name": "Revue indépendante de la sécurité de l'information",
+          "description": "Réviser de manière indépendante, à intervalles planifiés, l'approche de gestion de la sécurité.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.5.36",
+          "name": "Conformité aux politiques, règles et normes",
+          "description": "Vérifier régulièrement la conformité aux politiques et normes de sécurité de l'organisation.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.5.37",
+          "name": "Procédures d'exploitation documentées",
+          "description": "Documenter les procédures d'exploitation des moyens de traitement de l'information et les mettre à disposition.",
+          "criticality": "medium",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "id": "A6",
+      "name": "Mesures liées aux personnes",
+      "weight": 1,
+      "controls": [
+        {
+          "id": "A.6.1",
+          "name": "Sélection des candidats",
+          "description": "Vérifications préalables à l'embauche, proportionnées aux exigences métier, à la classification des informations et aux risques.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.6.2",
+          "name": "Termes et conditions du contrat de travail",
+          "description": "Les contrats précisent les responsabilités du personnel et de l'organisation en matière de sécurité.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.6.3",
+          "name": "Sensibilisation, apprentissage et formation à la sécurité",
+          "description": "Sensibilisation, formation et mises à jour régulières des politiques pour le personnel et les parties intéressées.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.6.4",
+          "name": "Processus disciplinaire",
+          "description": "Formaliser et communiquer un processus disciplinaire en cas de violation de la politique de sécurité.",
+          "criticality": "low",
+          "weight": 0.6
+        },
+        {
+          "id": "A.6.5",
+          "name": "Responsabilités après la fin ou le changement d'emploi",
+          "description": "Définir, appliquer et communiquer les responsabilités de sécurité qui restent valables après départ ou changement.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.6.6",
+          "name": "Accords de confidentialité ou de non-divulgation",
+          "description": "Identifier, documenter, réviser et signer les accords de confidentialité reflétant les besoins de protection.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.6.7",
+          "name": "Travail à distance",
+          "description": "Mesures de sécurité pour protéger l'information consultée, traitée ou stockée hors des locaux.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.6.8",
+          "name": "Signalement des événements de sécurité",
+          "description": "Mécanisme permettant au personnel de signaler rapidement les événements de sécurité observés ou suspectés.",
+          "criticality": "high",
+          "weight": 1.5
+        }
+      ]
+    },
+    {
+      "id": "A7",
+      "name": "Mesures physiques",
+      "weight": 0.9,
+      "controls": [
+        {
+          "id": "A.7.1",
+          "name": "Périmètres de sécurité physique",
+          "description": "Définir et utiliser des périmètres de sécurité pour protéger les zones contenant informations et actifs sensibles.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.7.2",
+          "name": "Contrôles physiques des accès",
+          "description": "Protéger les zones sécurisées par des contrôles d'entrée et des points d'accès appropriés.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.7.3",
+          "name": "Sécurisation des bureaux, salles et équipements",
+          "description": "Concevoir et mettre en œuvre la sécurité physique des bureaux, salles et installations.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.7.4",
+          "name": "Surveillance de la sécurité physique",
+          "description": "Surveiller en continu les locaux contre les accès physiques non autorisés (vidéosurveillance, alarmes).",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.7.5",
+          "name": "Protection contre les menaces physiques et environnementales",
+          "description": "Protéger contre les menaces physiques et environnementales (incendie, inondation, catastrophes).",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.7.6",
+          "name": "Travail dans les zones sécurisées",
+          "description": "Concevoir et appliquer des mesures de sécurité pour le travail dans les zones sécurisées.",
+          "criticality": "low",
+          "weight": 0.6
+        },
+        {
+          "id": "A.7.7",
+          "name": "Bureau propre et écran vide",
+          "description": "Règles de bureau propre pour documents et supports amovibles, et d'écran vide pour les moyens de traitement.",
+          "criticality": "low",
+          "weight": 0.6
+        },
+        {
+          "id": "A.7.8",
+          "name": "Emplacement et protection du matériel",
+          "description": "Placer et protéger le matériel pour réduire les risques liés aux menaces environnementales et aux accès non autorisés.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.7.9",
+          "name": "Sécurité des actifs hors des locaux",
+          "description": "Protéger les actifs utilisés hors des locaux de l'organisation.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.7.10",
+          "name": "Supports de stockage",
+          "description": "Gérer les supports de stockage sur tout leur cycle de vie (acquisition, utilisation, transport, mise au rebut).",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.7.11",
+          "name": "Services généraux",
+          "description": "Protéger les moyens de traitement contre les coupures de courant et autres perturbations des services généraux.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.7.12",
+          "name": "Sécurité du câblage",
+          "description": "Protéger les câbles d'alimentation et de télécommunication contre l'interception, l'interférence et les dommages.",
+          "criticality": "low",
+          "weight": 0.6
+        },
+        {
+          "id": "A.7.13",
+          "name": "Maintenance du matériel",
+          "description": "Entretenir correctement le matériel pour garantir disponibilité, intégrité et confidentialité.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.7.14",
+          "name": "Mise au rebut ou recyclage sécurisé du matériel",
+          "description": "Vérifier que les données sensibles et logiciels sous licence sont supprimés avant mise au rebut ou réutilisation.",
+          "criticality": "medium",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "id": "A8",
+      "name": "Mesures technologiques",
+      "weight": 1.3,
+      "controls": [
+        {
+          "id": "A.8.1",
+          "name": "Terminaux finaux des utilisateurs",
+          "description": "Protéger l'information stockée sur, traitée par ou accessible via les terminaux utilisateurs.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.8.2",
+          "name": "Droits d'accès privilégiés",
+          "description": "Restreindre et gérer l'attribution et l'utilisation des droits d'accès privilégiés (PAM).",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.8.3",
+          "name": "Restriction d'accès à l'information",
+          "description": "Restreindre l'accès à l'information et aux actifs associés conformément à la politique de contrôle d'accès.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.8.4",
+          "name": "Accès au code source",
+          "description": "Gérer de façon appropriée l'accès en lecture/écriture au code source, outils de développement et bibliothèques.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.8.5",
+          "name": "Authentification sécurisée",
+          "description": "Mettre en œuvre des technologies et procédures d'authentification sécurisée (MFA) selon les restrictions d'accès.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.8.6",
+          "name": "Dimensionnement",
+          "description": "Surveiller et ajuster l'utilisation des ressources selon les besoins de capacité actuels et prévus.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.8.7",
+          "name": "Protection contre les programmes malveillants",
+          "description": "Mettre en œuvre la protection contre les malwares, appuyée par la sensibilisation des utilisateurs (EDR/antivirus).",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.8.8",
+          "name": "Gestion des vulnérabilités techniques",
+          "description": "Obtenir l'information sur les vulnérabilités, évaluer l'exposition et prendre les mesures appropriées (patch management).",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.8.9",
+          "name": "Gestion de la configuration",
+          "description": "Établir, documenter, mettre en œuvre, surveiller et réviser les configurations (durcissement) du matériel, logiciels et réseaux.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.8.10",
+          "name": "Suppression d'informations",
+          "description": "Supprimer les informations stockées dans les systèmes et supports lorsqu'elles ne sont plus nécessaires.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.8.11",
+          "name": "Masquage des données",
+          "description": "Masquer les données conformément à la politique de contrôle d'accès et aux exigences métier et légales.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.8.12",
+          "name": "Prévention de la fuite de données",
+          "description": "Appliquer des mesures de prévention de fuite de données aux systèmes, réseaux et terminaux traitant des informations sensibles (DLP).",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.8.13",
+          "name": "Sauvegarde des informations",
+          "description": "Conserver et tester régulièrement des copies de sauvegarde conformément à la politique de sauvegarde.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.8.14",
+          "name": "Redondance des moyens de traitement de l'information",
+          "description": "Mettre en œuvre des moyens de traitement avec une redondance suffisante pour répondre aux exigences de disponibilité.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.8.15",
+          "name": "Journalisation",
+          "description": "Produire, stocker, protéger et analyser les journaux d'activité, d'exceptions, de défaillances et autres événements.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.8.16",
+          "name": "Activités de surveillance",
+          "description": "Surveiller réseaux, systèmes et applications pour détecter les comportements anormaux (SIEM/SOC).",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.8.17",
+          "name": "Synchronisation des horloges",
+          "description": "Synchroniser les horloges des systèmes de traitement sur des sources de temps approuvées.",
+          "criticality": "low",
+          "weight": 0.6
+        },
+        {
+          "id": "A.8.18",
+          "name": "Utilisation de programmes utilitaires à privilèges",
+          "description": "Restreindre et contrôler étroitement l'utilisation des utilitaires pouvant outrepasser les mesures de sécurité.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.8.19",
+          "name": "Installation de logiciels sur les systèmes en exploitation",
+          "description": "Procédures et mesures pour gérer en sécurité l'installation de logiciels sur les systèmes opérationnels.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.8.20",
+          "name": "Sécurité des réseaux",
+          "description": "Sécuriser, gérer et contrôler les réseaux et dispositifs réseau pour protéger l'information.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.8.21",
+          "name": "Sécurité des services réseau",
+          "description": "Identifier, mettre en œuvre et surveiller les mécanismes de sécurité et niveaux de service des services réseau.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.8.22",
+          "name": "Cloisonnement des réseaux",
+          "description": "Cloisonner les groupes de services, utilisateurs et systèmes d'information dans les réseaux (segmentation).",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.8.23",
+          "name": "Filtrage web",
+          "description": "Gérer l'accès aux sites web externes pour réduire l'exposition aux contenus malveillants.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.8.24",
+          "name": "Utilisation de la cryptographie",
+          "description": "Définir et mettre en œuvre des règles d'utilisation efficace de la cryptographie, dont la gestion des clés.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.8.25",
+          "name": "Cycle de vie de développement sécurisé",
+          "description": "Établir et appliquer des règles de développement sécurisé des logiciels et systèmes.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.8.26",
+          "name": "Exigences de sécurité des applications",
+          "description": "Identifier, spécifier et approuver les exigences de sécurité lors du développement ou de l'acquisition d'applications.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.8.27",
+          "name": "Principes d'ingénierie et d'architecture système sécurisée",
+          "description": "Établir, documenter, maintenir et appliquer des principes d'ingénierie sécurisée à toute activité de développement.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.8.28",
+          "name": "Codage sécurisé",
+          "description": "Appliquer les principes de codage sécurisé au développement de logiciels.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.8.29",
+          "name": "Tests de sécurité dans le développement et l'acceptation",
+          "description": "Définir et mettre en œuvre des processus de tests de sécurité durant le cycle de développement.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.8.30",
+          "name": "Développement externalisé",
+          "description": "Diriger, surveiller et vérifier les activités liées au développement externalisé de systèmes.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.8.31",
+          "name": "Séparation des environnements",
+          "description": "Séparer et sécuriser les environnements de développement, de test et de production.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "A.8.32",
+          "name": "Gestion des changements",
+          "description": "Soumettre les changements des moyens de traitement et systèmes à des procédures de gestion des changements.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "A.8.33",
+          "name": "Informations de test",
+          "description": "Sélectionner, protéger et gérer de façon appropriée les informations utilisées pour les tests.",
+          "criticality": "low",
+          "weight": 0.6
+        },
+        {
+          "id": "A.8.34",
+          "name": "Protection des systèmes pendant les tests d'audit",
+          "description": "Planifier et convenir des tests d'audit et activités d'assurance pour minimiser l'impact sur les systèmes en production.",
+          "criticality": "low",
+          "weight": 0.6
+        }
+      ]
+    }
+  ]
+}
