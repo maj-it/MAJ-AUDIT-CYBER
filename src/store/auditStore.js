@@ -15,7 +15,8 @@ const saveToStorage = (state) => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({
       audits: state.audits,
       companies: state.companies,
-      risks: state.risks
+      risks: state.risks,
+      scans: state.scans
     }))
   } catch {}
 }
@@ -29,6 +30,7 @@ export const useAuditStore = create((set, get) => ({
     { id: 'demo-corp', name: 'Demo Corp SA', sector: 'Finance', size: '250 employés', contact: 'rssi@democorp.fr' }
   ],
   risks: saved?.risks || [],
+  scans: saved?.scans || [],
   currentAudit: null,
 
   // ── Companies ──
@@ -43,12 +45,13 @@ export const useAuditStore = create((set, get) => ({
   },
 
   // ── Audits ──
-  createAudit: ({ companyId, referentialId, name }) => {
+  createAudit: ({ companyId, referentialId, name, mission = null }) => {
     const audit = {
       id: uuidv4(),
       companyId,
       referentialId,
       name,
+      mission,
       status: 'in_progress',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
@@ -65,6 +68,43 @@ export const useAuditStore = create((set, get) => ({
       return { audits, currentAudit: audit }
     })
     return audit
+  },
+
+  // Remplace les collections (sync cloud / déconnexion)
+  hydrate: (data) => {
+    set(s => {
+      const next = { audits: data.audits ?? s.audits, companies: data.companies ?? s.companies, risks: data.risks ?? s.risks, scans: data.scans ?? s.scans }
+      saveToStorage({ ...s, ...next })
+      return { ...next, currentAudit: null }
+    })
+  },
+
+  updateMission: (auditId, mission) => {
+    set(s => {
+      const audits = s.audits.map(a => a.id === auditId ? { ...a, mission, updatedAt: new Date().toISOString() } : a)
+      const currentAudit = audits.find(a => a.id === auditId) || s.currentAudit
+      saveToStorage({ ...s, audits })
+      return { audits, currentAudit }
+    })
+  },
+
+  // ── Sauvegarde / restauration ──
+  exportBackup: () => {
+    const s = get()
+    return JSON.stringify({ app: 'maj-audit', version: 1, exportedAt: new Date().toISOString(),
+      audits: s.audits, companies: s.companies, risks: s.risks, scans: s.scans }, null, 2)
+  },
+  importBackup: (text) => {
+    const d = JSON.parse(text)
+    if (d.app !== 'maj-audit' || !Array.isArray(d.audits)) throw new Error('Fichier de sauvegarde invalide')
+    const merge = (cur, inc) => { const ids = new Set(cur.map(x => x.id)); return [...cur, ...(inc || []).filter(x => !ids.has(x.id))] }
+    set(s => {
+      const next = { audits: merge(s.audits, d.audits), companies: merge(s.companies, d.companies),
+        risks: merge(s.risks, d.risks), scans: merge(s.scans, d.scans) }
+      saveToStorage({ ...s, ...next })
+      return next
+    })
+    return d.audits.length
   },
 
   setCurrentAudit: (auditId) => {
@@ -86,11 +126,11 @@ export const useAuditStore = create((set, get) => ({
     })
   },
 
-  saveAuditScore: (auditId, score, domainScores) => {
+  saveAuditScore: (auditId, score, domainScores, completed = true) => {
     set(s => {
       const audits = s.audits.map(a =>
         a.id === auditId
-          ? { ...a, score, domainScores, status: 'completed', updatedAt: new Date().toISOString() }
+          ? { ...a, score, domainScores, status: completed ? 'completed' : 'in_progress' }
           : a
       )
       const currentAudit = audits.find(a => a.id === auditId)
@@ -119,11 +159,48 @@ export const useAuditStore = create((set, get) => ({
     })
   },
 
+  updateActionItem: (auditId, itemId, patch) => {
+    set(s => {
+      const audits = s.audits.map(a => a.id !== auditId ? a : { ...a, updatedAt: new Date().toISOString(),
+        actionPlan: (a.actionPlan || []).map(x => x.id === itemId ? { ...x, ...patch } : x) })
+      saveToStorage({ ...s, audits })
+      return { audits }
+    })
+  },
+
+  removeActionItem: (auditId, itemId) => {
+    set(s => {
+      const audits = s.audits.map(a => a.id !== auditId ? a : { ...a, updatedAt: new Date().toISOString(),
+        actionPlan: (a.actionPlan || []).filter(x => x.id !== itemId) })
+      saveToStorage({ ...s, audits })
+      return { audits }
+    })
+  },
+
   deleteAudit: (auditId) => {
     set(s => {
       const audits = s.audits.filter(a => a.id !== auditId)
       saveToStorage({ ...s, audits })
       return { audits, currentAudit: s.currentAudit?.id === auditId ? null : s.currentAudit }
+    })
+  },
+
+  // ── Scans externes ──
+  addScan: (scan) => {
+    const item = { id: uuidv4(), ...scan }
+    set(s => {
+      const scans = [item, ...s.scans].slice(0, 50)
+      saveToStorage({ ...s, scans })
+      return { scans }
+    })
+    return item
+  },
+
+  deleteScan: (scanId) => {
+    set(s => {
+      const scans = s.scans.filter(x => x.id !== scanId)
+      saveToStorage({ ...s, scans })
+      return { scans }
     })
   },
 

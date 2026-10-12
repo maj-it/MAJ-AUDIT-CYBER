@@ -3,15 +3,9 @@ import { useNavigate } from 'react-router-dom'
 import { useAuditStore } from '../store/auditStore.js'
 import { searchEntreprises } from '../lib/sirene.js'
 import { ShieldCheck, ArrowRight, Building2, Search, Loader2, CheckCircle2 } from 'lucide-react'
-import iso27001 from '../data/iso27001.json'
-import nist from '../data/nist.json'
-import rgpd from '../data/rgpd.json'
+import { REFERENTIALS as REF_MAP, countControls } from '../data/index.js'
 
-const REFERENTIALS = [
-  { ...iso27001, controls: iso27001.domains.reduce((acc, d) => acc + d.controls.length, 0) },
-  { ...nist, controls: nist.domains.reduce((acc, d) => acc + d.controls.length, 0) },
-  { ...rgpd, controls: rgpd.domains.reduce((acc, d) => acc + d.controls.length, 0) },
-]
+const REFERENTIALS = Object.values(REF_MAP).map(r => ({ ...r, controls: countControls(r) }))
 
 export default function AuditNew() {
   const navigate = useNavigate()
@@ -22,6 +16,7 @@ export default function AuditNew() {
   const [companyId, setCompanyId] = useState(companies[0]?.id || '')
   const [auditName, setAuditName] = useState('')
   const [showNewCompany, setShowNewCompany] = useState(false)
+  const [mission, setMission] = useState({ perimetre: '', interlocuteur: '', dateDebut: new Date().toISOString().slice(0,10), dateFin: '', autorise: false, cloudConsent: false })
 
   // Sirene search
   const [search, setSearch] = useState('')
@@ -30,14 +25,18 @@ export default function AuditNew() {
   const [selectedSirene, setSelectedSirene] = useState(null)
   const [newCompany, setNewCompany] = useState({ name: '', sector: '', size: '', contact: '', siret: '', naf: '', adresse: '' })
   const debounceRef = useRef(null)
+  const [searchState, setSearchState] = useState('') // '' | 'empty' | 'error'
 
   useEffect(() => {
-    if (search.length < 3) { setSuggestions([]); return }
+    if (search.length < 3) { setSuggestions([]); setSearchState(''); return }
     clearTimeout(debounceRef.current)
     debounceRef.current = setTimeout(async () => {
       setSearching(true)
-      const results = await searchEntreprises(search)
-      setSuggestions(results)
+      try {
+        const results = await searchEntreprises(search)
+        setSuggestions(results)
+        setSearchState(results.length ? '' : 'empty')
+      } catch { setSuggestions([]); setSearchState('error') }
       setSearching(false)
     }, 400)
   }, [search])
@@ -67,10 +66,10 @@ export default function AuditNew() {
   }
 
   const handleCreateAudit = () => {
-    if (!selected || !companyId) return
+    if (!selected || !companyId || !mission.autorise) return
     const ref = REFERENTIALS.find(r => r.id === selected)
     const name = auditName || `Audit ${ref.name} — ${new Date().toLocaleDateString('fr-FR')}`
-    const audit = createAudit({ companyId, referentialId: selected, name })
+    const audit = createAudit({ companyId, referentialId: selected, name, mission })
     navigate(`/audits/${audit.id}`)
   }
 
@@ -107,7 +106,7 @@ export default function AuditNew() {
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-lg flex items-center justify-center text-xs font-bold font-mono flex-shrink-0 mt-0.5"
                     style={{ background: ref.color + '20', color: ref.color }}>
-                    {ref.id.toUpperCase().slice(0,3)}
+                    {ref.badge || ref.id.toUpperCase().slice(0,3)}
                   </div>
                   <div>
                     <div className="font-semibold text-white">{ref.name}</div>
@@ -167,11 +166,23 @@ export default function AuditNew() {
                   {searching ? <Loader2 size={14} className="text-cyber-400 animate-spin flex-shrink-0" /> : <Search size={14} className="text-slate-500 flex-shrink-0" />}
                   <input
                     className="bg-transparent outline-none flex-1 text-sm text-white placeholder-slate-500"
-                    placeholder="Rechercher par nom d'entreprise (API Sirene INSEE)..."
+                    placeholder="Nom, enseigne, SIREN ou SIRET (annuaire des entreprises)…"
                     value={search}
                     onChange={e => setSearch(e.target.value)}
                   />
                 </div>
+                {searchState && !searching && (
+                  <div className="mt-2 text-xs bg-navy-800 border border-navy-600 rounded-lg px-3 py-2 space-y-2">
+                    <div className="text-slate-400">
+                      {searchState === 'error'
+                        ? "L'annuaire des entreprises ne répond pas."
+                        : "Aucun résultat. Un entrepreneur individuel, une enseigne ou une entreprise récente n'apparaissent pas toujours : essayez le SIREN/SIRET, ou saisissez la fiche à la main."}
+                    </div>
+                    <button className="btn-ghost text-xs" onClick={() => { setNewCompany(p => ({ ...p, name: search })); setSearch(''); setSearchState('') }}>
+                      Créer « {search} » manuellement
+                    </button>
+                  </div>
+                )}
                 {suggestions.length > 0 && (
                   <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-navy-800 border border-navy-600 rounded-lg shadow-xl overflow-hidden">
                     {suggestions.map((s, i) => (
@@ -179,7 +190,7 @@ export default function AuditNew() {
                         onClick={() => handleSelectSirene(s)}>
                         <div className="flex items-start justify-between gap-2">
                           <div>
-                            <div className="text-sm font-medium text-white">{s.name}</div>
+                            <div className="text-sm font-medium text-white">{s.name}{s.enseigne && <span className="text-xs text-cyber-400 ml-2">({s.enseigne})</span>}</div>
                             <div className="text-xs text-slate-400 mt-0.5">{s.naf_label}</div>
                             <div className="text-xs text-slate-500">{s.adresse} {s.cp} {s.ville}</div>
                           </div>
@@ -287,9 +298,39 @@ export default function AuditNew() {
               )
             })()}
           </div>
+          <div className="card space-y-3">
+            <div className="text-sm font-semibold text-white">Fiche de mission</div>
+            <div>
+              <label className="text-xs text-slate-400 mb-1 block">Périmètre audité</label>
+              <textarea className="input" rows={2} placeholder="Ex : SI du siège, 12 postes, 1 serveur de fichiers, messagerie, site web"
+                value={mission.perimetre} onChange={e => setMission(m => ({ ...m, perimetre: e.target.value }))} />
+            </div>
+            <div className="grid grid-cols-3 gap-3">
+              <div>
+                <label className="text-xs text-slate-400 mb-1 block">Interlocuteur client</label>
+                <input className="input" value={mission.interlocuteur} onChange={e => setMission(m => ({ ...m, interlocuteur: e.target.value }))} />
+              </div>
+              <div>
+                <label className="text-xs text-slate-400 mb-1 block">Début</label>
+                <input type="date" className="input" value={mission.dateDebut} onChange={e => setMission(m => ({ ...m, dateDebut: e.target.value }))} />
+              </div>
+              <div>
+                <label className="text-xs text-slate-400 mb-1 block">Fin</label>
+                <input type="date" className="input" value={mission.dateFin} onChange={e => setMission(m => ({ ...m, dateFin: e.target.value }))} />
+              </div>
+            </div>
+            <label className="flex items-start gap-2 text-xs text-slate-400 cursor-pointer">
+              <input type="checkbox" className="mt-0.5" checked={mission.cloudConsent} onChange={e => setMission(m => ({ ...m, cloudConsent: e.target.checked }))} />
+              Le client accepte l'usage d'une IA cloud en secours (données anonymisées : jamais le nom de l'entreprise). Sinon, tout reste en local.
+            </label>
+            <label className="flex items-start gap-2 text-xs text-slate-300 cursor-pointer">
+              <input type="checkbox" className="mt-0.5" checked={mission.autorise} onChange={e => setMission(m => ({ ...m, autorise: e.target.checked }))} />
+              J'atteste disposer de l'autorisation écrite du client pour auditer ce périmètre.
+            </label>
+          </div>
           <div className="flex justify-between pt-2">
             <button className="btn-ghost" onClick={() => setStep(2)}>← Retour</button>
-            <button className="btn-primary flex items-center gap-2 text-base px-6 py-2.5" onClick={handleCreateAudit}>
+            <button className="btn-primary flex items-center gap-2 text-base px-6 py-2.5" disabled={!mission.autorise} onClick={handleCreateAudit}>
               <ShieldCheck size={18} /> Démarrer l'Audit
             </button>
           </div>

@@ -8,30 +8,63 @@ import AuditDetail from './pages/AuditDetail.jsx'
 import RiskMap from './pages/RiskMap.jsx'
 import Reports from './pages/Reports.jsx'
 import AIAssistant from './pages/AIAssistant.jsx'
+import Scan from './pages/Scan.jsx'
 import Login from './pages/Login.jsx'
 import { ollamaChat } from './lib/ollama.js'
+import { supabase, cloudEnabled } from './lib/supabase.js'
+import { startSync, stopSync, onSyncStatus } from './lib/cloud.js'
+import { useAuditStore } from './store/auditStore.js'
 import { Bot, X, Send, Loader2, Minimize2 } from 'lucide-react'
 
 export default function App() {
   const [user, setUser] = useState(() => {
+    if (cloudEnabled) return null
     try { return JSON.parse(localStorage.getItem('cyberaudit_user')) } catch { return null }
   })
+  const [booting, setBooting] = useState(cloudEnabled)
+  const [sync, setSync] = useState({ state: 'idle' })
+
+  // Mode SaaS : session Supabase + synchronisation de l'organisation
+  useEffect(() => {
+    if (!cloudEnabled) return
+    const apply = async (session) => {
+      if (!session) { stopSync(); setUser(null); setBooting(false); return }
+      const u = session.user
+      setUser({ id: u.id, email: u.email, name: u.user_metadata?.full_name || u.email.split('@')[0], role: 'Auditeur' })
+      try { await startSync(u.id) } catch (e) { console.error('Sync', e) }
+      setBooting(false)
+    }
+    supabase.auth.getSession().then(({ data }) => apply(data.session))
+    const { data: sub } = supabase.auth.onAuthStateChange((evt, session) => {
+      if (evt === 'SIGNED_IN' || evt === 'SIGNED_OUT') apply(session)
+    })
+    const off = onSyncStatus(setSync)
+    return () => { sub.subscription.unsubscribe(); off() }
+  }, [])
 
   const handleLogin = (u) => {
+    if (cloudEnabled) return // géré par onAuthStateChange
     localStorage.setItem('cyberaudit_user', JSON.stringify(u))
     setUser(u)
   }
 
-  const handleLogout = () => {
-    localStorage.removeItem('cyberaudit_user')
-    setUser(null)
+  const handleLogout = async () => {
+    if (cloudEnabled) {
+      stopSync()
+      await supabase.auth.signOut()
+      useAuditStore.getState().hydrate({ audits: [], companies: [], risks: [], scans: [] }) // purge du cache local
+    } else {
+      localStorage.removeItem('cyberaudit_user')
+      setUser(null)
+    }
   }
 
+  if (booting) return <div className="min-h-screen bg-navy-950 flex items-center justify-center text-slate-500 text-sm">Chargement…</div>
   if (!user) return <Login onLogin={handleLogin} />
 
   return (
     <>
-      <Layout user={user} onLogout={handleLogout}>
+      <Layout user={user} onLogout={handleLogout} sync={cloudEnabled ? sync : null}>
         <Routes>
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="/dashboard" element={<Dashboard />} />
@@ -40,6 +73,7 @@ export default function App() {
           <Route path="/audits/:id" element={<AuditDetail />} />
           <Route path="/risks" element={<RiskMap />} />
           <Route path="/reports" element={<Reports />} />
+          <Route path="/scan" element={<Scan />} />
           <Route path="/ai" element={<AIAssistant />} />
         </Routes>
       </Layout>
@@ -79,8 +113,8 @@ function FloatingChat({ user }) {
       await ollamaChat(apiMsgs, (_, acc) => { full = acc })
       setMessages(prev => [...prev, { role: 'assistant', content: full }])
       if (!open) setUnread(u => u + 1)
-    } catch {
-      setMessages(prev => [...prev, { role: 'assistant', content: '❌ Ollama non disponible.' }])
+    } catch (e) {
+      setMessages(prev => [...prev, { role: 'assistant', content: '❌ ' + (e?.message || 'IA non disponible.') }])
     }
     setLoading(false)
   }

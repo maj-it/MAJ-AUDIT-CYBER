@@ -2,21 +2,18 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { useAuditStore } from '../store/auditStore.js'
 import { computeAuditScore, computeCompletion, getMaturityLevel, getScoreColor, getRadarData, criticityBadge, criticityLabel, MATURITY_LABELS } from '../lib/scoring.js'
-import { analyzeAuditResponses, generateActionPlan, explainControl } from '../lib/ollama.js'
+import { analyzeAuditResponses, generateActionPlan, explainControl, buildOfflineActionPlan, getLastNote } from '../lib/ollama.js'
 import { exportAuditPDF } from '../lib/exportPDF.js'
 import { exportAuditExcel } from '../lib/exportExcel.js'
 import { RadarChart, Radar, PolarGrid, PolarAngleAxis, ResponsiveContainer } from 'recharts'
 import { Bot, FileDown, ChevronDown, ChevronRight, Info, Loader2, CheckCircle2, AlertCircle } from 'lucide-react'
-import iso27001 from '../data/iso27001.json'
-import nist from '../data/nist.json'
-import rgpd from '../data/rgpd.json'
+import { REFERENTIALS } from '../data/index.js'
 
-const REFERENTIALS = { iso27001, nist, rgpd }
 
 export default function AuditDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { audits, companies, updateResponse, saveAuditScore, saveAIAnalysis, saveActionPlan } = useAuditStore()
+  const { audits, companies, updateResponse, saveAuditScore, saveAIAnalysis, saveActionPlan, updateActionItem, removeActionItem } = useAuditStore()
 
   const audit = audits.find(a => a.id === id)
   const referential = audit ? REFERENTIALS[audit.referentialId] : null
@@ -27,7 +24,26 @@ export default function AuditDetail() {
   const [actionLoading, setActionLoading] = useState(false)
   const [controlExplanation, setControlExplanation] = useState(null)
   const [explainLoading, setExplainLoading] = useState(null)
+  const [notice, setNotice] = useState('')
+  const [info, setInfo] = useState('')
+  const [elapsed, setElapsed] = useState(0)
   const [activeTab, setActiveTab] = useState('audit') // audit | results | actions | analysis
+
+  // Chrono affiché pendant les générations IA (l'IA locale sur CPU peut prendre plusieurs minutes)
+  useEffect(() => {
+    if (!actionLoading && !aiLoading) { setElapsed(0); return }
+    const t0 = Date.now()
+    const t = setInterval(() => setElapsed(Math.round((Date.now() - t0) / 1000)), 1000)
+    return () => clearInterval(t)
+  }, [actionLoading, aiLoading])
+
+  // Sauvegarde continue du score (hook déclaré avant tout return conditionnel)
+  useEffect(() => {
+    if (!audit || !referential || !Object.keys(audit.responses || {}).length) return
+    const r = computeAuditScore(referential, audit.responses)
+    const c = computeCompletion(referential, audit.responses)
+    saveAuditScore(audit.id, r.globalScore, r.domainScores, c.pct === 100)
+  }, [audit?.responses])
 
   if (!audit || !referential) {
     return (
@@ -44,38 +60,35 @@ export default function AuditDetail() {
   const completion = computeCompletion(referential, audit.responses)
   const radarData = getRadarData(domainScores)
 
-  // Auto-save score when completion changes
-  useEffect(() => {
-    if (completion.pct === 100) {
-      const flat = {}
-      Object.values(domainScores).forEach(d => { flat[d.name] = d.score })
-      saveAuditScore(audit.id, globalScore, Object.fromEntries(
-        Object.entries(domainScores).map(([k, v]) => [v.name, v.score])
-      ))
-    }
-  }, [completion.pct])
+  const aiCtx = () => ({ sector: company?.sector, size: company?.size, perimetre: audit.mission?.perimetre, cloud: !!audit.mission?.cloudConsent })
 
   const handleAnalyze = async () => {
-    setAiLoading(true)
+    setAiLoading(true); setNotice(''); setInfo('')
     try {
       const flatScores = Object.fromEntries(Object.values(domainScores).map(d => [d.name, d.score]))
-      const analysis = await analyzeAuditResponses(referential, audit.responses, flatScores)
+      const analysis = await analyzeAuditResponses(referential, audit.responses, flatScores, aiCtx())
       saveAIAnalysis(audit.id, analysis)
       setActiveTab('analysis')
+      setInfo(getLastNote())
     } catch (e) {
-      alert('Erreur Ollama : ' + e.message)
+      setNotice('Analyse impossible : ' + e.message)
     }
     setAiLoading(false)
   }
 
   const handleActionPlan = async () => {
-    setActionLoading(true)
+    setActionLoading(true); setNotice(''); setInfo('')
     try {
-      const plan = await generateActionPlan(referential, audit.responses, {})
-      saveActionPlan(audit.id, plan)
+      // Le plan par règles s'affiche tout de suite ; l'IA l'enrichit ensuite si elle répond à temps
+      if (!(audit.actionPlan || []).length) {
+        saveActionPlan(audit.id, buildOfflineActionPlan(referential, audit.responses).map(b => ({ ...b, validated: true })))
+      }
       setActiveTab('actions')
+      const plan = await generateActionPlan(referential, audit.responses, aiCtx())
+      saveActionPlan(audit.id, plan)
+      setInfo(getLastNote())
     } catch (e) {
-      alert('Erreur Ollama : ' + e.message)
+      setNotice('Plan d\'actions impossible : ' + e.message)
     }
     setActionLoading(false)
   }
@@ -84,7 +97,7 @@ export default function AuditDetail() {
     if (explainLoading === control.id) return
     setExplainLoading(control.id)
     try {
-      const explanation = await explainControl(control.id, control.name, control.description)
+      const explanation = await explainControl(control.id, control.name, control.description, { question: control.question })
       setControlExplanation({ id: control.id, ...explanation })
     } catch (e) {
       setControlExplanation({ id: control.id, objectif: control.description, preuves_attendues: [], risques_si_absent: [], mise_en_oeuvre: '', exemple_pratique: '' })
@@ -101,6 +114,8 @@ export default function AuditDetail() {
 
   return (
     <div className="space-y-5">
+      {notice && <div className="text-sm text-red-400 bg-red-500/10 border border-red-500/30 rounded-lg px-3 py-2">{notice}</div>}
+      {info && <div className="text-sm text-yellow-300 bg-yellow-500/10 border border-yellow-500/30 rounded-lg px-3 py-2">{info}</div>}
       {/* Header */}
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
@@ -114,6 +129,7 @@ export default function AuditDetail() {
             <span className="badge-info">{referential.name}</span>
             <span className="text-xs text-slate-500">{company?.name}</span>
           </div>
+          {audit.mission?.perimetre && <div className="text-xs text-slate-500 mt-1">Périmètre : {audit.mission.perimetre}{audit.mission.interlocuteur ? ` — ${audit.mission.interlocuteur}` : ''}</div>}
         </div>
 
         {/* Actions */}
@@ -260,12 +276,18 @@ export default function AuditDetail() {
       {activeTab === 'actions' && (
         <div className="space-y-4">
           <div className="flex justify-between items-center">
-            <div className="text-sm text-slate-400">Plan d'actions généré par IA à partir des non-conformités détectées</div>
+            <div className="text-sm text-slate-400">Plan d'actions : les suggestions IA doivent être validées pour figurer dans le rapport</div>
             <button className="btn-primary flex items-center gap-2 text-xs" onClick={handleActionPlan} disabled={actionLoading}>
               {actionLoading ? <Loader2 size={14} className="animate-spin" /> : <Bot size={14} />}
-              Générer le Plan
+              {actionLoading ? `IA en cours… ${elapsed}s` : 'Générer le Plan'}
             </button>
           </div>
+          {(audit.actionPlan || []).some(a => a.validated === false) && (
+            <div className="flex flex-wrap items-center justify-between gap-2 text-xs bg-yellow-500/10 border border-yellow-500/30 rounded-lg px-3 py-2 text-yellow-300">
+              <span>{audit.actionPlan.filter(a => a.validated === false).length} suggestion(s) IA à relire : non incluses dans le PDF/Excel tant qu'elles ne sont pas validées.</span>
+              <button className="btn-ghost text-xs" onClick={() => audit.actionPlan.filter(a => a.validated === false).forEach(a => updateActionItem(audit.id, a.id, { validated: true }))}>Tout valider</button>
+            </div>
+          )}
           {audit.actionPlan?.length > 0 ? (
             <div className="space-y-2">
               {audit.actionPlan.map(action => (
@@ -287,7 +309,21 @@ export default function AuditDetail() {
                       <span>💰 {action.cout}</span>
                     </div>
                   </div>
-                  <span className="badge-info text-xs flex-shrink-0">{action.statut}</span>
+                  <div className="flex flex-col items-end gap-1 flex-shrink-0">
+                    {action.validated === false ? (
+                      <>
+                        <span className="text-xs px-2 py-0.5 rounded-full font-mono bg-yellow-500/10 text-yellow-300 border border-yellow-500/30">
+                          Suggestion IA {action.source === 'ia-cloud' ? '(cloud)' : '(locale)'}
+                        </span>
+                        <div className="flex gap-1">
+                          <button className="btn-ghost text-xs px-2 py-0.5" onClick={() => updateActionItem(audit.id, action.id, { validated: true })}>Valider</button>
+                          <button className="btn-ghost text-xs px-2 py-0.5" onClick={() => removeActionItem(audit.id, action.id)}>Rejeter</button>
+                        </div>
+                      </>
+                    ) : (
+                      <span className="badge-info text-xs">{action.statut}</span>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
@@ -305,6 +341,12 @@ export default function AuditDetail() {
         <div className="space-y-4">
           {audit.aiAnalysis ? (
             <>
+              {audit.aiAnalysis.validated === false && (
+                <div className="flex flex-wrap items-center justify-between gap-2 text-xs bg-yellow-500/10 border border-yellow-500/30 rounded-lg px-3 py-2 text-yellow-300">
+                  <span>Analyse générée par IA {audit.aiAnalysis.source === 'ia-cloud' ? '(cloud)' : '(locale)'} : relisez-la. Le PDF utilise le résumé automatique tant qu'elle n'est pas validée.</span>
+                  <button className="btn-ghost text-xs" onClick={() => saveAIAnalysis(audit.id, { ...audit.aiAnalysis, validated: true })}>Valider l'analyse</button>
+                </div>
+              )}
               <div className="card">
                 <div className="text-xs text-cyber-500 font-mono uppercase tracking-wider mb-2">Résumé Exécutif</div>
                 <p className="text-sm text-slate-300 leading-relaxed">{audit.aiAnalysis.resume}</p>
@@ -403,6 +445,9 @@ function ControlRow({ control, value, note, onChange, onExplain, explainLoading,
           </div>
           <div className="text-sm font-medium text-white leading-tight">{control.name}</div>
           <div className="text-xs text-slate-500 mt-1 line-clamp-2">{control.description}</div>
+          {control.question && (
+            <div className="text-xs text-cyber-300 mt-1.5 italic">💬 {control.question}</div>
+          )}
 
           <div className="flex flex-wrap items-center gap-2 mt-3">
             {matOptions.map(opt => (

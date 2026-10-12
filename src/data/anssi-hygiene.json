@@ -1,0 +1,367 @@
+{
+  "id": "anssi",
+  "name": "ANSSI — Hygiène informatique (42 mesures)",
+  "version": "v2",
+  "description": "Guide d'hygiène informatique de l'ANSSI : 42 mesures de base pour la sécurité du système d'information.",
+  "color": "#3b82f6",
+  "domains": [
+    {
+      "id": "H-G",
+      "name": "Gouvernance et sensibilisation",
+      "weight": 1,
+      "controls": [
+        {
+          "id": "H.1",
+          "name": "Former les équipes opérationnelles à la sécurité des systèmes d'information",
+          "description": "Les équipes techniques (internes ou prestataires) reçoivent une formation à la sécurité adaptée à leur rôle.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "H.2",
+          "name": "Sensibiliser les utilisateurs aux bonnes pratiques élémentaires de sécurité",
+          "description": "Sensibilisation régulière du personnel (phishing, mots de passe, signalement), avec une charte ou des règles connues de tous.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "H.3",
+          "name": "Maîtriser les risques de l'infogérance",
+          "description": "Les prestataires informatiques sont encadrés par un contrat précisant exigences de sécurité, accès, réversibilité et notification d'incident.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "H.38",
+          "name": "Procéder à des contrôles et audits de sécurité réguliers puis appliquer les actions correctives associées",
+          "description": "Contrôles et audits planifiés avec suivi des actions correctives. (Mesure de niveau renforcé.)",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "H.39",
+          "name": "Désigner un référent en sécurité des systèmes d'information et le faire connaître au sein de l'organisation",
+          "description": "Une personne est responsable de la sécurité du SI et connue de tous.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "H.41",
+          "name": "Mener une analyse de risques formelle",
+          "description": "Analyse de risques documentée et revue régulièrement. (Mesure de niveau renforcé.)",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "H.42",
+          "name": "Privilégier l'usage de produits et de services qualifiés par l'ANSSI",
+          "description": "Choix de produits et prestataires qualifiés/certifiés lorsque c'est possible. (Mesure de niveau renforcé.)",
+          "criticality": "low",
+          "weight": 0.6
+        }
+      ]
+    },
+    {
+      "id": "H-C",
+      "name": "Connaissance du système d'information",
+      "weight": 1,
+      "controls": [
+        {
+          "id": "H.4",
+          "name": "Identifier les informations et serveurs les plus sensibles et maintenir un schéma du réseau",
+          "description": "Les données et serveurs critiques sont identifiés ; un schéma du réseau est tenu à jour.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "H.5",
+          "name": "Disposer d'un inventaire exhaustif des comptes privilégiés et le maintenir à jour",
+          "description": "Liste à jour des comptes administrateurs et à privilèges, avec responsable identifié.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "H.6",
+          "name": "Organiser les procédures d'arrivée, de départ et de changement de fonction des utilisateurs",
+          "description": "Création, modification et suppression des comptes et droits à chaque mouvement de personnel.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "H.7",
+          "name": "Autoriser la connexion au réseau de l'entité aux seuls équipements maîtrisés",
+          "description": "Seuls les équipements connus et gérés peuvent se connecter au réseau (pas d'équipement personnel non contrôlé).",
+          "criticality": "medium",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "id": "H-A",
+      "name": "Authentification et contrôle d'accès",
+      "weight": 1.3,
+      "controls": [
+        {
+          "id": "H.8",
+          "name": "Identifier nommément chaque personne ayant accès au système et distinguer les rôles utilisateur/administrateur",
+          "description": "Comptes nominatifs, pas de compte partagé ; comptes d'administration distincts des comptes de travail courant.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "H.9",
+          "name": "Attribuer les bons droits sur les ressources sensibles du système d'information",
+          "description": "Droits d'accès accordés selon le besoin d'en connaître et revus périodiquement.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "H.10",
+          "name": "Définir et vérifier des règles de choix et de dimensionnement des mots de passe",
+          "description": "Longueur et complexité minimales, pas de réutilisation, vérification par outil ou politique de domaine.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "H.11",
+          "name": "Protéger les mots de passe stockés sur les systèmes",
+          "description": "Mots de passe stockés hachés et salés, jamais en clair dans des fichiers ou tableurs.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "H.12",
+          "name": "Changer les éléments d'authentification par défaut sur les équipements et services",
+          "description": "Aucun équipement (box, routeur, caméra, imprimante, NAS) ne conserve ses identifiants d'usine.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "H.13",
+          "name": "Privilégier lorsque c'est possible une authentification forte",
+          "description": "Double authentification (MFA) activée au minimum sur la messagerie, les accès distants et les comptes d'administration.",
+          "criticality": "high",
+          "weight": 1.5
+        }
+      ]
+    },
+    {
+      "id": "H-P",
+      "name": "Sécurité des postes",
+      "weight": 1.1,
+      "controls": [
+        {
+          "id": "H.14",
+          "name": "Mettre en place un niveau de sécurité minimal sur l'ensemble du parc informatique",
+          "description": "Configuration de base homogène : antivirus/EDR, chiffrement du disque, verrouillage de session, mises à jour.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "H.15",
+          "name": "Se protéger des menaces relatives à l'utilisation de supports amovibles",
+          "description": "Usage des clés USB encadré (blocage, analyse antivirus, désactivation de l'exécution automatique).",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "H.16",
+          "name": "Utiliser un outil de gestion centralisée afin d'homogénéiser les politiques de sécurité",
+          "description": "Politiques de sécurité appliquées de façon centralisée (GPO, MDM, outil de gestion de parc).",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "H.17",
+          "name": "Activer et configurer le pare-feu local des postes de travail",
+          "description": "Pare-feu logiciel actif sur tous les postes, avec règles adaptées.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "H.29",
+          "name": "Limiter les droits d'administration sur les postes de travail",
+          "description": "Les utilisateurs ne travaillent pas en administrateur local ; les droits élevés sont accordés au cas par cas.",
+          "criticality": "high",
+          "weight": 1.5
+        }
+      ]
+    },
+    {
+      "id": "H-R",
+      "name": "Sécurité des réseaux",
+      "weight": 1.2,
+      "controls": [
+        {
+          "id": "H.18",
+          "name": "Chiffrer les données sensibles transmises par Internet",
+          "description": "Données sensibles transmises via des canaux chiffrés (HTTPS/TLS, VPN, messagerie chiffrée).",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "H.19",
+          "name": "Segmenter le réseau et mettre en place un cloisonnement entre ces zones",
+          "description": "Zones réseau séparées (postes, serveurs, invités, caméras/IoT) avec filtrage entre elles.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "H.20",
+          "name": "S'assurer de la sécurité des réseaux d'accès Wi-Fi et de la séparation des usages",
+          "description": "Wi-Fi en WPA2/WPA3, mot de passe robuste, réseau invité séparé du réseau interne.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "H.21",
+          "name": "Utiliser des protocoles réseaux sécurisés dès qu'ils existent",
+          "description": "Protocoles sécurisés privilégiés (SSH, HTTPS, SFTP) ; protocoles obsolètes (Telnet, FTP, SMBv1) désactivés.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "H.22",
+          "name": "Mettre en place une passerelle d'accès sécurisé à Internet",
+          "description": "Accès à Internet filtré (pare-feu, proxy, filtrage web/DNS).",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "H.23",
+          "name": "Cloisonner les services visibles depuis Internet du reste du système d'information",
+          "description": "Les services exposés sont isolés dans une zone dédiée (DMZ) ; seuls les ports nécessaires sont ouverts.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "H.24",
+          "name": "Protéger la messagerie professionnelle",
+          "description": "Filtrage antispam/antiphishing, SPF/DKIM/DMARC configurés, MFA sur les boîtes mail.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "H.25",
+          "name": "Sécuriser les interconnexions réseau dédiées avec les partenaires",
+          "description": "Liaisons avec partenaires chiffrées, filtrées et limitées au strict besoin.",
+          "criticality": "medium",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "id": "H-X",
+      "name": "Sécurité physique et administration",
+      "weight": 0.9,
+      "controls": [
+        {
+          "id": "H.26",
+          "name": "Contrôler et protéger l'accès aux salles serveurs et aux locaux techniques",
+          "description": "Accès physique restreint (clé, badge), registre des entrées, local fermé.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "H.27",
+          "name": "Interdire l'accès à Internet depuis les postes ou serveurs utilisés pour l'administration du SI",
+          "description": "Les postes d'administration n'ont pas d'accès Internet libre (navigation, messagerie).",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "H.28",
+          "name": "Utiliser un réseau dédié et cloisonné pour l'administration du SI",
+          "description": "L'administration passe par un réseau ou un canal dédié, séparé du réseau utilisateur.",
+          "criticality": "medium",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "id": "H-N",
+      "name": "Nomadisme",
+      "weight": 0.9,
+      "controls": [
+        {
+          "id": "H.30",
+          "name": "Mettre en place des mesures de sécurisation physique des terminaux mobiles",
+          "description": "Ordinateurs et mobiles protégés physiquement (câble antivol, verrouillage, ne pas laisser sans surveillance).",
+          "criticality": "low",
+          "weight": 0.6
+        },
+        {
+          "id": "H.31",
+          "name": "Chiffrer les données sensibles, en particulier sur le matériel potentiellement perdable",
+          "description": "Chiffrement du disque (BitLocker, FileVault) sur portables, mobiles et supports amovibles.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "H.32",
+          "name": "Sécuriser la connexion réseau des postes utilisés en situation de nomadisme",
+          "description": "Accès distant via VPN ou accès sécurisé ; pas de connexion directe aux ressources internes depuis un Wi-Fi public.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "H.33",
+          "name": "Adopter une politique de sécurité des terminaux mobiles",
+          "description": "Règles pour smartphones et tablettes (verrouillage, MDM, séparation pro/perso, effacement à distance).",
+          "criticality": "medium",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "id": "H-M",
+      "name": "Maintien en condition de sécurité",
+      "weight": 1.2,
+      "controls": [
+        {
+          "id": "H.34",
+          "name": "Définir une politique de mise à jour des composants du système d'information",
+          "description": "Mises à jour du système, des applications et des équipements réseau appliquées dans des délais définis.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "H.35",
+          "name": "Anticiper la fin de la maintenance des logiciels et systèmes et limiter la dépendance au fournisseur",
+          "description": "Aucun système en fin de support (Windows 10 après support, serveurs anciens) ; fin de vie anticipée.",
+          "criticality": "medium",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "id": "H-S",
+      "name": "Supervision, sauvegarde et incidents",
+      "weight": 1.2,
+      "controls": [
+        {
+          "id": "H.36",
+          "name": "Activer et configurer les journaux des composants les plus importants",
+          "description": "Journaux activés et conservés sur serveurs, pare-feu, messagerie et comptes d'administration.",
+          "criticality": "medium",
+          "weight": 1
+        },
+        {
+          "id": "H.37",
+          "name": "Définir et appliquer une politique de sauvegarde des composants critiques",
+          "description": "Sauvegardes régulières, dont une copie hors ligne ou externalisée, avec tests de restauration.",
+          "criticality": "high",
+          "weight": 1.5
+        },
+        {
+          "id": "H.40",
+          "name": "Définir une procédure de gestion des incidents de sécurité",
+          "description": "Procédure documentée : qui alerter, quoi faire, comment isoler, quand notifier (CNIL, assurance, ANSSI/CERT).",
+          "criticality": "high",
+          "weight": 1.5
+        }
+      ]
+    }
+  ],
+  "badge": "ANS"
+}

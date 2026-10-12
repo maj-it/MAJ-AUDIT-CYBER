@@ -1,61 +1,543 @@
 {
   "id": "rgpd",
-  "name": "RGPD / GDPR",
-  "version": "2018",
-  "description": "Règlement Général sur la Protection des Données — Conformité et obligations",
+  "name": "RGPD — Règlement (UE) 2016/679",
+  "version": "2016/679",
+  "description": "Audit de conformité RGPD en 10 domaines : responsabilité, registre, licéité, droits, sous-traitants, transferts, sécurité (art. 32), violations, AIPD, cookies et cas particuliers. À compléter par la doctrine CNIL applicable.",
   "color": "#8b5cf6",
+  "badge": "RGPD",
   "domains": [
     {
-      "id": "BASE",
-      "name": "Bases légales et principes",
-      "weight": 1.5,
+      "id": "R-G",
+      "name": "Gouvernance et responsabilité",
+      "weight": 1.2,
       "controls": [
-        { "id": "R.1.1", "name": "Base légale du traitement", "description": "Chaque traitement de données personnelles repose sur une base légale valide (consentement, contrat, obligation légale, intérêt vital, mission d'intérêt public, intérêt légitime).", "criticality": "critical", "weight": 2.0 },
-        { "id": "R.1.2", "name": "Principe de minimisation", "description": "Les données collectées sont adéquates, pertinentes et limitées à ce qui est nécessaire au regard des finalités.", "criticality": "high", "weight": 1.5 },
-        { "id": "R.1.3", "name": "Limitation des finalités", "description": "Les données sont collectées pour des finalités déterminées, explicites et légitimes, et ne sont pas traitées ultérieurement de manière incompatible.", "criticality": "high", "weight": 1.5 },
-        { "id": "R.1.4", "name": "Exactitude des données", "description": "Les données sont exactes et tenues à jour. Toutes les mesures raisonnables sont prises pour effacer ou rectifier les données inexactes.", "criticality": "medium", "weight": 1.0 }
+        {
+          "id": "R.1",
+          "name": "Principe de responsabilité : l'organisme peut démontrer sa conformité",
+          "description": "Documentation, procédures et preuves permettant de démontrer le respect du RGPD (art. 5.2, 24).",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Si la CNIL ou un client demandait de prouver votre conformité, quels documents présenteriez-vous ?"
+        },
+        {
+          "id": "R.2",
+          "name": "Délégué à la protection des données (DPO) désigné, ou référent identifié",
+          "description": "DPO obligatoire pour les autorités publiques, le suivi régulier à grande échelle et les données sensibles à grande échelle ; à défaut, un référent clair (art. 37-39).",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Y a-t-il un DPO ou un référent RGPD ? Est-il déclaré à la CNIL et joignable ?"
+        },
+        {
+          "id": "R.3",
+          "name": "Le DPO / référent dispose d'indépendance et de moyens",
+          "description": "Rattachement à la direction, temps et budget dédiés, absence de conflit d'intérêts (art. 38).",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Le référent a-t-il du temps, un budget, et un accès direct à la direction ?"
+        },
+        {
+          "id": "R.4",
+          "name": "Politique de protection des données et procédures internes",
+          "description": "Politique approuvée par la direction et déclinée en procédures (droits, violations, durées, sous-traitants).",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Existe-t-il une politique ou charte de protection des données écrite et diffusée ?"
+        },
+        {
+          "id": "R.5",
+          "name": "Sensibilisation et formation du personnel",
+          "description": "Formation initiale et rappels réguliers pour tous ceux qui manipulent des données personnelles.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Le personnel est-il formé au RGPD ? Quand a eu lieu la dernière sensibilisation ?"
+        },
+        {
+          "id": "R.6",
+          "name": "Protection des données dès la conception et par défaut",
+          "description": "Prise en compte du RGPD dès le début de tout nouveau projet ou outil, paramètres par défaut protecteurs (art. 25).",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Un nouveau projet ou outil passe-t-il par une revue RGPD avant sa mise en service ?"
+        }
       ]
     },
     {
-      "id": "DROITS",
-      "name": "Droits des personnes",
+      "id": "R-R",
+      "name": "Registre et cartographie des traitements (art. 30)",
       "weight": 1.3,
       "controls": [
-        { "id": "R.2.1", "name": "Droit d'information (transparence)", "description": "Les personnes concernées sont informées de manière claire, transparente et accessible sur le traitement de leurs données.", "criticality": "high", "weight": 1.5 },
-        { "id": "R.2.2", "name": "Droit d'accès", "description": "Les personnes concernées peuvent obtenir confirmation que leurs données sont traitées et en recevoir une copie.", "criticality": "high", "weight": 1.3 },
-        { "id": "R.2.3", "name": "Droit à l'effacement", "description": "Les personnes peuvent demander l'effacement de leurs données dans les cas prévus par le RGPD.", "criticality": "high", "weight": 1.3 },
-        { "id": "R.2.4", "name": "Droit à la portabilité", "description": "Les personnes peuvent recevoir leurs données dans un format structuré et lisible par machine, ou les faire transmettre à un autre responsable.", "criticality": "medium", "weight": 1.0 },
-        { "id": "R.2.5", "name": "Droit d'opposition et de rectification", "description": "Les personnes peuvent s'opposer au traitement et demander la rectification de données inexactes.", "criticality": "high", "weight": 1.3 }
+        {
+          "id": "R.7",
+          "name": "Registre des activités de traitement tenu à jour (responsable de traitement)",
+          "description": "Un registre couvrant tous les traitements, avec les mentions de l'art. 30.1 (finalités, catégories, destinataires, durées, mesures de sécurité, transferts).",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Existe-t-il un registre des traitements ? Date de la dernière mise à jour ?"
+        },
+        {
+          "id": "R.8",
+          "name": "Registre des catégories d'activités en tant que sous-traitant",
+          "description": "Si l'organisme traite des données pour le compte de clients, registre dédié (art. 30.2).",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Traitez-vous des données pour le compte de clients ? Un registre sous-traitant existe-t-il ?"
+        },
+        {
+          "id": "R.9",
+          "name": "Cartographie des données et des flux",
+          "description": "Inventaire des données personnelles, des systèmes qui les contiennent et des flux avec les tiers.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Sait-on où se trouvent les données personnelles (outils, serveurs, cloud, papier) et qui y accède ?"
+        },
+        {
+          "id": "R.10",
+          "name": "Registre révisé lors de chaque changement significatif",
+          "description": "Mise à jour lors d'un nouvel outil, prestataire, finalité ou suppression d'un traitement.",
+          "criticality": "low",
+          "weight": 0.8,
+          "question": "Le registre est-il mis à jour quand un outil ou un prestataire change ?"
+        }
       ]
     },
     {
-      "id": "OBLIG",
-      "name": "Obligations du responsable",
-      "weight": 1.4,
+      "id": "R-L",
+      "name": "Licéité, finalités et qualité des données (art. 5-11)",
+      "weight": 1.3,
       "controls": [
-        { "id": "R.3.1", "name": "Registre des traitements (Art. 30)", "description": "Un registre des activités de traitement est tenu et tenu à jour. Il contient toutes les informations requises par l'article 30.", "criticality": "critical", "weight": 2.0 },
-        { "id": "R.3.2", "name": "Analyse d'Impact (AIPD / Art. 35)", "description": "Une analyse d'impact est réalisée pour les traitements susceptibles d'engendrer un risque élevé pour les droits et libertés.", "criticality": "critical", "weight": 2.0 },
-        { "id": "R.3.3", "name": "Désignation d'un DPO", "description": "Un délégué à la protection des données est désigné lorsque cela est obligatoire (Art. 37) ou à titre volontaire.", "criticality": "high", "weight": 1.3 },
-        { "id": "R.3.4", "name": "Privacy by Design et by Default", "description": "La protection des données est intégrée dès la conception et par défaut dans les traitements.", "criticality": "high", "weight": 1.5 }
+        {
+          "id": "R.11",
+          "name": "Finalités déterminées, explicites et légitimes pour chaque traitement",
+          "description": "Chaque traitement a un objectif précis ; pas de réutilisation incompatible (art. 5.1.b).",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Pour chaque fichier de données, la finalité est-elle écrite et précise ?"
+        },
+        {
+          "id": "R.12",
+          "name": "Base légale identifiée pour chaque traitement",
+          "description": "Consentement, contrat, obligation légale, intérêt vital, mission d'intérêt public ou intérêt légitime (art. 6).",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Quelle est la base légale de vos principaux traitements ? Est-elle documentée ?"
+        },
+        {
+          "id": "R.13",
+          "name": "Intérêt légitime : mise en balance documentée",
+          "description": "Quand l'intérêt légitime est invoqué, évaluation écrite des intérêts de l'organisme face aux droits des personnes.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Si vous invoquez l'intérêt légitime, une analyse écrite existe-t-elle ?"
+        },
+        {
+          "id": "R.14",
+          "name": "Consentement valide, prouvable et retirable",
+          "description": "Libre, spécifique, éclairé, univoque, preuve conservée, retrait aussi simple que l'octroi (art. 7).",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Comment recueillez-vous le consentement ? Pouvez-vous le prouver et le retirer facilement ?"
+        },
+        {
+          "id": "R.15",
+          "name": "Données sensibles : condition de l'art. 9 remplie",
+          "description": "Santé, origine, opinions, biométrie, orientation, etc. : exception applicable et garanties renforcées (art. 9, 10).",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Traitez-vous des données sensibles (santé, biométrie…) ? Sur quelle condition ?"
+        },
+        {
+          "id": "R.16",
+          "name": "Données de mineurs : consentement parental le cas échéant",
+          "description": "Âge du consentement numérique (15 ans en France) et vérification raisonnable (art. 8).",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Des mineurs sont-ils concernés ? Comment est géré l'accord parental ?"
+        },
+        {
+          "id": "R.17",
+          "name": "Minimisation : seules les données nécessaires sont collectées",
+          "description": "Pas de champs superflus dans les formulaires, dossiers ou bases (art. 5.1.c).",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Collecte-t-on des informations qui ne sont pas indispensables à la finalité ?"
+        },
+        {
+          "id": "R.18",
+          "name": "Exactitude et mise à jour des données",
+          "description": "Procédures de correction et de mise à jour (art. 5.1.d).",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Comment les données inexactes ou périmées sont-elles corrigées ?"
+        },
+        {
+          "id": "R.19",
+          "name": "Durées de conservation définies et appliquées",
+          "description": "Durées par catégorie, purge ou archivage intermédiaire effectifs (art. 5.1.e).",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Les durées de conservation sont-elles définies ? Les données anciennes sont-elles réellement supprimées ?"
+        }
       ]
     },
     {
-      "id": "SECU",
-      "name": "Sécurité et violations",
-      "weight": 1.5,
+      "id": "R-D",
+      "name": "Information et droits des personnes (art. 12-22)",
+      "weight": 1.3,
       "controls": [
-        { "id": "R.4.1", "name": "Mesures techniques et organisationnelles", "description": "Des mesures techniques et organisationnelles appropriées sont mises en œuvre pour garantir un niveau de sécurité adapté au risque (chiffrement, pseudonymisation, contrôles d'accès, etc.).", "criticality": "critical", "weight": 2.0 },
-        { "id": "R.4.2", "name": "Notification des violations (Art. 33)", "description": "En cas de violation de données, la CNIL est notifiée dans les 72h. Si risque élevé, les personnes concernées sont également informées.", "criticality": "critical", "weight": 2.0 },
-        { "id": "R.4.3", "name": "Sous-traitance (Art. 28)", "description": "Les sous-traitants présentent des garanties suffisantes. Un contrat de traitement de données conforme est en place.", "criticality": "high", "weight": 1.5 }
+        {
+          "id": "R.20",
+          "name": "Information claire des personnes lors de la collecte",
+          "description": "Mentions de l'art. 13 (ou 14 si collecte indirecte) : identité, finalités, base légale, durée, droits, destinataires, transferts.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Les personnes sont-elles informées à la collecte (formulaire, site, contrat, affichage) ?"
+        },
+        {
+          "id": "R.21",
+          "name": "Procédure d'exercice des droits et point de contact",
+          "description": "Moyen simple de saisir l'organisme ; réponse sous un mois, prolongeable à trois mois si complexe (art. 12).",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Comment une personne exerce-t-elle ses droits ? Qui traite la demande et sous quel délai ?"
+        },
+        {
+          "id": "R.22",
+          "name": "Droit d'accès traité",
+          "description": "Copie des données et informations associées (art. 15).",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Une demande d'accès pourrait-elle être traitée dans le mois ?"
+        },
+        {
+          "id": "R.23",
+          "name": "Rectification et effacement traités",
+          "description": "Corrections et suppressions effectives, y compris chez les sous-traitants (art. 16-17).",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Une demande de suppression est-elle répercutée dans tous les systèmes et chez les prestataires ?"
+        },
+        {
+          "id": "R.24",
+          "name": "Limitation, portabilité et notification aux destinataires",
+          "description": "Gel du traitement, export dans un format structuré, information des destinataires (art. 18-20).",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Sait-on exporter les données d'une personne dans un format réutilisable ?"
+        },
+        {
+          "id": "R.25",
+          "name": "Droit d'opposition, y compris à la prospection",
+          "description": "Opposition prise en compte, désabonnement simple (art. 21).",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Un lien de désinscription existe-t-il dans les communications ? Les oppositions sont-elles respectées partout ?"
+        },
+        {
+          "id": "R.26",
+          "name": "Décisions automatisées et profilage encadrés",
+          "description": "Intervention humaine, information et garanties si une décision automatisée produit un effet significatif (art. 22).",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Des décisions sont-elles prises automatiquement (scoring, tri) sur des personnes ?"
+        },
+        {
+          "id": "R.27",
+          "name": "Vérification de l'identité et suivi des demandes",
+          "description": "Contrôle proportionné de l'identité, journal des demandes et des réponses.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Les demandes de droits sont-elles consignées avec leur date et leur suite ?"
+        }
       ]
     },
     {
-      "id": "TRANS",
-      "name": "Transferts internationaux",
+      "id": "R-S",
+      "name": "Sous-traitants et partenaires (art. 26, 28, 29)",
+      "weight": 1.2,
+      "controls": [
+        {
+          "id": "R.28",
+          "name": "Liste des sous-traitants et prestataires accédant aux données",
+          "description": "Hébergeur, éditeurs SaaS, infogérant, comptable, prestataires paie, marketing…",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Quels prestataires ont accès aux données personnelles ? La liste est-elle à jour ?"
+        },
+        {
+          "id": "R.29",
+          "name": "Contrat de sous-traitance conforme à l'art. 28",
+          "description": "Clauses obligatoires : instructions, confidentialité, sécurité, sous-traitants ultérieurs, aide aux droits, suppression ou restitution, audit.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Chaque prestataire a-t-il signé un contrat ou avenant de sous-traitance RGPD ?"
+        },
+        {
+          "id": "R.30",
+          "name": "Garanties suffisantes vérifiées avant le choix du prestataire",
+          "description": "Évaluation de la sécurité et de la conformité (questionnaire, certifications, audits) avant le recours.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "La conformité et la sécurité d'un prestataire sont-elles vérifiées avant de le retenir ?"
+        },
+        {
+          "id": "R.31",
+          "name": "Sous-traitants ultérieurs autorisés et encadrés",
+          "description": "Autorisation préalable écrite, mêmes obligations en cascade (art. 28.2 et 28.4).",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Vos prestataires font-ils appel à d'autres prestataires ? Les connaissez-vous ?"
+        },
+        {
+          "id": "R.32",
+          "name": "Responsabilité conjointe : accord écrit",
+          "description": "Accord définissant les rôles lorsque deux organismes déterminent ensemble les finalités et moyens (art. 26).",
+          "criticality": "low",
+          "weight": 0.8,
+          "question": "Y a-t-il des situations de responsabilité conjointe (réseau, partenaires) ? Un accord existe-t-il ?"
+        },
+        {
+          "id": "R.33",
+          "name": "Personnes autorisées : habilitation et engagement de confidentialité",
+          "description": "Accès limité au besoin, engagement des personnes habilitées (art. 29, 32.4).",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Les personnes qui accèdent aux données ont-elles signé un engagement de confidentialité ?"
+        }
+      ]
+    },
+    {
+      "id": "R-T",
+      "name": "Transferts hors de l'Union européenne (chap. V, art. 44-49)",
       "weight": 1.1,
       "controls": [
-        { "id": "R.5.1", "name": "Transferts hors UE", "description": "Les transferts de données vers des pays tiers reposent sur une décision d'adéquation, des clauses contractuelles types, ou d'autres garanties appropriées.", "criticality": "high", "weight": 1.5 },
-        { "id": "R.5.2", "name": "Binding Corporate Rules", "description": "Pour les groupes multinationaux, des règles contraignantes d'entreprise sont approuvées par les autorités compétentes si applicable.", "criticality": "medium", "weight": 1.0 }
+        {
+          "id": "R.34",
+          "name": "Transferts hors UE / EEE identifiés",
+          "description": "Recensement des pays de destination, y compris accès à distance et services cloud.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Des données sont-elles hébergées ou accessibles depuis des pays hors UE (outils américains, support à distance) ?"
+        },
+        {
+          "id": "R.35",
+          "name": "Mécanisme de transfert valide et documenté",
+          "description": "Décision d'adéquation, clauses contractuelles types, règles d'entreprise contraignantes ; analyse d'impact du transfert si nécessaire.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Sur quelle garantie reposent les transferts (adéquation, clauses types) ? Une analyse a-t-elle été faite ?"
+        },
+        {
+          "id": "R.36",
+          "name": "Information des personnes sur les transferts",
+          "description": "Mention des transferts et des garanties dans l'information donnée aux personnes.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Les transferts hors UE figurent-ils dans votre politique de confidentialité ?"
+        }
+      ]
+    },
+    {
+      "id": "R-X",
+      "name": "Sécurité des données (art. 32)",
+      "weight": 1.4,
+      "controls": [
+        {
+          "id": "R.37",
+          "name": "Mesures de sécurité adaptées au risque et documentées",
+          "description": "Mesures techniques et organisationnelles proportionnées à l'état de l'art, aux coûts et aux risques.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Quelles mesures de sécurité protègent les données personnelles ? Sont-elles documentées ?"
+        },
+        {
+          "id": "R.38",
+          "name": "Contrôle des accès et habilitations",
+          "description": "Comptes nominatifs, moindre privilège, revue périodique, retrait à chaque départ.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Qui peut accéder aux données ? Les droits sont-ils revus et retirés au départ ?"
+        },
+        {
+          "id": "R.39",
+          "name": "Authentification forte sur les accès sensibles",
+          "description": "Mots de passe robustes et double authentification sur messagerie, administration et accès distants.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "La double authentification est-elle active sur les accès sensibles ?"
+        },
+        {
+          "id": "R.40",
+          "name": "Chiffrement et pseudonymisation",
+          "description": "Chiffrement des postes nomades, supports, sauvegardes et échanges ; pseudonymisation lorsque possible.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Les ordinateurs portables, clés USB, sauvegardes et échanges de données sont-ils chiffrés ?"
+        },
+        {
+          "id": "R.41",
+          "name": "Sauvegarde et capacité de rétablissement",
+          "description": "Sauvegardes régulières, isolées, testées ; restauration en temps utile (art. 32.1.c).",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Les sauvegardes sont-elles testées ? En combien de temps restaure-t-on ?"
+        },
+        {
+          "id": "R.42",
+          "name": "Sécurité des postes, du réseau et des locaux",
+          "description": "Mises à jour, antivirus, pare-feu, protection physique des locaux et du papier.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Les postes sont-ils à jour et protégés ? Les locaux et armoires contenant des données sont-ils sécurisés ?"
+        },
+        {
+          "id": "R.43",
+          "name": "Journalisation et traçabilité des accès",
+          "description": "Journaux des accès aux données et des actions sensibles, conservés et protégés.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Peut-on savoir qui a consulté ou modifié un dossier sensible ?"
+        },
+        {
+          "id": "R.44",
+          "name": "Tests et revue régulière de l'efficacité des mesures",
+          "description": "Audits, scans, tests d'intrusion, revue des mesures (art. 32.1.d).",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "La sécurité est-elle testée ou auditée régulièrement ?"
+        }
+      ]
+    },
+    {
+      "id": "R-V",
+      "name": "Violations de données personnelles (art. 33-34)",
+      "weight": 1.3,
+      "controls": [
+        {
+          "id": "R.45",
+          "name": "Procédure de détection et de gestion des violations",
+          "description": "Rôles, contacts, qualification, réaction, retour d'expérience.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Que se passe-t-il en cas de perte, vol ou fuite de données ? Existe-t-il une procédure écrite ?"
+        },
+        {
+          "id": "R.46",
+          "name": "Notification à la CNIL sous 72 heures",
+          "description": "Notification dans les 72 h après avoir pris connaissance de la violation, sauf absence de risque (art. 33).",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Saurait-on notifier la CNIL dans les 72 h ? Qui le ferait et comment ?"
+        },
+        {
+          "id": "R.47",
+          "name": "Information des personnes concernées en cas de risque élevé",
+          "description": "Communication claire et rapide aux personnes touchées (art. 34).",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Comment informerait-on les personnes si leurs données étaient compromises ?"
+        },
+        {
+          "id": "R.48",
+          "name": "Registre des violations",
+          "description": "Toutes les violations consignées, notifiées ou non, avec effets et mesures prises (art. 33.5).",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Existe-t-il un registre des violations, y compris des incidents mineurs ?"
+        },
+        {
+          "id": "R.49",
+          "name": "Sensibilisation et tests de la procédure",
+          "description": "Personnel formé à signaler, exercices ou simulations.",
+          "criticality": "low",
+          "weight": 0.8,
+          "question": "Le personnel sait-il à qui signaler un incident ? La procédure a-t-elle été testée ?"
+        }
+      ]
+    },
+    {
+      "id": "R-A",
+      "name": "Analyse d'impact et risques (art. 35-36)",
+      "weight": 1.1,
+      "controls": [
+        {
+          "id": "R.50",
+          "name": "Identification des traitements à risque élevé",
+          "description": "Application des critères du CEPD et de la liste CNIL (profilage, grande échelle, données sensibles, surveillance…).",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Avez-vous identifié les traitements susceptibles de présenter un risque élevé ?"
+        },
+        {
+          "id": "R.51",
+          "name": "Analyse d'impact (AIPD) réalisée lorsque requise",
+          "description": "Description, nécessité et proportionnalité, risques, mesures ; avis du DPO (art. 35).",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Une AIPD a-t-elle été réalisée pour ces traitements ? Où est-elle documentée ?"
+        },
+        {
+          "id": "R.52",
+          "name": "Consultation préalable de la CNIL si risque résiduel élevé",
+          "description": "Saisine de la CNIL avant mise en œuvre lorsque le risque reste élevé malgré les mesures (art. 36).",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Une consultation préalable a-t-elle été envisagée pour les risques résiduels ?"
+        },
+        {
+          "id": "R.53",
+          "name": "Revue périodique des AIPD",
+          "description": "Mise à jour lors de changements de traitement ou de risque.",
+          "criticality": "low",
+          "weight": 0.8,
+          "question": "Les AIPD sont-elles revues quand le traitement évolue ?"
+        }
+      ]
+    },
+    {
+      "id": "R-C",
+      "name": "Cas particuliers : site web, prospection, vidéosurveillance, RH",
+      "weight": 1.0,
+      "controls": [
+        {
+          "id": "R.54",
+          "name": "Cookies et traceurs conformes",
+          "description": "Consentement préalable pour les traceurs non essentiels, refus aussi simple que l'acceptation, preuve conservée (art. 82 loi Informatique et Libertés, lignes directrices CNIL).",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Le site dépose-t-il des cookies ou traceurs ? Le bandeau recueille-t-il un vrai consentement avec refus facile ?"
+        },
+        {
+          "id": "R.55",
+          "name": "Politique de confidentialité et mentions légales du site",
+          "description": "Politique complète, accessible et à jour ; mentions légales.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Le site publie-t-il une politique de confidentialité à jour et des mentions légales complètes ?"
+        },
+        {
+          "id": "R.56",
+          "name": "Prospection commerciale encadrée",
+          "description": "Consentement préalable en B2C par voie électronique, information et droit d'opposition en B2B, lien de désinscription.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Comment les fichiers de prospection sont-ils constitués ? Le désabonnement est-il respecté ?"
+        },
+        {
+          "id": "R.57",
+          "name": "Vidéosurveillance et contrôle des salariés encadrés",
+          "description": "Finalité légitime, information des personnes, durée de conservation limitée, accès restreint, consultation des représentants du personnel si applicable.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Y a-t-il des caméras ou un contrôle des salariés (messagerie, géolocalisation) ? L'information et les durées sont-elles conformes ?"
+        },
+        {
+          "id": "R.58",
+          "name": "Données RH : traitement et conservation encadrés",
+          "description": "Dossiers du personnel, recrutement, paie : accès restreint et durées de conservation adaptées.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Les dossiers RH et de recrutement sont-ils protégés et purgés à échéance ?"
+        }
       ]
     }
   ]

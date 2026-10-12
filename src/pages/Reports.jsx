@@ -2,25 +2,40 @@ import { useAuditStore } from '../store/auditStore.js'
 import { useNavigate } from 'react-router-dom'
 import { exportAuditPDF } from '../lib/exportPDF.js'
 import { exportAuditExcel } from '../lib/exportExcel.js'
-import { getScoreColor, getMaturityLevel } from '../lib/scoring.js'
+import { getScoreColor, getMaturityLevel, normalizeDomainScores } from '../lib/scoring.js'
+import { useRef } from 'react'
 import { FileDown, FileText, Table2, ChevronRight } from 'lucide-react'
-import iso27001 from '../data/iso27001.json'
-import nist from '../data/nist.json'
-import rgpd from '../data/rgpd.json'
+import { REFERENTIALS } from '../data/index.js'
 
-const REFERENTIALS = { iso27001, nist, rgpd }
 
 export default function Reports() {
   const { audits, companies } = useAuditStore()
   const navigate = useNavigate()
 
-  const completed = audits.filter(a => a.score !== null)
+  const { exportBackup, importBackup } = useAuditStore.getState()
+  const fileRef = useRef(null)
+  const doExport = () => {
+    const blob = new Blob([exportBackup()], { type: 'application/json' })
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob)
+    a.download = `maj-audit-sauvegarde-${new Date().toISOString().slice(0,10)}.json`; a.click()
+  }
+  const doImport = async (e) => {
+    const f = e.target.files?.[0]; if (!f) return
+    try { const n = importBackup(await f.text()); alert(`${n} audit(s) importé(s)`) } catch (err) { alert(err.message) }
+    e.target.value = ''
+  }
+  const completed = audits.filter(a => a.score != null)
 
   return (
     <div className="space-y-5">
       <div>
         <h1 className="text-2xl font-bold text-white">Rapports</h1>
         <p className="text-sm text-slate-500 mt-1">Exportez vos audits en PDF ou Excel</p>
+        <div className="flex gap-2 mt-3">
+          <button className="btn-ghost text-xs" onClick={doExport}>Sauvegarde JSON (export)</button>
+          <button className="btn-ghost text-xs" onClick={() => fileRef.current?.click()}>Restaurer (import)</button>
+          <input ref={fileRef} type="file" accept="application/json" className="hidden" onChange={doImport} />
+        </div>
       </div>
 
       {completed.length === 0 ? (
@@ -43,7 +58,7 @@ export default function Reports() {
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg flex items-center justify-center text-xs font-mono font-bold flex-shrink-0"
                       style={{ background: (ref?.color || '#64748b') + '20', color: ref?.color || '#64748b' }}>
-                      {audit.referentialId?.toUpperCase().slice(0, 3)}
+                      {ref?.badge || audit.referentialId?.toUpperCase().slice(0, 3)}
                     </div>
                     <div>
                       <div className="font-medium text-white">{audit.name}</div>
@@ -79,9 +94,9 @@ export default function Reports() {
                 </div>
 
                 {/* Domain scores preview */}
-                {audit.domainScores && (
+                {audit.domainScores && Object.keys(audit.domainScores).length > 0 && (
                   <div className="mt-4 pt-4 border-t border-navy-700 grid grid-cols-2 md:grid-cols-3 gap-2">
-                    {Object.values(audit.domainScores).slice(0, 6).map(d => (
+                    {Object.values(normalizeDomainScores(audit.domainScores)).slice(0, 6).map(d => (
                       <div key={d.name} className="flex items-center gap-2">
                         <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: d.color }} />
                         <span className="text-xs text-slate-400 truncate">{d.name}</span>

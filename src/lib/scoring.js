@@ -110,7 +110,18 @@ export function computeCompletion(referential, responses) {
   return { total, answered, pct: total > 0 ? Math.round((answered / total) * 100) : 0 }
 }
 
+// Accepte l'ancien format {nom: score} et le format {id: {name, score, ...}}
+export function normalizeDomainScores(ds) {
+  const out = {}
+  for (const [k, v] of Object.entries(ds || {})) {
+    if (v && typeof v === 'object') out[k] = v
+    else if (typeof v === 'number') out[k] = { name: k, score: v, answered: 0, total: 0, color: getScoreColor(v) }
+  }
+  return out
+}
+
 export function getRadarData(domainScores) {
+  domainScores = normalizeDomainScores(domainScores)
   if (!domainScores || typeof domainScores !== 'object') return []
   const entries = Object.values(domainScores)
   if (!entries || entries.length === 0) return []

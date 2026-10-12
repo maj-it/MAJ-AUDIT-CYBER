@@ -1,12 +1,9 @@
 import { useNavigate } from 'react-router-dom'
 import { useAuditStore } from '../store/auditStore.js'
-import { getScoreColor, getMaturityLevel } from '../lib/scoring.js'
+import { getScoreColor, getMaturityLevel, computeCompletion } from '../lib/scoring.js'
 import { Plus, Trash2, ChevronRight, ClipboardList } from 'lucide-react'
-import iso27001 from '../data/iso27001.json'
-import nist from '../data/nist.json'
-import rgpd from '../data/rgpd.json'
+import { REFERENTIALS } from '../data/index.js'
 
-const REFERENTIALS = { iso27001, nist, rgpd }
 
 export default function AuditList() {
   const { audits, companies, deleteAudit } = useAuditStore()
@@ -38,7 +35,8 @@ export default function AuditList() {
             const ref = REFERENTIALS[audit.referentialId]
             const company = companies.find(c => c.id === audit.companyId)
             const score = audit.score
-            const maturity = score !== null ? getMaturityLevel(score) : null
+            const maturity = score != null ? getMaturityLevel(score) : null
+            const comp = computeCompletion(ref, audit.responses)
 
             return (
               <div key={audit.id}
@@ -47,7 +45,7 @@ export default function AuditList() {
                 <div className="flex items-center gap-4">
                   <div className="w-10 h-10 rounded-lg flex items-center justify-center text-xs font-mono font-bold flex-shrink-0"
                     style={{ background: (ref?.color || '#64748b') + '20', color: ref?.color || '#64748b' }}>
-                    {audit.referentialId?.toUpperCase().slice(0, 3)}
+                    {ref?.badge || audit.referentialId?.toUpperCase().slice(0, 3)}
                   </div>
                   <div>
                     <div className="font-medium text-white text-sm">{audit.name}</div>
@@ -58,13 +56,13 @@ export default function AuditList() {
                 </div>
 
                 <div className="flex items-center gap-4">
-                  {score !== null ? (
+                  {score != null ? (
                     <div className="text-right">
                       <div className="font-mono font-bold text-sm" style={{ color: getScoreColor(score) }}>{score}%</div>
-                      <div className="text-xs text-slate-500">{maturity?.level}</div>
+                      <div className="text-xs text-slate-500">{maturity?.level} · {audit.status === 'completed' ? 'terminé' : `${comp.answered}/${comp.total} réponses`}</div>
                     </div>
                   ) : (
-                    <span className="badge-info">En cours</span>
+                    <span className="badge-info">En cours · 0/{comp.total}</span>
                   )}
                   <button
                     className="p-1.5 text-slate-600 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all"

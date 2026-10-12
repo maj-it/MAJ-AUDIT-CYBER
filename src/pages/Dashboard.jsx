@@ -7,11 +7,8 @@ import {
   RadarChart, Radar, PolarGrid, PolarAngleAxis, ResponsiveContainer,
   BarChart, Bar, XAxis, YAxis, Tooltip, Cell, LineChart, Line, CartesianGrid, Legend
 } from 'recharts'
-import iso27001 from '../data/iso27001.json'
-import nist from '../data/nist.json'
-import rgpd from '../data/rgpd.json'
+import { REFERENTIALS } from '../data/index.js'
 
-const REFERENTIALS = { iso27001, nist, rgpd }
 
 function AnimatedScore({ target, color }) {
   const [val, setVal] = useState(0)
@@ -33,7 +30,7 @@ export default function Dashboard() {
   const { audits, risks } = useAuditStore()
   const navigate = useNavigate()
 
-  const completed = audits.filter(a => a.score !== null)
+  const completed = audits.filter(a => a.status === 'completed' && a.score != null)
   const avgScore = completed.length
     ? Math.round(completed.reduce((acc, a) => acc + (a.score || 0), 0) / completed.length) : 0
   const criticalRisks = risks.filter(r => (r.impact * r.probability) >= 16).length

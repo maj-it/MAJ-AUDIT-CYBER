@@ -1,0 +1,383 @@
+{
+  "id": "nis2",
+  "name": "NIS2 — Directive (UE) 2022/2555",
+  "version": "2022/2555",
+  "description": "Mesures de gestion des risques (art. 21), gouvernance (art. 20) et notification des incidents (art. 23) de la directive NIS2. À compléter avec la transposition nationale applicable.",
+  "color": "#a855f7",
+  "badge": "NIS2",
+  "domains": [
+    {
+      "id": "N-G",
+      "name": "Gouvernance et responsabilité (art. 20)",
+      "weight": 1.2,
+      "controls": [
+        {
+          "id": "N.1",
+          "name": "Périmètre NIS2 : l'entité sait si elle est « essentielle » ou « importante » et si elle doit s'enregistrer",
+          "description": "Qualification de l'entité selon son secteur et sa taille, et démarches auprès de l'autorité nationale compétente (ANSSI en France).",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Savez-vous si l'entreprise entre dans le champ de NIS2 (secteur, taille) ? Une démarche d'enregistrement a-t-elle été faite ?"
+        },
+        {
+          "id": "N.2",
+          "name": "La direction approuve les mesures de gestion des risques de cybersécurité",
+          "description": "Validation formelle des mesures par l'organe de direction (art. 20.1).",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "La direction a-t-elle formellement validé la politique et les mesures de cybersécurité ? Où est la trace ?"
+        },
+        {
+          "id": "N.3",
+          "name": "La direction supervise la mise en œuvre et en répond",
+          "description": "Suivi régulier par la direction (tableau de bord, comité) ; responsabilité en cas de manquement.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "À quelle fréquence la direction examine-t-elle l'état de la cybersécurité ?"
+        },
+        {
+          "id": "N.4",
+          "name": "Les dirigeants sont formés aux risques cyber",
+          "description": "Formation des membres de la direction pour évaluer les risques et pratiques (art. 20.2).",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Les dirigeants ont-ils suivi une formation ou une présentation sur les risques cyber ?"
+        },
+        {
+          "id": "N.5",
+          "name": "Un responsable de la sécurité des SI est désigné avec des moyens dédiés",
+          "description": "RSSI ou référent identifié, avec budget et temps alloués.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Qui est le responsable cybersécurité ? Dispose-t-il d'un budget et de temps dédiés ?"
+        }
+      ]
+    },
+    {
+      "id": "N-R",
+      "name": "Politiques et analyse des risques (art. 21.2.a)",
+      "weight": 1.2,
+      "controls": [
+        {
+          "id": "N.6",
+          "name": "Politique de sécurité des systèmes d'information formalisée",
+          "description": "Politique approuvée, communiquée et révisée périodiquement.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Existe-t-il une politique de sécurité écrite, à jour et diffusée ?"
+        },
+        {
+          "id": "N.7",
+          "name": "Analyse de risques réalisée et revue régulièrement",
+          "description": "Démarche d'analyse des risques couvrant les systèmes et services critiques, avec plan de traitement.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Une analyse de risques a-t-elle été faite ? Date, méthode, plan de traitement ?"
+        },
+        {
+          "id": "N.8",
+          "name": "Inventaire des systèmes, services et données critiques",
+          "description": "Cartographie des actifs essentiels au service et de leurs dépendances.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Dispose-t-on d'une liste à jour des systèmes et données critiques ?"
+        }
+      ]
+    },
+    {
+      "id": "N-I",
+      "name": "Gestion et notification des incidents (art. 21.2.b, art. 23)",
+      "weight": 1.3,
+      "controls": [
+        {
+          "id": "N.9",
+          "name": "Procédure de gestion des incidents documentée",
+          "description": "Rôles, détection, qualification, réponse, retour d'expérience.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Que se passe-t-il en cas d'incident ? Existe-t-il une procédure écrite et un contact d'alerte ?"
+        },
+        {
+          "id": "N.10",
+          "name": "Capacités de détection et de journalisation",
+          "description": "Collecte et conservation des journaux, supervision des événements de sécurité.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Les journaux (serveurs, pare-feu, messagerie) sont-ils conservés et surveillés ?"
+        },
+        {
+          "id": "N.11",
+          "name": "Alerte précoce sous 24 h à l'autorité pour les incidents significatifs",
+          "description": "Capacité à transmettre une alerte précoce dans les 24 heures suivant la prise de connaissance.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "L'entreprise saurait-elle prévenir l'autorité compétente dans les 24 h ? Qui le ferait ?"
+        },
+        {
+          "id": "N.12",
+          "name": "Notification d'incident sous 72 h et rapport final sous un mois",
+          "description": "Notification avec évaluation initiale sous 72 h, rapport final dans le mois (art. 23).",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Les délais de 72 h et d'un mois pour la notification et le rapport final sont-ils connus et organisés ?"
+        },
+        {
+          "id": "N.13",
+          "name": "Exercices et tests de la réponse à incident",
+          "description": "Simulations régulières, retours d'expérience formalisés.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Un exercice de crise ou d'incident a-t-il déjà eu lieu ?"
+        }
+      ]
+    },
+    {
+      "id": "N-C",
+      "name": "Continuité d'activité et gestion de crise (art. 21.2.c)",
+      "weight": 1.2,
+      "controls": [
+        {
+          "id": "N.14",
+          "name": "Plan de continuité d'activité (PCA) et plan de reprise (PRA)",
+          "description": "Plans documentés couvrant les services essentiels, avec objectifs de reprise.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Existe-t-il un plan de continuité / reprise ? Quels sont les délais de reprise visés ?"
+        },
+        {
+          "id": "N.15",
+          "name": "Sauvegardes régulières, hors ligne ou isolées, et testées",
+          "description": "Sauvegardes protégées contre le chiffrement par rançongiciel, avec tests de restauration.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Les sauvegardes sont-elles isolées et une restauration a-t-elle été testée récemment ?"
+        },
+        {
+          "id": "N.16",
+          "name": "Gestion de crise : rôles et communication d'urgence définis",
+          "description": "Cellule de crise, annuaire d'urgence, canaux de communication de secours.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Qui décide et comment communique-t-on en cas de crise ?"
+        }
+      ]
+    },
+    {
+      "id": "N-F",
+      "name": "Sécurité de la chaîne d'approvisionnement (art. 21.2.d, 21.3)",
+      "weight": 1.1,
+      "controls": [
+        {
+          "id": "N.17",
+          "name": "Inventaire des fournisseurs et prestataires critiques",
+          "description": "Liste des prestataires ayant accès au SI ou fournissant des services essentiels.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Connaît-on les prestataires critiques (hébergeur, infogéreur, éditeurs) ?"
+        },
+        {
+          "id": "N.18",
+          "name": "Exigences de sécurité contractualisées avec les fournisseurs",
+          "description": "Clauses sur la sécurité, la notification d'incident, l'audit et la réversibilité.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Les contrats avec les prestataires comportent-ils des exigences de sécurité et d'alerte en cas d'incident ?"
+        },
+        {
+          "id": "N.19",
+          "name": "Évaluation et suivi de la sécurité des fournisseurs",
+          "description": "Évaluation des pratiques de sécurité et des vulnérabilités propres à chaque fournisseur, revue périodique.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "La sécurité des prestataires est-elle évaluée (questionnaire, certification, audit) ?"
+        }
+      ]
+    },
+    {
+      "id": "N-V",
+      "name": "Acquisition, maintenance et gestion des vulnérabilités (art. 21.2.e)",
+      "weight": 1.2,
+      "controls": [
+        {
+          "id": "N.20",
+          "name": "Gestion des correctifs de sécurité",
+          "description": "Mises à jour régulières des systèmes, applications et équipements réseau, avec délais selon la criticité.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Comment et à quelle fréquence applique-t-on les mises à jour de sécurité ? Y a-t-il des systèmes obsolètes ?"
+        },
+        {
+          "id": "N.21",
+          "name": "Veille et traitement des vulnérabilités",
+          "description": "Suivi des alertes (CERT-FR), analyse des vulnérabilités et correction priorisée.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Y a-t-il une veille sur les vulnérabilités qui concernent les équipements utilisés ?"
+        },
+        {
+          "id": "N.22",
+          "name": "Sécurité intégrée à l'acquisition et au développement",
+          "description": "Exigences de sécurité dans les achats et développements, tests avant mise en production.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Des exigences de sécurité sont-elles prévues lors de l'achat ou du développement d'un outil ?"
+        },
+        {
+          "id": "N.23",
+          "name": "Politique de divulgation coordonnée des vulnérabilités",
+          "description": "Point de contact et processus pour recevoir et traiter les signalements (ex. security.txt).",
+          "criticality": "low",
+          "weight": 0.8,
+          "question": "Existe-t-il un moyen pour qu'un tiers signale une faille (adresse dédiée, security.txt) ?"
+        }
+      ]
+    },
+    {
+      "id": "N-E",
+      "name": "Évaluation de l'efficacité des mesures (art. 21.2.f)",
+      "weight": 1.0,
+      "controls": [
+        {
+          "id": "N.24",
+          "name": "Audits et contrôles de sécurité périodiques",
+          "description": "Audits internes ou externes planifiés, suivi des écarts.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Quand le dernier audit ou contrôle de sécurité a-t-il eu lieu ? Quelles actions ont suivi ?"
+        },
+        {
+          "id": "N.25",
+          "name": "Tests d'intrusion et scans de vulnérabilités",
+          "description": "Tests techniques réguliers sur les systèmes exposés.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Des tests d'intrusion ou scans de vulnérabilités ont-ils été réalisés ?"
+        },
+        {
+          "id": "N.26",
+          "name": "Indicateurs de sécurité suivis par la direction",
+          "description": "Tableau de bord d'indicateurs (patchs, incidents, formations, sauvegardes).",
+          "criticality": "low",
+          "weight": 0.8,
+          "question": "Des indicateurs de cybersécurité sont-ils suivis ?"
+        }
+      ]
+    },
+    {
+      "id": "N-H",
+      "name": "Cyberhygiène et formation (art. 21.2.g)",
+      "weight": 1.1,
+      "controls": [
+        {
+          "id": "N.27",
+          "name": "Pratiques de cyberhygiène de base appliquées",
+          "description": "Postes et serveurs protégés, droits limités, antivirus/EDR, filtrage, mots de passe robustes.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Les règles de base (antivirus, mises à jour, mots de passe, droits utilisateurs) sont-elles appliquées partout ?"
+        },
+        {
+          "id": "N.28",
+          "name": "Sensibilisation et formation régulières du personnel",
+          "description": "Programme annuel, campagnes de phishing, formations ciblées selon les rôles.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Le personnel est-il sensibilisé chaque année ? Y a-t-il des tests de phishing ?"
+        }
+      ]
+    },
+    {
+      "id": "N-K",
+      "name": "Cryptographie et chiffrement (art. 21.2.h)",
+      "weight": 1.0,
+      "controls": [
+        {
+          "id": "N.29",
+          "name": "Politique d'usage de la cryptographie",
+          "description": "Règles sur les algorithmes, longueurs de clés et cas d'usage, alignées sur les recommandations ANSSI.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Existe-t-il des règles sur le chiffrement (algorithmes, clés) ?"
+        },
+        {
+          "id": "N.30",
+          "name": "Chiffrement des données en transit et au repos",
+          "description": "TLS à jour pour les flux, chiffrement des postes nomades, supports et sauvegardes sensibles.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Les ordinateurs portables, sauvegardes et échanges sensibles sont-ils chiffrés ?"
+        },
+        {
+          "id": "N.31",
+          "name": "Gestion du cycle de vie des clés et certificats",
+          "description": "Génération, stockage, renouvellement et révocation maîtrisés.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Qui gère les certificats et clés, et comment est suivie leur expiration ?"
+        }
+      ]
+    },
+    {
+      "id": "N-A",
+      "name": "Ressources humaines, contrôle d'accès et actifs (art. 21.2.i)",
+      "weight": 1.2,
+      "controls": [
+        {
+          "id": "N.32",
+          "name": "Gestion des arrivées, mobilités et départs",
+          "description": "Création, modification et suppression des accès liées aux mouvements du personnel.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Que se passe-t-il pour les accès d'une personne qui quitte l'entreprise ?"
+        },
+        {
+          "id": "N.33",
+          "name": "Droits d'accès selon le moindre privilège",
+          "description": "Habilitations limitées au besoin, revues périodiques, comptes d'administration séparés.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Les droits sont-ils limités au besoin ? Qui a des droits d'administrateur ?"
+        },
+        {
+          "id": "N.34",
+          "name": "Gestion des actifs : matériel et logiciels",
+          "description": "Inventaire, propriétaire, cycle de vie et mise au rebut sécurisée.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Dispose-t-on d'un inventaire du matériel et des logiciels ?"
+        }
+      ]
+    },
+    {
+      "id": "N-M",
+      "name": "Authentification forte et communications sécurisées (art. 21.2.j)",
+      "weight": 1.3,
+      "controls": [
+        {
+          "id": "N.35",
+          "name": "Authentification multifacteur (MFA) sur les accès sensibles",
+          "description": "MFA pour les accès distants, la messagerie, les comptes administrateurs et les services cloud.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "La double authentification est-elle active sur la messagerie, le VPN, les comptes admin et le cloud ?"
+        },
+        {
+          "id": "N.36",
+          "name": "Communications voix, vidéo et messagerie sécurisées",
+          "description": "Outils de communication chiffrés et maîtrisés par l'entité.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Quels outils sont utilisés pour échanger des informations sensibles (messagerie, visio) ?"
+        },
+        {
+          "id": "N.37",
+          "name": "Communications d'urgence sécurisées en cas de crise",
+          "description": "Canaux de secours indépendants du SI principal.",
+          "criticality": "low",
+          "weight": 0.8,
+          "question": "Existe-t-il un moyen de communiquer si la messagerie ou le SI sont indisponibles ?"
+        }
+      ]
+    }
+  ]
+}
