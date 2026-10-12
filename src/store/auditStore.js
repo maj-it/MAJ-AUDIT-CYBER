@@ -126,6 +126,52 @@ export const useAuditStore = create((set, get) => ({
     })
   },
 
+  // Preuves issues du scan : proposées (validated:false), appliquées au questionnaire seulement après validation
+  applyScanEvidence: (auditId, evidence) => {
+    set(s => {
+      const audits = s.audits.map(a => {
+        if (a.id !== auditId) return a
+        const cur = a.evidence || {}
+        const next = { ...cur }
+        for (const [c, ev] of Object.entries(evidence)) if (!cur[c]?.validated) next[c] = ev
+        return { ...a, evidence: next, updatedAt: new Date().toISOString() }
+      })
+      const currentAudit = audits.find(a => a.id === auditId)
+      saveToStorage({ ...s, audits })
+      return { audits, currentAudit }
+    })
+  },
+
+  validateEvidence: (auditId, controlId, note) => {
+    set(s => {
+      const audits = s.audits.map(a => {
+        const ev = a.evidence?.[controlId]
+        if (a.id !== auditId || !ev) return a
+        return { ...a, updatedAt: new Date().toISOString(),
+          responses: { ...a.responses, [controlId]: ev.value },
+          notes: { ...a.notes, [controlId]: note },
+          evidence: { ...a.evidence, [controlId]: { ...ev, validated: true, validatedAt: new Date().toISOString() } } }
+      })
+      const currentAudit = audits.find(a => a.id === auditId)
+      saveToStorage({ ...s, audits })
+      return { audits, currentAudit }
+    })
+  },
+
+  rejectEvidence: (auditId, controlId) => {
+    set(s => {
+      const audits = s.audits.map(a => {
+        if (a.id !== auditId || !a.evidence?.[controlId]) return a
+        const evidence = { ...a.evidence }
+        delete evidence[controlId]
+        return { ...a, evidence, updatedAt: new Date().toISOString() }
+      })
+      const currentAudit = audits.find(a => a.id === auditId)
+      saveToStorage({ ...s, audits })
+      return { audits, currentAudit }
+    })
+  },
+
   saveAuditScore: (auditId, score, domainScores, completed = true) => {
     set(s => {
       const audits = s.audits.map(a =>

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuditStore } from '../store/auditStore.js'
 import { searchEntreprises } from '../lib/sirene.js'
+import { isNonDiffusible } from '../lib/review.js'
 import { ShieldCheck, ArrowRight, Building2, Search, Loader2, CheckCircle2 } from 'lucide-react'
 import { REFERENTIALS as REF_MAP, countControls } from '../data/index.js'
 
@@ -44,7 +45,7 @@ export default function AuditNew() {
   const handleSelectSirene = (entreprise) => {
     setSelectedSirene(entreprise)
     setNewCompany({
-      name: entreprise.name,
+      name: isNonDiffusible(entreprise.name) ? '' : entreprise.name, // non diffusible : à saisir à la main
       sector: entreprise.naf_label,
       size: formatEffectif(entreprise.effectif),
       contact: '',

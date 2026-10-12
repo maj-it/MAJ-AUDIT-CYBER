@@ -1,5 +1,5 @@
 import * as XLSX from 'xlsx'
-import { approvedAudit } from './review.js'
+import { approvedAudit, companyLabel } from './review.js'
 import { getMaturityLevel, normalizeDomainScores, computeAuditScore } from './scoring.js'
 import { getAuditor } from './auditor.js'
 
@@ -23,7 +23,8 @@ export function exportAuditExcel(audit, referential, company) {
     ['RAPPORT D\'AUDIT CYBERSÉCURITÉ', '', '', ''],
     ['', '', '', ''],
     ['Référentiel', referential.name, '', ''],
-    ['Entreprise', company?.name || 'N/A', '', ''],
+    ['Entreprise', companyLabel(company), '', ''],
+    ...(company?.siret ? [['SIRET', company.siret, '', '']] : []),
     ['Date', new Date().toLocaleDateString('fr-FR'), '', ''],
     ['Auditeur', `${auditor.name} — ${auditor.org} (${auditor.site})`, '', ''],
     ...(mission.perimetre ? [['Périmètre', mission.perimetre, '', '']] : []),

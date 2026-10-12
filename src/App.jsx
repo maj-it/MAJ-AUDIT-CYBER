@@ -9,6 +9,7 @@ import RiskMap from './pages/RiskMap.jsx'
 import Reports from './pages/Reports.jsx'
 import AIAssistant from './pages/AIAssistant.jsx'
 import Scan from './pages/Scan.jsx'
+import Progress from './pages/Progress.jsx'
 import Login from './pages/Login.jsx'
 import { ollamaChat } from './lib/ollama.js'
 import { supabase, cloudEnabled } from './lib/supabase.js'
@@ -74,6 +75,7 @@ export default function App() {
           <Route path="/risks" element={<RiskMap />} />
           <Route path="/reports" element={<Reports />} />
           <Route path="/scan" element={<Scan />} />
+          <Route path="/progress" element={<Progress />} />
           <Route path="/ai" element={<AIAssistant />} />
         </Routes>
       </Layout>

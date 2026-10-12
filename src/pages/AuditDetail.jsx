@@ -8,12 +8,14 @@ import { exportAuditExcel } from '../lib/exportExcel.js'
 import { RadarChart, Radar, PolarGrid, PolarAngleAxis, ResponsiveContainer } from 'recharts'
 import { Bot, FileDown, ChevronDown, ChevronRight, Info, Loader2, CheckCircle2, AlertCircle } from 'lucide-react'
 import { REFERENTIALS } from '../data/index.js'
+import { evidenceNote } from '../lib/scan.js'
+import CrossCoverage from '../components/CrossCoverage.jsx'
 
 
 export default function AuditDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { audits, companies, updateResponse, saveAuditScore, saveAIAnalysis, saveActionPlan, updateActionItem, removeActionItem } = useAuditStore()
+  const { audits, companies, updateResponse, saveAuditScore, saveAIAnalysis, saveActionPlan, updateActionItem, removeActionItem, validateEvidence, rejectEvidence } = useAuditStore()
 
   const audit = audits.find(a => a.id === id)
   const referential = audit ? REFERENTIALS[audit.referentialId] : null
@@ -59,8 +61,9 @@ export default function AuditDetail() {
   const { globalScore, domainScores, maturity, stats } = computeAuditScore(referential, audit.responses)
   const completion = computeCompletion(referential, audit.responses)
   const radarData = getRadarData(domainScores)
+  const pendingEvidence = Object.entries(audit.evidence || {}).filter(([, ev]) => !ev.validated)
 
-  const aiCtx = () => ({ sector: company?.sector, size: company?.size, perimetre: audit.mission?.perimetre, cloud: !!audit.mission?.cloudConsent })
+  const aiCtx = () => ({ globalScore, sector: company?.sector, size: company?.size, perimetre: audit.mission?.perimetre, cloud: !!audit.mission?.cloudConsent })
 
   const handleAnalyze = async () => {
     setAiLoading(true); setNotice(''); setInfo('')
@@ -93,6 +96,15 @@ export default function AuditDetail() {
     setActionLoading(false)
   }
 
+  // Échéances proposées selon la priorité (P1 30 j, P2 90 j, P3 180 j) ; modifiables ligne par ligne
+  const proposeDueDates = () => {
+    const days = { P1: 30, P2: 90, P3: 180 }
+    ;(audit.actionPlan || []).filter(a => !a.echeance).forEach(a => {
+      const d = new Date(); d.setDate(d.getDate() + (days[a.priorite] || 90))
+      updateActionItem(audit.id, a.id, { echeance: d.toISOString().slice(0, 10) })
+    })
+  }
+
   const handleExplainControl = async (control) => {
     if (explainLoading === control.id) return
     setExplainLoading(control.id)
@@ -109,6 +121,7 @@ export default function AuditDetail() {
     { id: 'audit', label: 'Questionnaire' },
     { id: 'results', label: 'Résultats' },
     { id: 'actions', label: 'Plan d\'Actions' },
+    { id: 'cross', label: 'Autres référentiels' },
     { id: 'analysis', label: 'Analyse IA' },
   ]
 
@@ -177,6 +190,12 @@ export default function AuditDetail() {
       {/* Tab: Questionnaire */}
       {activeTab === 'audit' && (
         <div className="space-y-3">
+          {pendingEvidence.length > 0 && (
+            <div className="flex flex-wrap items-center justify-between gap-2 text-xs bg-cyber-500/10 border border-cyber-500/30 rounded-lg px-3 py-2 text-cyber-300">
+              <span>{pendingEvidence.length} contrôle(s) constaté(s) par scan en attente de validation : ils ne comptent dans le score et les rapports qu'après votre validation.</span>
+              <button className="btn-ghost text-xs" onClick={() => pendingEvidence.forEach(([c, ev]) => validateEvidence(audit.id, c, evidenceNote(ev)))}>Tout valider</button>
+            </div>
+          )}
           {referential.domains.map(domain => {
             const ds = domainScores[domain.id]
             const isOpen = expandedDomain === domain.id
@@ -213,6 +232,9 @@ export default function AuditDetail() {
                         onExplain={() => handleExplainControl(control)}
                         explainLoading={explainLoading === control.id}
                         explanation={controlExplanation?.id === control.id ? controlExplanation : null}
+                        evidence={audit.evidence?.[control.id]}
+                        onValidateEvidence={() => validateEvidence(audit.id, control.id, evidenceNote(audit.evidence[control.id]))}
+                        onRejectEvidence={() => rejectEvidence(audit.id, control.id)}
                       />
                     ))}
                   </div>
@@ -277,10 +299,15 @@ export default function AuditDetail() {
         <div className="space-y-4">
           <div className="flex justify-between items-center">
             <div className="text-sm text-slate-400">Plan d'actions : les suggestions IA doivent être validées pour figurer dans le rapport</div>
+            <div className="flex gap-2">
             <button className="btn-primary flex items-center gap-2 text-xs" onClick={handleActionPlan} disabled={actionLoading}>
               {actionLoading ? <Loader2 size={14} className="animate-spin" /> : <Bot size={14} />}
               {actionLoading ? `IA en cours… ${elapsed}s` : 'Générer le Plan'}
             </button>
+            {(audit.actionPlan || []).some(a => !a.echeance) && (
+              <button className="btn-ghost text-xs" onClick={proposeDueDates}>Proposer des échéances</button>
+            )}
+            </div>
           </div>
           {(audit.actionPlan || []).some(a => a.validated === false) && (
             <div className="flex flex-wrap items-center justify-between gap-2 text-xs bg-yellow-500/10 border border-yellow-500/30 rounded-lg px-3 py-2 text-yellow-300">
@@ -321,7 +348,16 @@ export default function AuditDetail() {
                         </div>
                       </>
                     ) : (
-                      <span className="badge-info text-xs">{action.statut}</span>
+                      <>
+                        <select className="select text-xs w-auto py-0.5" value={action.statut || 'A faire'}
+                          onChange={e => updateActionItem(audit.id, action.id, { statut: e.target.value })}>
+                          <option>A faire</option><option>En cours</option><option>Fait</option>
+                        </select>
+                        <input type="date" className="input text-xs py-0.5 w-auto" value={action.echeance || ''}
+                          onChange={e => updateActionItem(audit.id, action.id, { echeance: e.target.value })} />
+                        {action.echeance && action.statut !== 'Fait' && action.echeance < new Date().toISOString().slice(0, 10) &&
+                          <span className="badge-critical text-xs">En retard</span>}
+                      </>
                     )}
                   </div>
                 </div>
@@ -335,6 +371,8 @@ export default function AuditDetail() {
           )}
         </div>
       )}
+
+      {activeTab === 'cross' && <CrossCoverage referentialId={audit.referentialId} responses={audit.responses} />}
 
       {/* Tab: Analyse IA */}
       {activeTab === 'analysis' && (
@@ -424,9 +462,13 @@ export default function AuditDetail() {
   )
 }
 
-function ControlRow({ control, value, note, onChange, onExplain, explainLoading, explanation }) {
+const EV_LABEL = ['Non implémenté', 'Partiel', 'Implémenté']
+const EV_ICON = { ok: '✓', warn: '⚠', fail: '✗' }
+
+function ControlRow({ control, value, note, onChange, onExplain, explainLoading, explanation, evidence, onValidateEvidence, onRejectEvidence }) {
   const [showNote, setShowNote] = useState(false)
   const [localNote, setLocalNote] = useState(note)
+  useEffect(() => { setLocalNote(note) }, [note])
 
   const matOptions = [
     { v: 0, label: 'Non implémenté', color: 'text-red-400' },
@@ -478,6 +520,33 @@ function ControlRow({ control, value, note, onChange, onExplain, explainLoading,
           </button>
         </div>
       </div>
+
+      {/* Preuve issue du scan */}
+      {evidence && (
+        <div className="ml-3 p-3 bg-navy-800 border border-cyber-500/30 rounded-lg text-xs space-y-1.5">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <span className="text-cyber-400 font-semibold">
+              {evidence.validated ? 'Constaté par scan — validé' : 'Constaté par scan — à valider'}
+              <span className="text-slate-500 font-normal"> · {evidence.domain} · {new Date(evidence.scannedAt).toLocaleDateString('fr-FR')}</span>
+            </span>
+            {!evidence.validated && (
+              <span className="flex items-center gap-2">
+                <span className="text-slate-400">Proposé : <strong className="text-white">{evidence.value} — {EV_LABEL[evidence.value]}</strong></span>
+                <button className="btn-ghost text-xs px-2 py-0.5" onClick={onValidateEvidence}>Valider</button>
+                <button className="btn-ghost text-xs px-2 py-0.5" onClick={onRejectEvidence}>Rejeter</button>
+              </span>
+            )}
+          </div>
+          <ul className="space-y-0.5">
+            {evidence.items.map((it, i) => (
+              <li key={i} className="text-slate-300">
+                <span className={it.status === 'ok' ? 'text-green-400' : it.status === 'fail' ? 'text-red-400' : 'text-yellow-400'}>{EV_ICON[it.status]}</span> {it.title}
+                {it.detail && <span className="text-slate-500"> — {it.detail}</span>}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       {/* Explication IA */}
       {explanation && (

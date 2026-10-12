@@ -1,7 +1,7 @@
 import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
 import { getAuditor } from './auditor.js'
-import { approvedAudit } from './review.js'
+import { approvedAudit, companyLabel } from './review.js'
 import { buildOfflineAnalysis } from './ollama.js'
 import { getMaturityLevel, getScoreColor, computeAuditScore, normalizeDomainScores } from './scoring.js'
 
@@ -39,7 +39,7 @@ function drawBar(doc, x, y, w, h, score, label) {
   doc.setTextColor(255, 255, 255)
   doc.setFontSize(7)
   doc.setFont('helvetica', 'normal')
-  doc.text(label.length > 22 ? label.slice(0, 22) + '…' : label, x, y - 1.5)
+  doc.text(label.length > 70 ? label.slice(0, 70) + '…' : label, x, y - 1.5)
   doc.setTextColor(...color)
   doc.setFont('helvetica', 'bold')
   doc.text(`${score}%`, x + w + 2, y + h - 0.5)
@@ -91,7 +91,11 @@ export function exportAuditPDF(audit, referential, company) {
   }
 
   domainScores = Object.fromEntries(Object.values(normalizeDomainScores(domainScores)).map(d => [d.name, d.score]))
-  if (!aiAnalysis?.resume) aiAnalysis = { ...buildOfflineAnalysis(referential, responses || {}, domainScores), ...(aiAnalysis || {}), resume: buildOfflineAnalysis(referential, responses || {}, domainScores).resume }
+  if (!aiAnalysis?.resume) {
+    // le score global passé en 4e argument garantit le même chiffre sur la couverture et dans le résumé
+    const offline = buildOfflineAnalysis(referential, responses || {}, domainScores, score)
+    aiAnalysis = { ...offline, ...(aiAnalysis || {}), resume: offline.resume }
+  }
   const auditor = getAuditor()
   const mission = audit.mission || {}
   const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
@@ -127,7 +131,7 @@ export function exportAuditPDF(audit, referential, company) {
   // Infos entreprise
   doc.setFontSize(11)
   doc.setTextColor(200, 220, 255)
-  const companyName = (company?.name || "N/A").slice(0, 40)
+  const companyName = companyLabel(company).slice(0, 60)
   doc.text(companyName, 45, 43)
   doc.setFontSize(9)
   doc.setTextColor(100, 130, 180)
@@ -186,6 +190,9 @@ export function exportAuditPDF(audit, referential, company) {
   // ── Résumé exécutif IA ──
   if (aiAnalysis?.resume) {
     doc.setFillColor(15, 32, 68)
+    // la police doit être réglée AVANT splitTextToSize, sinon les lignes sont coupées avec la mauvaise largeur
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(8.5)
     const resumeLines = doc.splitTextToSize(aiAnalysis.resume, W - 50)
     const resumeH = resumeLines.length * 5 + 14
     doc.roundedRect(15, y, W - 30, resumeH, 3, 3, 'F')

@@ -1,96 +1,26 @@
-# 🦉 Easy4Cyber — Plateforme GRC & Audit Cybersécurité
+# MAJ Audit
 
-![Version](https://img.shields.io/badge/version-1.0.0-cyan)
-![Référentiels](https://img.shields.io/badge/référentiels-ISO27001%20%7C%20NIST%20%7C%20RGPD-blue)
-![IA](https://img.shields.io/badge/IA-Qwen2.5--coder%3A7b-green)
-![Stack](https://img.shields.io/badge/stack-React%20%2B%20Vite%20%2B%20Tailwind-orange)
+Plateforme GRC d'audit cybersécurité par **MAJ-IT** (Babette Flore Majeu).
 
-> Plateforme d'audit cybersécurité intelligente permettant d'évaluer la conformité d'une organisation selon les principaux référentiels internationaux, avec analyse IA intégrée.
+- Référentiels : ANSSI TPE (12), ANSSI (42), ISO 27001 (clauses 4-10 + Annexe A, 118), NIST CSF 2.0 (106), RGPD (58), NIS2 (37)
+- Scoring par maturité, plan d'actions, rapports PDF / Excel, sauvegarde JSON
+- Scan externe (ports, en-têtes, TLS, DNS, sous-domaines) avec note A–F
+- Assistant IA : Ollama/Qwen local en priorité, repli par règles, Gemini via proxy serveur (consentement requis). Les suggestions IA doivent être validées avant export.
+- Scan → questionnaire : les constats du scan deviennent des preuves « constaté par scan », à valider par l'auditeur avant d'entrer dans le score et les rapports
+- Autres référentiels : projection indicative des réponses sur ANSSI / ISO 27001 / NIS2 / RGPD / NIST par thème (table `src/data/crosswalk.json`, établie par MAJ-IT, à faire valider)
+- Suivi dans le temps : comparaison de deux audits du même client, contrôles corrigés, plan d'actions avec statuts et échéances
+- Mode SaaS optionnel (Supabase)
 
----
-
-## 🎯 Fonctionnalités
-
-| Module | Description |
-|--------|-------------|
-| 🔐 **Authentification** | Login sécurisé avec gestion des rôles (RSSI, Auditeur) |
-| 📋 **Audits multi-référentiels** | ISO 27001:2022, NIST CSF 2.0, RGPD |
-| 📊 **Scoring automatique** | Score global, par domaine, niveau de maturité (0→100%) |
-| 🤖 **Analyse IA** | Qwen2.5-coder:7b via Ollama — analyse, recommandations, plan d'actions |
-| 🗺️ **Cartographie des risques** | Matrice Impact × Probabilité 5×5 |
-| 📄 **Export PDF** | Rapport professionnel multi-pages avec radar chart et logo |
-| 📊 **Export Excel** | 4 onglets : résumé, réponses, plan d'actions, analyse IA |
-| 🏢 **Recherche entreprises** | Auto-complétion via API Sirene INSEE (SIRET, NAF, adresse) |
-| 💬 **Chatbot flottant** | Assistant IA accessible sur toutes les pages |
-| 📈 **Dashboard RSSI** | KPIs animés, radar, évolution temporelle |
-
----
-
-## 🛠️ Stack Technique
-
-- **Front-end** : React 18 + Vite + Tailwind CSS
-- **State** : Zustand + localStorage
-- **Charts** : Recharts (Radar, Bar, Line)
-- **IA** : Ollama + Qwen2.5-coder:7b (local)
-- **Export** : jsPDF + jspdf-autotable + SheetJS
-- **API** : Sirene INSEE (recherche entreprises)
-
----
-
-## 🚀 Installation
-
-### Prérequis
-- Node.js 18+
-- [Ollama](https://ollama.ai) avec le modèle `qwen2.5-coder:7b`
+## Démarrage
 
 ```bash
-# 1. Clone
-git clone https://github.com/maj-it/easy4cyber.git
-cd easy4cyber
-
-# 2. Install
 npm install
-
-# 3. Lance Ollama
-ollama run qwen2.5-coder:7b
-
-# 4. Démarre l'app
+cp .env.example .env   # puis renseigner les variables nécessaires
 npm run dev
 ```
 
-Ouvre **http://localhost:5173**
+## Sécurité
 
----
-
-## 🔑 Comptes de démonstration
-https://easy4cyber.vercel.app/
-
-| Login | Mot de passe | Rôle |
-|-------|-------------|------|
-| `admin` | `easy4cyber` | RSSI |
-| `auditeur` | `audit2026` | Auditeur |
-
----
-
-## 📐 Référentiels disponibles
-
-- **ISO 27001:2022** — 37 contrôles, 9 domaines
-- **NIST CSF 2.0** — 19 contrôles, 6 fonctions (GV, ID, PR, DE, RS, RC)
-- **RGPD** — 18 contrôles, 5 domaines
-
----
-
-## 📸 Screenshots
-
-> Dashboard RSSI • Questionnaire d'audit • Radar de maturité • Rapport PDF • Cartographie des risques
-
----
-
-## 👤 Auteur
-
-**MAJ-IT** — Freelance Dev & Cybersécurité  
- • [LinkedIn](https://linkedin.com/in/flore-maj)
-
----
-
-*Projet réalisé dans le cadre d'un rattrapage cybersécurité — Flore Majeu -- INSTA Paris 2026*
+- Ne jamais committer `.env`. Les clés (`GEMINI_API_KEY`, `SCAN_TOKEN`) restent côté serveur, sans préfixe `VITE_`.
+- Les comptes de démo n'existent qu'en mode développement.
+- N'auditer et ne scanner que des systèmes pour lesquels une autorisation écrite a été obtenue.

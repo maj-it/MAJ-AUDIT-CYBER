@@ -2,9 +2,216 @@
   "id": "iso27001",
   "name": "ISO 27001:2022",
   "version": "2022",
-  "description": "Système de management de la sécurité de l'information — Annexe A (93 mesures)",
+  "description": "Système de management de la sécurité de l'information — exigences du SMSI (clauses 4 à 10) et Annexe A (93 mesures)",
   "color": "#00c9d4",
   "domains": [
+    {
+      "id": "C",
+      "name": "Système de management (clauses 4 à 10)",
+      "weight": 1.3,
+      "controls": [
+        {
+          "id": "C.4.1",
+          "name": "Contexte de l'organisation",
+          "description": "L'organisation détermine les enjeux externes et internes pertinents pour son SMSI et leurs effets sur ses résultats attendus.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : l'organisation détermine les enjeux externes et internes pertinents pour son SMSI et leurs effets sur ses résultats attendus ?"
+        },
+        {
+          "id": "C.4.2",
+          "name": "Parties intéressées",
+          "description": "Les parties intéressées pertinentes et leurs exigences (dont légales et contractuelles) pour la sécurité de l'information sont déterminées.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les parties intéressées pertinentes et leurs exigences (dont légales et contractuelles) pour la sécurité de l'information sont déterminées ?"
+        },
+        {
+          "id": "C.4.3",
+          "name": "Périmètre du SMSI",
+          "description": "Le périmètre du SMSI est déterminé et documenté, en tenant compte des enjeux, des exigences et des interfaces et dépendances.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : le périmètre du SMSI est déterminé et documenté, en tenant compte des enjeux, des exigences et des interfaces et dépendances ?"
+        },
+        {
+          "id": "C.4.4",
+          "name": "Système de management",
+          "description": "Un SMSI est établi, mis en œuvre, tenu à jour et amélioré en continu.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : un SMSI est établi, mis en œuvre, tenu à jour et amélioré en continu ?"
+        },
+        {
+          "id": "C.5.1",
+          "name": "Leadership et engagement",
+          "description": "La direction démontre son leadership : politique et objectifs compatibles avec la stratégie, ressources, intégration aux processus, promotion de l'amélioration.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : la direction démontre son leadership : politique et objectifs compatibles avec la stratégie, ressources, intégration aux processus, promotion de l'amélioration ?"
+        },
+        {
+          "id": "C.5.2",
+          "name": "Politique de sécurité de l'information",
+          "description": "Une politique de sécurité de l'information est établie, documentée, communiquée et disponible aux parties intéressées.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : une politique de sécurité de l'information est établie, documentée, communiquée et disponible aux parties intéressées ?"
+        },
+        {
+          "id": "C.5.3",
+          "name": "Rôles, responsabilités et autorités",
+          "description": "Les responsabilités et autorités liées à la sécurité de l'information sont attribuées et communiquées, y compris pour rendre compte de la performance du SMSI.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : les responsabilités et autorités liées à la sécurité de l'information sont attribuées et communiquées, y compris pour rendre compte de la performance du SMSI ?"
+        },
+        {
+          "id": "C.6.1.1",
+          "name": "Actions face aux risques et opportunités",
+          "description": "Les risques et opportunités à traiter sont déterminés pour assurer les résultats attendus, prévenir les effets indésirables et améliorer le SMSI.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les risques et opportunités à traiter sont déterminés pour assurer les résultats attendus, prévenir les effets indésirables et améliorer le SMSI ?"
+        },
+        {
+          "id": "C.6.1.2",
+          "name": "Appréciation des risques",
+          "description": "Un processus d'appréciation des risques est défini : critères d'acceptation, identification, analyse, évaluation et priorisation, avec des résultats comparables et reproductibles.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : un processus d'appréciation des risques est défini : critères d'acceptation, identification, analyse, évaluation et priorisation, avec des résultats comparables et reproductibles ?"
+        },
+        {
+          "id": "C.6.1.3",
+          "name": "Traitement des risques et déclaration d'applicabilité",
+          "description": "Un processus de traitement des risques choisit les options, détermine les mesures nécessaires, les compare à l'Annexe A, produit la déclaration d'applicabilité et le plan de traitement approuvé par les propriétaires de risque.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : un processus de traitement des risques choisit les options, détermine les mesures nécessaires, les compare à l'Annexe A, produit la déclaration d'applicabilité et le plan de traitement approuvé par les propriétaires de risque ?"
+        },
+        {
+          "id": "C.6.2",
+          "name": "Objectifs de sécurité et planification",
+          "description": "Des objectifs de sécurité de l'information mesurables sont établis, avec qui, quoi, quand, comment et avec quelles ressources.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : des objectifs de sécurité de l'information mesurables sont établis, avec qui, quoi, quand, comment et avec quelles ressources ?"
+        },
+        {
+          "id": "C.6.3",
+          "name": "Planification des modifications",
+          "description": "Les modifications du SMSI sont planifiées et réalisées de façon maîtrisée.",
+          "criticality": "low",
+          "weight": 0.7,
+          "question": "Où en êtes-vous : les modifications du SMSI sont planifiées et réalisées de façon maîtrisée ?"
+        },
+        {
+          "id": "C.7.1",
+          "name": "Ressources",
+          "description": "Les ressources nécessaires au SMSI sont déterminées et fournies.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les ressources nécessaires au SMSI sont déterminées et fournies ?"
+        },
+        {
+          "id": "C.7.2",
+          "name": "Compétences",
+          "description": "Les compétences nécessaires du personnel agissant sur la performance du SMSI sont déterminées, assurées et conservées sous forme de preuves.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les compétences nécessaires du personnel agissant sur la performance du SMSI sont déterminées, assurées et conservées sous forme de preuves ?"
+        },
+        {
+          "id": "C.7.3",
+          "name": "Sensibilisation",
+          "description": "Les personnes travaillant sous le contrôle de l'organisation connaissent la politique, leur contribution et les conséquences d'une non-conformité.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les personnes travaillant sous le contrôle de l'organisation connaissent la politique, leur contribution et les conséquences d'une non-conformité ?"
+        },
+        {
+          "id": "C.7.4",
+          "name": "Communication",
+          "description": "Les besoins de communication interne et externe liés au SMSI (quoi, quand, avec qui, comment) sont déterminés.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les besoins de communication interne et externe liés au SMSI (quoi, quand, avec qui, comment) sont déterminés ?"
+        },
+        {
+          "id": "C.7.5",
+          "name": "Informations documentées",
+          "description": "Les informations documentées exigées par la norme et nécessaires à l'efficacité du SMSI sont créées, mises à jour, maîtrisées et protégées.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les informations documentées exigées par la norme et nécessaires à l'efficacité du SMSI sont créées, mises à jour, maîtrisées et protégées ?"
+        },
+        {
+          "id": "C.8.1",
+          "name": "Planification et maîtrise opérationnelles",
+          "description": "Les processus nécessaires sont planifiés, mis en œuvre et maîtrisés, y compris les processus externalisés ; les changements sont maîtrisés.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : les processus nécessaires sont planifiés, mis en œuvre et maîtrisés, y compris les processus externalisés ; les changements sont maîtrisés ?"
+        },
+        {
+          "id": "C.8.2",
+          "name": "Appréciation des risques (mise en œuvre)",
+          "description": "Les appréciations des risques sont réalisées à intervalles planifiés ou lors de changements importants, avec conservation des résultats.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : les appréciations des risques sont réalisées à intervalles planifiés ou lors de changements importants, avec conservation des résultats ?"
+        },
+        {
+          "id": "C.8.3",
+          "name": "Traitement des risques (mise en œuvre)",
+          "description": "Le plan de traitement des risques est mis en œuvre et ses résultats sont conservés.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : le plan de traitement des risques est mis en œuvre et ses résultats sont conservés ?"
+        },
+        {
+          "id": "C.9.1",
+          "name": "Surveillance, mesure, analyse et évaluation",
+          "description": "L'organisation détermine ce qui doit être surveillé et mesuré, les méthodes et les échéances, et évalue la performance du SMSI.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : l'organisation détermine ce qui doit être surveillé et mesuré, les méthodes et les échéances, et évalue la performance du SMSI ?"
+        },
+        {
+          "id": "C.9.2",
+          "name": "Audit interne",
+          "description": "Des audits internes sont réalisés à intervalles planifiés selon un programme défini, par des auditeurs objectifs et impartiaux, avec rapports conservés.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : des audits internes sont réalisés à intervalles planifiés selon un programme défini, par des auditeurs objectifs et impartiaux, avec rapports conservés ?"
+        },
+        {
+          "id": "C.9.3",
+          "name": "Revue de direction",
+          "description": "La direction revoit le SMSI à intervalles planifiés, en examinant les éléments d'entrée requis et en documentant les décisions.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : la direction revoit le SMSI à intervalles planifiés, en examinant les éléments d'entrée requis et en documentant les décisions ?"
+        },
+        {
+          "id": "C.10.1",
+          "name": "Amélioration continue",
+          "description": "L'organisation améliore en continu la pertinence, l'adéquation et l'efficacité du SMSI.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : l'organisation améliore en continu la pertinence, l'adéquation et l'efficacité du SMSI ?"
+        },
+        {
+          "id": "C.10.2",
+          "name": "Non-conformités et actions correctives",
+          "description": "En cas de non-conformité, l'organisation réagit, traite les causes, met en œuvre les actions correctives, vérifie leur efficacité et conserve les preuves.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : en cas de non-conformité, l'organisation réagit, traite les causes, met en œuvre les actions correctives, vérifie leur efficacité et conserve les preuves ?"
+        }
+      ]
+    },
     {
       "id": "A5",
       "name": "Mesures organisationnelles",

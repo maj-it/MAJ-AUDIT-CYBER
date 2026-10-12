@@ -2,10 +2,13 @@ import { useState } from 'react'
 import { ShieldCheck, Lock, User, Eye, EyeOff } from 'lucide-react'
 import { supabase, cloudEnabled } from '../lib/supabase.js'
 
-const USERS = [
-  { login: 'admin', password: 'easy4cyber', role: 'RSSI', name: 'Admin RSSI' },
-  { login: 'auditeur', password: 'audit2026', role: 'Auditeur', name: 'Jean Auditeur' },
-]
+// Comptes de démonstration : uniquement en développement local (jamais dans un build de production).
+const USERS = import.meta.env.DEV
+  ? [
+      { login: 'admin', password: 'easy4cyber', role: 'RSSI', name: 'Admin RSSI' },
+      { login: 'auditeur', password: 'audit2026', role: 'Auditeur', name: 'Jean Auditeur' },
+    ]
+  : []
 
 export default function Login({ onLogin }) {
   const [login, setLogin] = useState('')
@@ -122,7 +125,10 @@ export default function Login({ onLogin }) {
             </button>
           )}
 
-          {!cloudEnabled && <div className="mt-5 pt-4 border-t border-navy-700">
+          {!cloudEnabled && USERS.length === 0 && (
+            <div className="mt-4 text-xs text-slate-500 text-center">Aucun mode de connexion configuré (Supabase requis en production).</div>
+          )}
+          {!cloudEnabled && USERS.length > 0 && <div className="mt-5 pt-4 border-t border-navy-700">
             <div className="text-xs text-slate-600 text-center mb-2">Comptes de démonstration</div>
             <div className="grid grid-cols-2 gap-2">
               {USERS.map(u => (

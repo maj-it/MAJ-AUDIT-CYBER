@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useAuditStore } from '../store/auditStore.js'
 import { REFERENTIALS } from '../data/index.js'
-import { runExternalScan, getScanToken, setScanToken, findingToRisk, findingsToResponses } from '../lib/scan.js'
+import { runExternalScan, getScanToken, setScanToken, findingToRisk, findingsToEvidence } from '../lib/scan.js'
 import { Globe, Loader2, ShieldAlert, CheckCircle2, AlertTriangle, XCircle, Info, Download, Trash2, Plus } from 'lucide-react'
 
 const SEV_BADGE = { critical: 'badge-critical', high: 'badge-high', medium: 'badge-medium', low: 'badge-low', info: 'badge-info' }
@@ -15,7 +15,7 @@ const STATUS_ICON = {
 const isLocal = typeof window !== 'undefined' && ['localhost', '127.0.0.1'].includes(window.location.hostname)
 
 export default function Scan() {
-  const { scans, addScan, deleteScan, addRisk, audits, companies, updateResponse } = useAuditStore()
+  const { scans, addScan, deleteScan, addRisk, audits, companies, applyScanEvidence } = useAuditStore()
   const [domain, setDomain] = useState('')
   const [authorized, setAuthorized] = useState(false)
   const [ports, setPorts] = useState(false)
@@ -48,10 +48,10 @@ export default function Scan() {
   }
 
   const audit = audits.find(a => a.id === auditId)
-  const mapping = audit && result ? findingsToResponses(result.findings, REFERENTIALS[audit.referentialId]) : {}
+  const mapping = audit && result ? findingsToEvidence(result.findings, REFERENTIALS[audit.referentialId], result) : {}
   const applyToAudit = () => {
-    Object.entries(mapping).forEach(([cid, { value, note }]) => updateResponse(audit.id, cid, value, note))
-    setNotice(`${Object.keys(mapping).length} contrôle(s) de l'audit « ${audit.name} » pré-rempli(s) depuis le scan.`)
+    applyScanEvidence(audit.id, mapping)
+    setNotice(`${Object.keys(mapping).length} preuve(s) du scan transmises à l'audit « ${audit.name} » : à valider dans le questionnaire.`)
   }
 
   const exportJson = () => {
@@ -146,7 +146,7 @@ export default function Scan() {
               </select>
               {audit && (
                 <button className="btn-primary text-xs" onClick={applyToAudit} disabled={!Object.keys(mapping).length}>
-                  Pré-remplir {Object.keys(mapping).length} contrôle(s)
+                  Envoyer {Object.keys(mapping).length} preuve(s) à l'audit
                 </button>
               )}
             </div>

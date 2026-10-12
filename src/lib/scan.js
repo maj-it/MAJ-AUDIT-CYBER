@@ -30,6 +30,25 @@ export function findingToRisk(f, domain) {
   }
 }
 
+// Constats → preuves par contrôle, à valider par l'auditeur (jamais prises en compte automatiquement)
+export function findingsToEvidence(findings, referential, scan) {
+  const map = findingsToResponses(findings, referential)
+  const out = {}
+  for (const [c, { value }] of Object.entries(map)) {
+    const items = findings
+      .filter(f => f.status !== 'info' && (f.controls || []).includes(c))
+      .map(f => ({ title: f.title, status: f.status, detail: String(f.detail || '').slice(0, 300) }))
+    out[c] = { source: 'scan', domain: scan?.domain || '', scannedAt: scan?.scannedAt || new Date().toISOString(), value, items, validated: false }
+  }
+  return out
+}
+
+export const evidenceNote = (ev) => {
+  const d = ev.scannedAt ? new Date(ev.scannedAt).toLocaleDateString('fr-FR') : ''
+  const bad = ev.items.filter(i => i.status !== 'ok').map(i => i.title)
+  return `Constaté par scan externe de ${ev.domain} le ${d} : ${bad.length ? bad.join(' ; ') : 'aucun écart détecté'}`
+}
+
 // Constats → valeurs du questionnaire (0 non implémenté, 1 partiel, 2 implémenté)
 // Un contrôle n'est coché "implémenté" que si TOUS ses constats sont OK.
 export function findingsToResponses(findings, referential) {

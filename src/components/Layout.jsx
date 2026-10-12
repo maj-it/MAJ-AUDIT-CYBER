@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import { useEffect, useState as useS } from 'react'
 import { aiStatus } from '../lib/ollama.js'
-import { LayoutDashboard, ClipboardList, Plus, AlertTriangle, FileText, Bot, Menu, X, LogOut, Globe } from 'lucide-react'
+import { LayoutDashboard, ClipboardList, Plus, AlertTriangle, FileText, Bot, Menu, X, LogOut, Globe, TrendingUp } from 'lucide-react'
 import { useState } from 'react'
 
 const NAV = [
@@ -9,6 +9,7 @@ const NAV = [
   { to: '/audits', icon: ClipboardList, label: 'Audits' },
   { to: '/audits/new', icon: Plus, label: 'Nouvel Audit' },
   { to: '/scan', icon: Globe, label: 'Scan externe' },
+  { to: '/progress', icon: TrendingUp, label: 'Suivi dans le temps' },
   { to: '/risks', icon: AlertTriangle, label: 'Cartographie Risques' },
   { to: '/reports', icon: FileText, label: 'Rapports' },
   { to: '/ai', icon: Bot, label: 'Assistant IA' },
