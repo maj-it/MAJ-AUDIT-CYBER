@@ -2,7 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { useAuditStore } from '../store/auditStore.js'
 import { computeAuditScore, computeCompletion, getMaturityLevel, getScoreColor, getRadarData, criticityBadge, criticityLabel, MATURITY_LABELS } from '../lib/scoring.js'
-import { analyzeAuditResponses, generateActionPlan, explainControl } from '../lib/ollama.js'
+import { analyzeAuditResponses, generateActionPlan, explainControl, buildOfflineActionPlan, getLastNote } from '../lib/ollama.js'
 import { exportAuditPDF } from '../lib/exportPDF.js'
 import { exportAuditExcel } from '../lib/exportExcel.js'
 import { RadarChart, Radar, PolarGrid, PolarAngleAxis, ResponsiveContainer } from 'recharts'
@@ -25,7 +25,17 @@ export default function AuditDetail() {
   const [controlExplanation, setControlExplanation] = useState(null)
   const [explainLoading, setExplainLoading] = useState(null)
   const [notice, setNotice] = useState('')
+  const [info, setInfo] = useState('')
+  const [elapsed, setElapsed] = useState(0)
   const [activeTab, setActiveTab] = useState('audit') // audit | results | actions | analysis
+
+  // Chrono affiché pendant les générations IA (l'IA locale sur CPU peut prendre plusieurs minutes)
+  useEffect(() => {
+    if (!actionLoading && !aiLoading) { setElapsed(0); return }
+    const t0 = Date.now()
+    const t = setInterval(() => setElapsed(Math.round((Date.now() - t0) / 1000)), 1000)
+    return () => clearInterval(t)
+  }, [actionLoading, aiLoading])
 
   // Sauvegarde continue du score (hook déclaré avant tout return conditionnel)
   useEffect(() => {
@@ -53,12 +63,13 @@ export default function AuditDetail() {
   const aiCtx = () => ({ sector: company?.sector, size: company?.size, perimetre: audit.mission?.perimetre, cloud: !!audit.mission?.cloudConsent })
 
   const handleAnalyze = async () => {
-    setAiLoading(true)
+    setAiLoading(true); setNotice(''); setInfo('')
     try {
       const flatScores = Object.fromEntries(Object.values(domainScores).map(d => [d.name, d.score]))
       const analysis = await analyzeAuditResponses(referential, audit.responses, flatScores, aiCtx())
       saveAIAnalysis(audit.id, analysis)
       setActiveTab('analysis')
+      setInfo(getLastNote())
     } catch (e) {
       setNotice('Analyse impossible : ' + e.message)
     }
@@ -66,11 +77,16 @@ export default function AuditDetail() {
   }
 
   const handleActionPlan = async () => {
-    setActionLoading(true)
+    setActionLoading(true); setNotice(''); setInfo('')
     try {
+      // Le plan par règles s'affiche tout de suite ; l'IA l'enrichit ensuite si elle répond à temps
+      if (!(audit.actionPlan || []).length) {
+        saveActionPlan(audit.id, buildOfflineActionPlan(referential, audit.responses).map(b => ({ ...b, validated: true })))
+      }
+      setActiveTab('actions')
       const plan = await generateActionPlan(referential, audit.responses, aiCtx())
       saveActionPlan(audit.id, plan)
-      setActiveTab('actions')
+      setInfo(getLastNote())
     } catch (e) {
       setNotice('Plan d\'actions impossible : ' + e.message)
     }
@@ -99,6 +115,7 @@ export default function AuditDetail() {
   return (
     <div className="space-y-5">
       {notice && <div className="text-sm text-red-400 bg-red-500/10 border border-red-500/30 rounded-lg px-3 py-2">{notice}</div>}
+      {info && <div className="text-sm text-yellow-300 bg-yellow-500/10 border border-yellow-500/30 rounded-lg px-3 py-2">{info}</div>}
       {/* Header */}
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
@@ -262,7 +279,7 @@ export default function AuditDetail() {
             <div className="text-sm text-slate-400">Plan d'actions : les suggestions IA doivent être validées pour figurer dans le rapport</div>
             <button className="btn-primary flex items-center gap-2 text-xs" onClick={handleActionPlan} disabled={actionLoading}>
               {actionLoading ? <Loader2 size={14} className="animate-spin" /> : <Bot size={14} />}
-              Générer le Plan
+              {actionLoading ? `IA en cours… ${elapsed}s` : 'Générer le Plan'}
             </button>
           </div>
           {(audit.actionPlan || []).some(a => a.validated === false) && (

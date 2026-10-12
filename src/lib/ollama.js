@@ -15,6 +15,9 @@ const DEFAULTS = {
 import { getScanToken } from './scan.js'
 
 let lastEngine = 'local'
+let lastNote = ''
+// Message d'information sur la dernière génération (ex. repli sur les règles) ; '' si l'IA a répondu
+export const getLastNote = () => lastNote
 export const getLastEngine = () => lastEngine
 
 export function getAIConfig() {
@@ -90,7 +93,7 @@ async function ollamaRequest(messages, onChunk) {
   const cfg = getAIConfig()
   const model = await resolveModel(cfg)
   const ctrl = new AbortController()
-  const timeout = setTimeout(() => ctrl.abort(), 180000)
+  const timeout = setTimeout(() => ctrl.abort(), Number(import.meta.env.VITE_OLLAMA_TIMEOUT_MS) || 150000)
   try {
     const response = await fetch(`${cfg.ollamaBase}/api/chat`, {
       method: 'POST',
@@ -269,10 +272,14 @@ SCORE GLOBAL : ${Object.values(domainScores).length ? Math.round(Object.values(d
 Réponds UNIQUEMENT avec ce JSON (sans markdown) :
 {"resume":"2-3 phrases","points_forts":["..."],"faiblesses_critiques":["..."],"niveau_maturite":"Initial|Répétable|Défini|Géré|Optimisé","risque_global":"Critique|Élevé|Moyen|Faible","recommandations":[{"priorite":"P1","action":"...","delai":"...","impact":"..."}]}`
 
+  lastNote = ''
   try {
     const parsed = extractJSON(await ollamaChat([{ role: 'user', content: prompt }], null, { cloud: !!ctx.cloud }))
     if (parsed && parsed.resume) return { ...offline, ...parsed, source: lastEngine === 'cloud' ? 'ia-cloud' : 'ia-local', validated: false }
-  } catch {}
+    lastNote = 'Réponse de l\'IA inexploitable : synthèse générée par les règles.'
+  } catch (e) {
+    lastNote = `IA indisponible ou trop lente (${String(e?.message || e).slice(0, 90)}) : synthèse générée par les règles.`
+  }
   return { ...offline, validated: true }
 }
 
@@ -307,7 +314,10 @@ function contextLine(ctx = {}) {
 
 export async function generateActionPlan(referential, responses, ctx = {}) {
   const base = buildOfflineActionPlan(referential, responses).map(b => ({ ...b, validated: true }))
+  lastNote = ''
   if (!base.length) return base
+  // L'IA locale (souvent sur CPU) ne reformule que les 5 actions les plus prioritaires : plus rapide, plus fiable
+  const head = base.slice(0, 5)
   const prompt = `Consultant GRC. Reformule et complète ce plan d'actions pour l'audit ${referential.name}.
 ${contextLine(ctx)}
 Garde exactement les mêmes champs "id", "controle", "priorite", "delai". Rends "action" concrète (1-2 phrases, réaliste pour la taille du client) et ajuste "responsable", "effort", "cout".
@@ -315,7 +325,7 @@ Valeurs possibles : responsable = RSSI|DSI|DPO|Direction|RH|Prestataire IT ; eff
 N'invente aucun identifiant : n'utilise que ceux fournis.
 
 PLAN :
-${JSON.stringify(base.map(({ id, controle, action, priorite, delai }) => ({ id, controle, action, priorite, delai })))}
+${JSON.stringify(head.map(({ id, controle, action, priorite, delai }) => ({ id, controle, action, priorite, delai })))}
 
 Réponds UNIQUEMENT avec le tableau JSON.`
   try {
@@ -338,6 +348,9 @@ Réponds UNIQUEMENT avec le tableau JSON.`
       }
       if (ai.size) return base.map(b => ai.get(b.id) || b) // priorité, délai et contrôle restent ceux des règles
     }
-  } catch {}
+    lastNote = 'Réponse de l\'IA inexploitable : plan généré par les règles.'
+  } catch (e) {
+    lastNote = `IA indisponible ou trop lente (${String(e?.message || e).slice(0, 90)}) : plan généré par les règles.`
+  }
   return base
 }

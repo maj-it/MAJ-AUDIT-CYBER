@@ -25,7 +25,14 @@ export default defineConfig(({ mode }) => {
         '/ollama': {
           target: process.env.OLLAMA_URL || 'http://localhost:11434',
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/ollama/, '')
+          rewrite: (path) => path.replace(/^\/ollama/, ''),
+          // Ollama renvoie 403 si l'Origin du navigateur n'est pas dans OLLAMA_ORIGINS : on le retire.
+          configure: (proxy) => {
+            proxy.on('proxyReq', (proxyReq) => {
+              proxyReq.removeHeader('origin')
+              proxyReq.removeHeader('referer')
+            })
+          }
         }
       }
     }
