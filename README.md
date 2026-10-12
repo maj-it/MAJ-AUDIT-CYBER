@@ -21,3 +21,4 @@ npm run dev
 - Ne jamais committer `.env`. Les clés (`GEMINI_API_KEY`, `SCAN_TOKEN`) restent côté serveur, sans préfixe `VITE_`.
 - Les comptes de démo n'existent qu'en mode développement.
 - N'auditer et ne scanner que des systèmes pour lesquels une autorisation écrite a été obtenue.
+# maj-audit
