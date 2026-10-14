@@ -136,6 +136,9 @@ async function ollamaRequest(messages, onChunk) {
   }
 }
 
+// Démo publique (données fictives) : le secours cloud est autorisé sans consentement de mission
+export const DEMO_CLOUD = import.meta.env.VITE_DEMO_MODE === 'true'
+
 // opts.cloud : autorise le secours cloud (uniquement si la mission l'a consenti)
 export async function ollamaChat(messages, onChunk = null, opts = {}) {
   const cfg = getAIConfig()
@@ -147,7 +150,7 @@ export async function ollamaChat(messages, onChunk = null, opts = {}) {
   } catch (e) {
     ollamaError = e
   }
-  if (opts.cloud) {
+  if (opts.cloud || DEMO_CLOUD) {
     const result = await geminiChat(messages)
     lastEngine = 'cloud'
     if (onChunk) onChunk(result, result)

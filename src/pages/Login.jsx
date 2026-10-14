@@ -54,6 +54,7 @@ export default function Login({ onLogin }) {
 
       <div className="w-full max-w-md relative">
         <div className="text-center mb-8">
+          <img src="/logo.svg" alt="" className="w-16 h-16 mx-auto mb-3" />
           <h1 className="text-3xl font-bold text-white">MAJ Audit</h1>
           <p className="text-slate-500 text-sm mt-1 font-mono">Plateforme GRC & Audit Cybersécurité</p>
           <div className="flex items-center justify-center gap-2 mt-3">

@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import { useEffect, useState as useS } from 'react'
-import { aiStatus } from '../lib/ollama.js'
+import { aiStatus, DEMO_CLOUD } from '../lib/ollama.js'
+import { getScanToken, setScanToken } from '../lib/scan.js'
 import { LayoutDashboard, ClipboardList, Plus, AlertTriangle, FileText, Bot, Menu, X, LogOut, Globe, TrendingUp } from 'lucide-react'
 import { useState } from 'react'
 
@@ -43,6 +44,8 @@ export default function Layout({ children, user, onLogout, sync }) {
 
 function SidebarContent({ user, onLogout, onClose, sync }) {
   const [ai, setAi] = useS(null)
+  const [token, setToken] = useS(getScanToken())
+  const remote = typeof window !== 'undefined' && !['localhost', '127.0.0.1'].includes(window.location.hostname)
   useEffect(() => {
     let alive = true
     const tick = () => aiStatus().then(s => alive && setAi(s))
@@ -53,9 +56,10 @@ function SidebarContent({ user, onLogout, onClose, sync }) {
     <>
       <div className="px-5 py-5 border-b border-navy-700 flex items-center justify-between">
         <div className="flex items-center gap-2.5">
+          <img src="/logo.svg" alt="" className="w-8 h-8" />
           <div>
             <div className="font-bold text-white text-sm leading-tight">MAJ Audit</div>
-            <div className="text-xs text-slate-500 font-mono">Audit & Conformité</div>
+            <div className="text-[10px] text-slate-500 font-mono tracking-wide whitespace-nowrap">Audit & Conformité</div>
           </div>
         </div>
         {onClose && <button onClick={onClose} className="text-slate-400 md:hidden"><X size={18} /></button>}
@@ -86,9 +90,15 @@ function SidebarContent({ user, onLogout, onClose, sync }) {
         </div>
         <div className="mt-3 px-2">
           <div className="text-xs text-slate-600 font-mono">v1.1 • MAJ-IT</div>
-          <div className={`text-xs font-mono mt-1 ${ai?.ollama ? 'text-green-400' : 'text-slate-500'}`} title={ai?.models?.join(', ') || ''}>
-            ● {ai == null ? 'IA…' : ai.ollama ? `IA locale : ${ai.modelInstalled ? ai.model : (ai.models.find(n => /^qwen/i.test(n)) || ai.models[0] || 'aucun modèle')}` : 'IA hors-ligne (mode règles)'}
+          <div className={`text-xs font-mono mt-1 ${ai?.ollama || (DEMO_CLOUD && token) ? 'text-green-400' : 'text-slate-500'}`} title={ai?.models?.join(', ') || ''}>
+            ● {ai == null ? 'IA…' : ai.ollama ? `IA locale : ${ai.modelInstalled ? ai.model : (ai.models.find(n => /^qwen/i.test(n)) || ai.models[0] || 'aucun modèle')}` : (DEMO_CLOUD && token) ? 'IA cloud (jeton défini)' : 'IA hors-ligne (mode règles)'}
           </div>
+          {remote && (
+            <div className="mt-2">
+              <input type="password" className="input text-xs py-1" placeholder="Jeton d'accès IA / scan" value={token}
+                onChange={e => { setToken(e.target.value); setScanToken(e.target.value.trim()) }} />
+            </div>
+          )}
           {sync && <div className={`text-xs font-mono mt-1 ${sync.state === 'error' ? 'text-red-400' : sync.state === 'syncing' ? 'text-yellow-400' : 'text-green-400'}`} title={sync.error || ''}>
             ● {sync.state === 'error' ? 'Synchro en erreur' : sync.state === 'syncing' ? 'Synchronisation…' : 'Cloud synchronisé'}
           </div>}

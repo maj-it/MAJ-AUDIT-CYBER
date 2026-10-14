@@ -40,7 +40,7 @@ export const useAuditStore = create((set, get) => ({
     const company = { id: 'demo-tpe', name: 'Atelier Durand (exemple fictif)', sector: 'Artisanat', size: '8 employés', contact: 'contact@exemple.invalid' }
     const R = { 'H.2': 1, 'H.4': 1, 'H.8': 2, 'H.10': 1, 'H.12': 0, 'H.13': 0, 'H.29': 1, 'H.20': 1, 'H.24': 2, 'H.34': 1, 'H.37': 2, 'H.40': 0 }
     const N = { 'H.12': 'Box et imprimante en configuration usine.', 'H.13': 'Pas de double authentification sur la messagerie.', 'H.40': 'Aucune procédure en cas d\'incident.', 'H.37': 'Sauvegarde hebdomadaire sur disque externe, restauration jamais testée.' }
-    const audit = { id: 'demo-audit', companyId: company.id, referentialId: 'anssi-tpe', name: 'Audit ANSSI TPE — exemple', mission: { perimetre: 'Ensemble du SI (données fictives)' },
+    const audit = { id: 'demo-audit', companyId: company.id, referentialId: 'anssi-tpe', name: 'Audit ANSSI TPE — exemple', mission: { perimetre: 'Ensemble du SI (données fictives)', cloudConsent: true },
       status: 'in_progress', createdAt: now, updatedAt: now, responses: R, notes: N, score: null, domainScores: {}, aiAnalysis: null, actionPlan: [] }
     set(s => {
       const companies = [...s.companies, company], audits = [...s.audits, audit]
