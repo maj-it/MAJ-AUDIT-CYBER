@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
-import { ollamaChat, aiStatus } from '../lib/ollama.js'
+import { ollamaChat, aiStatus, DEMO_CLOUD } from '../lib/ollama.js'
+import { getScanToken } from '../lib/scan.js'
 import { Bot, Send, Loader2, User, Trash2 } from 'lucide-react'
 
 const SYSTEM_PROMPT = `Tu es un expert en cybersécurité et conformité GRC (Governance, Risk & Compliance). 
@@ -20,6 +21,7 @@ const QUICK_PROMPTS = [
 export default function AIAssistant() {
   const [ai, setAi] = useState(null)
   useEffect(() => { aiStatus().then(setAi) }, [])
+  const cloudReady = DEMO_CLOUD && !!getScanToken()
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
@@ -63,7 +65,7 @@ export default function AIAssistant() {
       const up = (await aiStatus()).ollama
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: `❌ ${e?.message || 'IA indisponible'}\n${up ? 'Ollama répond mais la requête a échoué (modèle absent ou trop lent ?).' : 'Ollama est injoignable depuis l\'application (tester : curl localhost:11434/api/tags).'}`
+        content: `❌ ${e?.message || 'IA indisponible'}\n${DEMO_CLOUD ? (getScanToken() ? '' : 'Renseignez le jeton d\'accès dans la barre latérale.') : up ? 'Ollama répond mais la requête a échoué (modèle absent ou trop lent ?).' : 'Ollama est injoignable depuis l\'application (tester : curl localhost:11434/api/tags).'}`
       }])
     }
 
@@ -83,8 +85,8 @@ export default function AIAssistant() {
         <div>
           <h1 className="text-2xl font-bold text-white">Assistant IA Cybersécurité</h1>
           <div className="flex items-center gap-2 mt-1">
-            <div className={`w-2 h-2 rounded-full ${ai?.ollama ? 'bg-green-400 animate-pulse' : 'bg-red-400'}`} />
-            <span className="text-xs text-slate-500 font-mono">{ai == null ? '…' : ai.ollama ? `${ai.modelInstalled ? ai.model : (ai.models.find(n => /^qwen/i.test(n)) || ai.models[0] || 'aucun modèle')} via Ollama` : 'Ollama injoignable'}</span>
+            <div className={`w-2 h-2 rounded-full ${ai?.ollama || cloudReady ? 'bg-green-400 animate-pulse' : 'bg-red-400'}`} />
+            <span className="text-xs text-slate-500 font-mono">{ai == null ? '…' : ai.ollama ? `${ai.modelInstalled ? ai.model : (ai.models.find(n => /^qwen/i.test(n)) || ai.models[0] || 'aucun modèle')} via Ollama` : cloudReady ? 'IA cloud (Claude) · données anonymisées' : 'Ollama injoignable'}</span>
           </div>
         </div>
         <button className="btn-ghost flex items-center gap-2 text-xs" onClick={() => setMessages([messages[0]])}>

@@ -49,7 +49,11 @@ export async function handleAi(req, res, { requireToken = false } = {}) {
       if (!merged.length) return send(res, 400, { error: 'Aucun message utilisateur.' })
       const r = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-api-key': anthropicKey, 'anthropic-version': '2023-06-01' },
+        headers: {
+          'Content-Type': 'application/json', 'x-api-key': anthropicKey, 'anthropic-version': '2023-06-01',
+          // Clé non rattachée à un workspace : l'API exige alors l'identifiant du workspace à utiliser
+          ...(process.env.ANTHROPIC_WORKSPACE_ID ? { 'anthropic-workspace-id': process.env.ANTHROPIC_WORKSPACE_ID } : {})
+        },
         body: JSON.stringify({
           model: process.env.ANTHROPIC_MODEL || 'claude-sonnet-5-5',
           max_tokens: 2048,
