@@ -1,0 +1,70 @@
+{
+  "id": "nist",
+  "name": "NIST CSF 2.0",
+  "version": "2.0",
+  "description": "NIST Cybersecurity Framework — Identify, Protect, Detect, Respond, Recover",
+  "color": "#6366f1",
+  "domains": [
+    {
+      "id": "GV",
+      "name": "Gouverner (Govern)",
+      "weight": 1.2,
+      "controls": [
+        { "id": "GV.OC", "name": "Contexte organisationnel", "description": "La mission, les parties prenantes, les dépendances et les exigences légales/réglementaires sont comprises et informent la stratégie cybersécurité.", "criticality": "high", "weight": 1.3 },
+        { "id": "GV.RM", "name": "Stratégie de gestion des risques", "description": "Les priorités, les contraintes, les tolérances au risque et les hypothèses de l'organisation sont établies, communiquées et utilisées.", "criticality": "high", "weight": 1.5 },
+        { "id": "GV.RR", "name": "Rôles et responsabilités", "description": "Les rôles, responsabilités et autorités en matière de cybersécurité sont établis, communiqués, compris et appliqués.", "criticality": "high", "weight": 1.3 },
+        { "id": "GV.PO", "name": "Politiques", "description": "Les politiques de cybersécurité de l'organisation sont établies, communiquées et appliquées.", "criticality": "high", "weight": 1.3 }
+      ]
+    },
+    {
+      "id": "ID",
+      "name": "Identifier (Identify)",
+      "weight": 1.3,
+      "controls": [
+        { "id": "ID.AM", "name": "Gestion des actifs", "description": "Les actifs (données, matériel, logiciel, systèmes, installations, services, personnes) qui permettent à l'organisation d'atteindre ses objectifs sont identifiés et gérés.", "criticality": "high", "weight": 1.5 },
+        { "id": "ID.RA", "name": "Évaluation des risques", "description": "L'organisation comprend les risques de cybersécurité liés aux opérations, actifs et individus.", "criticality": "critical", "weight": 2.0 },
+        { "id": "ID.IM", "name": "Amélioration", "description": "Les améliorations aux processus de cybersécurité de l'organisation sont identifiées sur la base des leçons tirées des activités actuelles et précédentes.", "criticality": "medium", "weight": 1.0 }
+      ]
+    },
+    {
+      "id": "PR",
+      "name": "Protéger (Protect)",
+      "weight": 1.4,
+      "controls": [
+        { "id": "PR.AA", "name": "Gestion des identités et des accès", "description": "L'accès aux actifs physiques et logiques est limité aux utilisateurs, services et matériels autorisés.", "criticality": "critical", "weight": 2.0 },
+        { "id": "PR.AT", "name": "Sensibilisation et formation", "description": "Le personnel et les partenaires de l'organisation reçoivent une sensibilisation et une formation en cybersécurité.", "criticality": "high", "weight": 1.3 },
+        { "id": "PR.DS", "name": "Sécurité des données", "description": "Les données sont gérées conformément à la stratégie de risque de l'organisation pour protéger la confidentialité, l'intégrité et la disponibilité.", "criticality": "critical", "weight": 2.0 },
+        { "id": "PR.IR", "name": "Résilience de l'infrastructure", "description": "Les réseaux et l'infrastructure sont protégés de manière à être résilients.", "criticality": "high", "weight": 1.5 },
+        { "id": "PR.PS", "name": "Sécurité de la plateforme", "description": "Le matériel, les logiciels et les services sont gérés conformément à la stratégie de risque.", "criticality": "high", "weight": 1.3 }
+      ]
+    },
+    {
+      "id": "DE",
+      "name": "Détecter (Detect)",
+      "weight": 1.3,
+      "controls": [
+        { "id": "DE.AE", "name": "Analyse des événements", "description": "Les anomalies, indicateurs de compromission et autres événements potentiellement néfastes sont analysés.", "criticality": "high", "weight": 1.5 },
+        { "id": "DE.CM", "name": "Surveillance continue", "description": "Les actifs sont surveillés pour identifier les anomalies, indicateurs de compromission et autres événements potentiellement néfastes.", "criticality": "high", "weight": 1.5 }
+      ]
+    },
+    {
+      "id": "RS",
+      "name": "Répondre (Respond)",
+      "weight": 1.2,
+      "controls": [
+        { "id": "RS.MA", "name": "Gestion des incidents", "description": "Les réponses aux incidents détectés sont gérées.", "criticality": "high", "weight": 1.5 },
+        { "id": "RS.AN", "name": "Analyse des incidents", "description": "Les investigations sont menées pour assurer une réponse efficace et soutenir la médico-légale.", "criticality": "high", "weight": 1.3 },
+        { "id": "RS.CO", "name": "Communication lors des incidents", "description": "Les activités de réponse sont coordonnées avec les parties prenantes internes et externes.", "criticality": "medium", "weight": 1.0 }
+      ]
+    },
+    {
+      "id": "RC",
+      "name": "Récupérer (Recover)",
+      "weight": 1.1,
+      "controls": [
+        { "id": "RC.RP", "name": "Plan de récupération", "description": "Un plan de récupération est exécuté lors ou après un incident de cybersécurité.", "criticality": "critical", "weight": 2.0 },
+        { "id": "RC.CO", "name": "Communication lors de la récupération", "description": "Les activités de restauration sont coordonnées avec les parties internes et externes.", "criticality": "medium", "weight": 1.0 }
+      ]
+    }
+  ]
+}

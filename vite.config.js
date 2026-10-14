@@ -6,7 +6,7 @@ import { handleAi } from './server/aiHandler.js'
 // POST /api/scan et /api/ai en développement (npm run dev) : exécutés sur la machine de l'auditeur, sans jeton.
 // GEMINI_API_KEY (sans préfixe VITE_) n'est jamais envoyée au navigateur.
 const serverApis = () => ({
-  name: 'e4c-server-apis',
+  name: 'majaudit-server-apis',
   configureServer(server) {
     server.middlewares.use('/api/scan', (req, res) => handleScan(req, res, { requireToken: false }))
     server.middlewares.use('/api/ai', (req, res) => handleAi(req, res, { requireToken: false }))

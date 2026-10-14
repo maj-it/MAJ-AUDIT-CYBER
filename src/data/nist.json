@@ -2,7 +2,7 @@
   "id": "nist",
   "name": "NIST CSF 2.0",
   "version": "2.0",
-  "description": "NIST Cybersecurity Framework — Identify, Protect, Detect, Respond, Recover",
+  "description": "NIST Cybersecurity Framework 2.0 — 6 fonctions, 22 catégories, 106 sous-catégories (traduction libre des résultats attendus).",
   "color": "#6366f1",
   "domains": [
     {
@@ -10,10 +10,254 @@
       "name": "Gouverner (Govern)",
       "weight": 1.2,
       "controls": [
-        { "id": "GV.OC", "name": "Contexte organisationnel", "description": "La mission, les parties prenantes, les dépendances et les exigences légales/réglementaires sont comprises et informent la stratégie cybersécurité.", "criticality": "high", "weight": 1.3 },
-        { "id": "GV.RM", "name": "Stratégie de gestion des risques", "description": "Les priorités, les contraintes, les tolérances au risque et les hypothèses de l'organisation sont établies, communiquées et utilisées.", "criticality": "high", "weight": 1.5 },
-        { "id": "GV.RR", "name": "Rôles et responsabilités", "description": "Les rôles, responsabilités et autorités en matière de cybersécurité sont établis, communiqués, compris et appliqués.", "criticality": "high", "weight": 1.3 },
-        { "id": "GV.PO", "name": "Politiques", "description": "Les politiques de cybersécurité de l'organisation sont établies, communiquées et appliquées.", "criticality": "high", "weight": 1.3 }
+        {
+          "id": "GV.OC-01",
+          "name": "Mission de l'organisation",
+          "description": "Contexte organisationnel — La mission de l'organisation est comprise et oriente la gestion des risques de cybersécurité.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : la mission de l'organisation est comprise et oriente la gestion des risques de cybersécurité ?"
+        },
+        {
+          "id": "GV.OC-02",
+          "name": "Parties prenantes",
+          "description": "Contexte organisationnel — Les parties prenantes internes et externes, leurs besoins et leurs attentes en matière de gestion des risques cyber sont identifiés et pris en compte.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les parties prenantes internes et externes, leurs besoins et leurs attentes en matière de gestion des risques cyber sont identifiés et pris en compte ?"
+        },
+        {
+          "id": "GV.OC-03",
+          "name": "Exigences légales et contractuelles",
+          "description": "Contexte organisationnel — Les exigences légales, réglementaires et contractuelles liées à la cybersécurité (dont vie privée et libertés civiles) sont comprises et gérées.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : les exigences légales, réglementaires et contractuelles liées à la cybersécurité (dont vie privée et libertés civiles) sont comprises et gérées ?"
+        },
+        {
+          "id": "GV.OC-04",
+          "name": "Services critiques attendus",
+          "description": "Contexte organisationnel — Les objectifs, capacités et services critiques dont dépendent les parties prenantes externes sont compris et communiqués.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les objectifs, capacités et services critiques dont dépendent les parties prenantes externes sont compris et communiqués ?"
+        },
+        {
+          "id": "GV.OC-05",
+          "name": "Dépendances de l'organisation",
+          "description": "Contexte organisationnel — Les résultats, capacités et services dont l'organisation dépend sont compris et communiqués.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les résultats, capacités et services dont l'organisation dépend sont compris et communiqués ?"
+        },
+        {
+          "id": "GV.RM-01",
+          "name": "Objectifs de gestion des risques",
+          "description": "Stratégie de gestion des risques — Les objectifs de gestion des risques sont établis et approuvés par les parties prenantes de l'organisation.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les objectifs de gestion des risques sont établis et approuvés par les parties prenantes de l'organisation ?"
+        },
+        {
+          "id": "GV.RM-02",
+          "name": "Appétence et tolérance au risque",
+          "description": "Stratégie de gestion des risques — Les déclarations d'appétence et de tolérance au risque sont établies, communiquées et tenues à jour.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : les déclarations d'appétence et de tolérance au risque sont établies, communiquées et tenues à jour ?"
+        },
+        {
+          "id": "GV.RM-03",
+          "name": "Intégration à la gestion des risques d'entreprise",
+          "description": "Stratégie de gestion des risques — Les activités et résultats de gestion des risques cyber sont intégrés aux processus de gestion des risques de l'entreprise.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les activités et résultats de gestion des risques cyber sont intégrés aux processus de gestion des risques de l'entreprise ?"
+        },
+        {
+          "id": "GV.RM-04",
+          "name": "Options de réponse aux risques",
+          "description": "Stratégie de gestion des risques — Une orientation stratégique décrivant les options de réponse aux risques appropriées est établie et communiquée.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : une orientation stratégique décrivant les options de réponse aux risques appropriées est établie et communiquée ?"
+        },
+        {
+          "id": "GV.RM-05",
+          "name": "Canaux de communication des risques",
+          "description": "Stratégie de gestion des risques — Des canaux de communication sont établis dans l'organisation pour les risques cyber, y compris ceux liés aux fournisseurs et tiers.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : des canaux de communication sont établis dans l'organisation pour les risques cyber, y compris ceux liés aux fournisseurs et tiers ?"
+        },
+        {
+          "id": "GV.RM-06",
+          "name": "Méthode d'évaluation des risques",
+          "description": "Stratégie de gestion des risques — Une méthode standardisée de calcul, documentation, catégorisation et priorisation des risques cyber est établie et communiquée.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : une méthode standardisée de calcul, documentation, catégorisation et priorisation des risques cyber est établie et communiquée ?"
+        },
+        {
+          "id": "GV.RM-07",
+          "name": "Opportunités stratégiques",
+          "description": "Stratégie de gestion des risques — Les opportunités stratégiques (risques positifs) sont caractérisées et intégrées aux discussions sur les risques cyber.",
+          "criticality": "low",
+          "weight": 0.7,
+          "question": "Où en êtes-vous : les opportunités stratégiques (risques positifs) sont caractérisées et intégrées aux discussions sur les risques cyber ?"
+        },
+        {
+          "id": "GV.RR-01",
+          "name": "Responsabilité de la direction",
+          "description": "Rôles, responsabilités et autorités — La direction est responsable de la cybersécurité et favorise une culture attentive aux risques, éthique et d'amélioration continue.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : la direction est responsable de la cybersécurité et favorise une culture attentive aux risques, éthique et d'amélioration continue ?"
+        },
+        {
+          "id": "GV.RR-02",
+          "name": "Rôles et responsabilités cyber",
+          "description": "Rôles, responsabilités et autorités — Les rôles, responsabilités et autorités liés à la gestion des risques cyber sont établis, communiqués, compris et appliqués.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : les rôles, responsabilités et autorités liés à la gestion des risques cyber sont établis, communiqués, compris et appliqués ?"
+        },
+        {
+          "id": "GV.RR-03",
+          "name": "Ressources allouées",
+          "description": "Rôles, responsabilités et autorités — Des ressources adaptées à la stratégie de risques, aux rôles, aux responsabilités et aux politiques sont allouées.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : des ressources adaptées à la stratégie de risques, aux rôles, aux responsabilités et aux politiques sont allouées ?"
+        },
+        {
+          "id": "GV.RR-04",
+          "name": "Cybersécurité et ressources humaines",
+          "description": "Rôles, responsabilités et autorités — La cybersécurité est intégrée aux pratiques RH (recrutement, départs, mobilité).",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : la cybersécurité est intégrée aux pratiques RH (recrutement, départs, mobilité) ?"
+        },
+        {
+          "id": "GV.PO-01",
+          "name": "Politique de gestion des risques cyber",
+          "description": "Politique — Une politique de gestion des risques cyber est établie selon le contexte, la stratégie et les priorités, puis communiquée et appliquée.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : une politique de gestion des risques cyber est établie selon le contexte, la stratégie et les priorités, puis communiquée et appliquée ?"
+        },
+        {
+          "id": "GV.PO-02",
+          "name": "Revue de la politique",
+          "description": "Politique — La politique est revue, mise à jour, communiquée et appliquée pour refléter l'évolution des exigences, menaces, technologies et de la mission.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : la politique est revue, mise à jour, communiquée et appliquée pour refléter l'évolution des exigences, menaces, technologies et de la mission ?"
+        },
+        {
+          "id": "GV.OV-01",
+          "name": "Revue des résultats de la stratégie",
+          "description": "Supervision — Les résultats de la stratégie de gestion des risques cyber sont revus pour ajuster la stratégie et l'orientation.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les résultats de la stratégie de gestion des risques cyber sont revus pour ajuster la stratégie et l'orientation ?"
+        },
+        {
+          "id": "GV.OV-02",
+          "name": "Couverture des exigences et risques",
+          "description": "Supervision — La stratégie est revue et ajustée pour couvrir les exigences et les risques de l'organisation.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : la stratégie est revue et ajustée pour couvrir les exigences et les risques de l'organisation ?"
+        },
+        {
+          "id": "GV.OV-03",
+          "name": "Évaluation de la performance",
+          "description": "Supervision — La performance de la gestion des risques cyber est évaluée et revue pour déterminer les ajustements nécessaires.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : la performance de la gestion des risques cyber est évaluée et revue pour déterminer les ajustements nécessaires ?"
+        },
+        {
+          "id": "GV.SC-01",
+          "name": "Programme de gestion des risques fournisseurs",
+          "description": "Gestion des risques de la chaîne d'approvisionnement — Un programme, une stratégie, des objectifs, des politiques et des processus de gestion des risques cyber de la chaîne d'approvisionnement sont établis et approuvés.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : un programme, une stratégie, des objectifs, des politiques et des processus de gestion des risques cyber de la chaîne d'approvisionnement sont établis et approuvés ?"
+        },
+        {
+          "id": "GV.SC-02",
+          "name": "Rôles cyber des fournisseurs et partenaires",
+          "description": "Gestion des risques de la chaîne d'approvisionnement — Les rôles et responsabilités cyber des fournisseurs, clients et partenaires sont établis, communiqués et coordonnés en interne et en externe.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les rôles et responsabilités cyber des fournisseurs, clients et partenaires sont établis, communiqués et coordonnés en interne et en externe ?"
+        },
+        {
+          "id": "GV.SC-03",
+          "name": "Intégration à la gestion des risques",
+          "description": "Gestion des risques de la chaîne d'approvisionnement — La gestion des risques de la chaîne d'approvisionnement est intégrée aux processus de gestion des risques, d'évaluation et d'amélioration.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : la gestion des risques de la chaîne d'approvisionnement est intégrée aux processus de gestion des risques, d'évaluation et d'amélioration ?"
+        },
+        {
+          "id": "GV.SC-04",
+          "name": "Fournisseurs connus et priorisés",
+          "description": "Gestion des risques de la chaîne d'approvisionnement — Les fournisseurs sont connus et priorisés selon leur criticité.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : les fournisseurs sont connus et priorisés selon leur criticité ?"
+        },
+        {
+          "id": "GV.SC-05",
+          "name": "Exigences cyber dans les contrats",
+          "description": "Gestion des risques de la chaîne d'approvisionnement — Les exigences de réduction des risques cyber de la chaîne d'approvisionnement sont établies, priorisées et intégrées aux contrats et accords avec les fournisseurs et tiers.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : les exigences de réduction des risques cyber de la chaîne d'approvisionnement sont établies, priorisées et intégrées aux contrats et accords avec les fournisseurs et tiers ?"
+        },
+        {
+          "id": "GV.SC-06",
+          "name": "Diligence avant contractualisation",
+          "description": "Gestion des risques de la chaîne d'approvisionnement — Une planification et une diligence raisonnable sont menées avant d'entrer en relation formelle avec un fournisseur ou un tiers.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : une planification et une diligence raisonnable sont menées avant d'entrer en relation formelle avec un fournisseur ou un tiers ?"
+        },
+        {
+          "id": "GV.SC-07",
+          "name": "Suivi des risques fournisseurs",
+          "description": "Gestion des risques de la chaîne d'approvisionnement — Les risques posés par un fournisseur, ses produits et services, et les tiers sont compris, enregistrés, priorisés, évalués, traités et surveillés pendant toute la relation.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les risques posés par un fournisseur, ses produits et services, et les tiers sont compris, enregistrés, priorisés, évalués, traités et surveillés pendant toute la relation ?"
+        },
+        {
+          "id": "GV.SC-08",
+          "name": "Fournisseurs dans la gestion des incidents",
+          "description": "Gestion des risques de la chaîne d'approvisionnement — Les fournisseurs et tiers pertinents sont associés à la planification, à la réponse et à la reprise après incident.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les fournisseurs et tiers pertinents sont associés à la planification, à la réponse et à la reprise après incident ?"
+        },
+        {
+          "id": "GV.SC-09",
+          "name": "Pratiques de sécurité sur le cycle de vie",
+          "description": "Gestion des risques de la chaîne d'approvisionnement — Les pratiques de sécurité de la chaîne d'approvisionnement sont intégrées aux programmes de gestion des risques et leur performance est suivie sur tout le cycle de vie des produits et services.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les pratiques de sécurité de la chaîne d'approvisionnement sont intégrées aux programmes de gestion des risques et leur performance est suivie sur tout le cycle de vie des produits et services ?"
+        },
+        {
+          "id": "GV.SC-10",
+          "name": "Fin de relation avec un fournisseur",
+          "description": "Gestion des risques de la chaîne d'approvisionnement — Les plans de gestion des risques de la chaîne d'approvisionnement prévoient les activités à mener après la fin d'un partenariat ou d'un contrat de service.",
+          "criticality": "low",
+          "weight": 0.7,
+          "question": "Où en êtes-vous : les plans de gestion des risques de la chaîne d'approvisionnement prévoient les activités à mener après la fin d'un partenariat ou d'un contrat de service ?"
+        }
       ]
     },
     {
@@ -21,9 +265,174 @@
       "name": "Identifier (Identify)",
       "weight": 1.3,
       "controls": [
-        { "id": "ID.AM", "name": "Gestion des actifs", "description": "Les actifs (données, matériel, logiciel, systèmes, installations, services, personnes) qui permettent à l'organisation d'atteindre ses objectifs sont identifiés et gérés.", "criticality": "high", "weight": 1.5 },
-        { "id": "ID.RA", "name": "Évaluation des risques", "description": "L'organisation comprend les risques de cybersécurité liés aux opérations, actifs et individus.", "criticality": "critical", "weight": 2.0 },
-        { "id": "ID.IM", "name": "Amélioration", "description": "Les améliorations aux processus de cybersécurité de l'organisation sont identifiées sur la base des leçons tirées des activités actuelles et précédentes.", "criticality": "medium", "weight": 1.0 }
+        {
+          "id": "ID.AM-01",
+          "name": "Inventaire du matériel",
+          "description": "Gestion des actifs — Les inventaires du matériel géré par l'organisation sont tenus à jour.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : les inventaires du matériel géré par l'organisation sont tenus à jour ?"
+        },
+        {
+          "id": "ID.AM-02",
+          "name": "Inventaire des logiciels et services",
+          "description": "Gestion des actifs — Les inventaires des logiciels, services et systèmes gérés par l'organisation sont tenus à jour.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : les inventaires des logiciels, services et systèmes gérés par l'organisation sont tenus à jour ?"
+        },
+        {
+          "id": "ID.AM-03",
+          "name": "Flux réseau et flux de données",
+          "description": "Gestion des actifs — Les représentations des communications réseau autorisées et des flux de données internes et externes sont tenues à jour.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les représentations des communications réseau autorisées et des flux de données internes et externes sont tenues à jour ?"
+        },
+        {
+          "id": "ID.AM-04",
+          "name": "Inventaire des services fournis par des tiers",
+          "description": "Gestion des actifs — Les inventaires des services fournis par les fournisseurs sont tenus à jour.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les inventaires des services fournis par les fournisseurs sont tenus à jour ?"
+        },
+        {
+          "id": "ID.AM-05",
+          "name": "Priorisation des actifs",
+          "description": "Gestion des actifs — Les actifs sont priorisés selon leur criticité, leur importance pour la mission et leur impact potentiel.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : les actifs sont priorisés selon leur criticité, leur importance pour la mission et leur impact potentiel ?"
+        },
+        {
+          "id": "ID.AM-07",
+          "name": "Inventaire des données",
+          "description": "Gestion des actifs — Les inventaires des données et métadonnées pour les types de données définis sont tenus à jour.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les inventaires des données et métadonnées pour les types de données définis sont tenus à jour ?"
+        },
+        {
+          "id": "ID.AM-08",
+          "name": "Gestion du cycle de vie des actifs",
+          "description": "Gestion des actifs — Les systèmes, matériels, logiciels, services et données sont gérés tout au long de leur cycle de vie.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les systèmes, matériels, logiciels, services et données sont gérés tout au long de leur cycle de vie ?"
+        },
+        {
+          "id": "ID.RA-01",
+          "name": "Identification des vulnérabilités",
+          "description": "Évaluation des risques — Les vulnérabilités des actifs sont identifiées, validées et enregistrées.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : les vulnérabilités des actifs sont identifiées, validées et enregistrées ?"
+        },
+        {
+          "id": "ID.RA-02",
+          "name": "Renseignement sur la menace",
+          "description": "Évaluation des risques — Le renseignement sur la menace cyber est reçu de forums et sources de partage d'information.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : le renseignement sur la menace cyber est reçu de forums et sources de partage d'information ?"
+        },
+        {
+          "id": "ID.RA-03",
+          "name": "Menaces internes et externes",
+          "description": "Évaluation des risques — Les menaces internes et externes pesant sur l'organisation sont identifiées et enregistrées.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les menaces internes et externes pesant sur l'organisation sont identifiées et enregistrées ?"
+        },
+        {
+          "id": "ID.RA-04",
+          "name": "Impacts et probabilités",
+          "description": "Évaluation des risques — Les impacts et probabilités potentiels de l'exploitation des vulnérabilités par les menaces sont identifiés et enregistrés.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les impacts et probabilités potentiels de l'exploitation des vulnérabilités par les menaces sont identifiés et enregistrés ?"
+        },
+        {
+          "id": "ID.RA-05",
+          "name": "Risque inhérent et priorisation",
+          "description": "Évaluation des risques — Les menaces, vulnérabilités, probabilités et impacts servent à comprendre le risque inhérent et à prioriser la réponse.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : les menaces, vulnérabilités, probabilités et impacts servent à comprendre le risque inhérent et à prioriser la réponse ?"
+        },
+        {
+          "id": "ID.RA-06",
+          "name": "Choix et suivi des réponses aux risques",
+          "description": "Évaluation des risques — Les réponses aux risques sont choisies, priorisées, planifiées, suivies et communiquées.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : les réponses aux risques sont choisies, priorisées, planifiées, suivies et communiquées ?"
+        },
+        {
+          "id": "ID.RA-07",
+          "name": "Gestion des changements et exceptions",
+          "description": "Évaluation des risques — Les changements et exceptions sont gérés, évalués quant à leur impact sur le risque, enregistrés et suivis.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les changements et exceptions sont gérés, évalués quant à leur impact sur le risque, enregistrés et suivis ?"
+        },
+        {
+          "id": "ID.RA-08",
+          "name": "Divulgation de vulnérabilités",
+          "description": "Évaluation des risques — Des processus de réception, d'analyse et de réponse aux divulgations de vulnérabilités sont établis.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : des processus de réception, d'analyse et de réponse aux divulgations de vulnérabilités sont établis ?"
+        },
+        {
+          "id": "ID.RA-09",
+          "name": "Authenticité des produits avant acquisition",
+          "description": "Évaluation des risques — L'authenticité et l'intégrité du matériel et des logiciels sont évaluées avant leur acquisition et leur utilisation.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : l'authenticité et l'intégrité du matériel et des logiciels sont évaluées avant leur acquisition et leur utilisation ?"
+        },
+        {
+          "id": "ID.RA-10",
+          "name": "Évaluation des fournisseurs critiques",
+          "description": "Évaluation des risques — Les fournisseurs critiques sont évalués avant l'acquisition.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les fournisseurs critiques sont évalués avant l'acquisition ?"
+        },
+        {
+          "id": "ID.IM-01",
+          "name": "Améliorations issues des évaluations",
+          "description": "Amélioration — Des améliorations sont identifiées à partir des évaluations.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : des améliorations sont identifiées à partir des évaluations ?"
+        },
+        {
+          "id": "ID.IM-02",
+          "name": "Améliorations issues des tests et exercices",
+          "description": "Amélioration — Des améliorations sont identifiées à partir des tests et exercices de sécurité, y compris ceux menés avec les fournisseurs.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : des améliorations sont identifiées à partir des tests et exercices de sécurité, y compris ceux menés avec les fournisseurs ?"
+        },
+        {
+          "id": "ID.IM-03",
+          "name": "Améliorations issues de l'exploitation",
+          "description": "Amélioration — Des améliorations sont identifiées à partir de l'exécution des processus, procédures et activités opérationnels.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : des améliorations sont identifiées à partir de l'exécution des processus, procédures et activités opérationnels ?"
+        },
+        {
+          "id": "ID.IM-04",
+          "name": "Plans de réponse et de continuité",
+          "description": "Amélioration — Les plans de réponse aux incidents et autres plans cyber qui touchent l'exploitation sont établis, communiqués, maintenus et améliorés.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : les plans de réponse aux incidents et autres plans cyber qui touchent l'exploitation sont établis, communiqués, maintenus et améliorés ?"
+        }
       ]
     },
     {
@@ -31,11 +440,182 @@
       "name": "Protéger (Protect)",
       "weight": 1.4,
       "controls": [
-        { "id": "PR.AA", "name": "Gestion des identités et des accès", "description": "L'accès aux actifs physiques et logiques est limité aux utilisateurs, services et matériels autorisés.", "criticality": "critical", "weight": 2.0 },
-        { "id": "PR.AT", "name": "Sensibilisation et formation", "description": "Le personnel et les partenaires de l'organisation reçoivent une sensibilisation et une formation en cybersécurité.", "criticality": "high", "weight": 1.3 },
-        { "id": "PR.DS", "name": "Sécurité des données", "description": "Les données sont gérées conformément à la stratégie de risque de l'organisation pour protéger la confidentialité, l'intégrité et la disponibilité.", "criticality": "critical", "weight": 2.0 },
-        { "id": "PR.IR", "name": "Résilience de l'infrastructure", "description": "Les réseaux et l'infrastructure sont protégés de manière à être résilients.", "criticality": "high", "weight": 1.5 },
-        { "id": "PR.PS", "name": "Sécurité de la plateforme", "description": "Le matériel, les logiciels et les services sont gérés conformément à la stratégie de risque.", "criticality": "high", "weight": 1.3 }
+        {
+          "id": "PR.AA-01",
+          "name": "Gestion des identités et des identifiants",
+          "description": "Gestion des identités, authentification et contrôle d'accès — Les identités et identifiants des utilisateurs, services et matériels autorisés sont gérés par l'organisation.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : les identités et identifiants des utilisateurs, services et matériels autorisés sont gérés par l'organisation ?"
+        },
+        {
+          "id": "PR.AA-02",
+          "name": "Vérification des identités",
+          "description": "Gestion des identités, authentification et contrôle d'accès — Les identités sont vérifiées et liées à des identifiants selon le contexte des interactions.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les identités sont vérifiées et liées à des identifiants selon le contexte des interactions ?"
+        },
+        {
+          "id": "PR.AA-03",
+          "name": "Authentification",
+          "description": "Gestion des identités, authentification et contrôle d'accès — Les utilisateurs, services et matériels sont authentifiés.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : les utilisateurs, services et matériels sont authentifiés ?"
+        },
+        {
+          "id": "PR.AA-04",
+          "name": "Protection des assertions d'identité",
+          "description": "Gestion des identités, authentification et contrôle d'accès — Les assertions d'identité sont protégées, transmises et vérifiées.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les assertions d'identité sont protégées, transmises et vérifiées ?"
+        },
+        {
+          "id": "PR.AA-05",
+          "name": "Droits d'accès et moindre privilège",
+          "description": "Gestion des identités, authentification et contrôle d'accès — Les droits et autorisations d'accès sont définis par une politique, gérés, appliqués et revus, selon les principes de moindre privilège et de séparation des tâches.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : les droits et autorisations d'accès sont définis par une politique, gérés, appliqués et revus, selon les principes de moindre privilège et de séparation des tâches ?"
+        },
+        {
+          "id": "PR.AA-06",
+          "name": "Accès physique",
+          "description": "Gestion des identités, authentification et contrôle d'accès — L'accès physique aux actifs est géré, surveillé et appliqué en proportion du risque.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : l'accès physique aux actifs est géré, surveillé et appliqué en proportion du risque ?"
+        },
+        {
+          "id": "PR.AT-01",
+          "name": "Sensibilisation du personnel",
+          "description": "Sensibilisation et formation — Le personnel reçoit une sensibilisation et une formation lui donnant les connaissances et compétences pour ses tâches courantes en cybersécurité.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : le personnel reçoit une sensibilisation et une formation lui donnant les connaissances et compétences pour ses tâches courantes en cybersécurité ?"
+        },
+        {
+          "id": "PR.AT-02",
+          "name": "Formation des rôles spécialisés",
+          "description": "Sensibilisation et formation — Les personnes aux rôles spécialisés reçoivent une sensibilisation et une formation adaptées aux risques liés à leurs fonctions.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les personnes aux rôles spécialisés reçoivent une sensibilisation et une formation adaptées aux risques liés à leurs fonctions ?"
+        },
+        {
+          "id": "PR.DS-01",
+          "name": "Protection des données au repos",
+          "description": "Sécurité des données — La confidentialité, l'intégrité et la disponibilité des données au repos sont protégées.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : la confidentialité, l'intégrité et la disponibilité des données au repos sont protégées ?"
+        },
+        {
+          "id": "PR.DS-02",
+          "name": "Protection des données en transit",
+          "description": "Sécurité des données — La confidentialité, l'intégrité et la disponibilité des données en transit sont protégées.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : la confidentialité, l'intégrité et la disponibilité des données en transit sont protégées ?"
+        },
+        {
+          "id": "PR.DS-10",
+          "name": "Protection des données en cours d'utilisation",
+          "description": "Sécurité des données — La confidentialité, l'intégrité et la disponibilité des données en cours d'utilisation sont protégées.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : la confidentialité, l'intégrité et la disponibilité des données en cours d'utilisation sont protégées ?"
+        },
+        {
+          "id": "PR.DS-11",
+          "name": "Sauvegardes",
+          "description": "Sécurité des données — Des sauvegardes des données sont créées, protégées, maintenues et testées.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : des sauvegardes des données sont créées, protégées, maintenues et testées ?"
+        },
+        {
+          "id": "PR.PS-01",
+          "name": "Gestion de la configuration",
+          "description": "Sécurité des plateformes — Des pratiques de gestion de la configuration sont établies et appliquées.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : des pratiques de gestion de la configuration sont établies et appliquées ?"
+        },
+        {
+          "id": "PR.PS-02",
+          "name": "Maintenance des logiciels",
+          "description": "Sécurité des plateformes — Les logiciels sont maintenus, remplacés et retirés en proportion du risque.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : les logiciels sont maintenus, remplacés et retirés en proportion du risque ?"
+        },
+        {
+          "id": "PR.PS-03",
+          "name": "Maintenance du matériel",
+          "description": "Sécurité des plateformes — Le matériel est maintenu, remplacé et retiré en proportion du risque.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : le matériel est maintenu, remplacé et retiré en proportion du risque ?"
+        },
+        {
+          "id": "PR.PS-04",
+          "name": "Journalisation",
+          "description": "Sécurité des plateformes — Des journaux d'événements sont générés et mis à disposition de la surveillance continue.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : des journaux d'événements sont générés et mis à disposition de la surveillance continue ?"
+        },
+        {
+          "id": "PR.PS-05",
+          "name": "Logiciels non autorisés",
+          "description": "Sécurité des plateformes — L'installation et l'exécution de logiciels non autorisés sont empêchées.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : l'installation et l'exécution de logiciels non autorisés sont empêchées ?"
+        },
+        {
+          "id": "PR.PS-06",
+          "name": "Développement sécurisé",
+          "description": "Sécurité des plateformes — Des pratiques de développement logiciel sécurisé sont intégrées et leur performance est suivie sur tout le cycle de développement.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : des pratiques de développement logiciel sécurisé sont intégrées et leur performance est suivie sur tout le cycle de développement ?"
+        },
+        {
+          "id": "PR.IR-01",
+          "name": "Protection des réseaux et environnements",
+          "description": "Résilience de l'infrastructure technologique — Les réseaux et environnements sont protégés contre les accès logiques non autorisés.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : les réseaux et environnements sont protégés contre les accès logiques non autorisés ?"
+        },
+        {
+          "id": "PR.IR-02",
+          "name": "Menaces environnementales",
+          "description": "Résilience de l'infrastructure technologique — Les actifs technologiques sont protégés contre les menaces environnementales.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les actifs technologiques sont protégés contre les menaces environnementales ?"
+        },
+        {
+          "id": "PR.IR-03",
+          "name": "Mécanismes de résilience",
+          "description": "Résilience de l'infrastructure technologique — Des mécanismes sont en place pour atteindre les exigences de résilience en situation normale et dégradée.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : des mécanismes sont en place pour atteindre les exigences de résilience en situation normale et dégradée ?"
+        },
+        {
+          "id": "PR.IR-04",
+          "name": "Capacité de ressources",
+          "description": "Résilience de l'infrastructure technologique — Une capacité de ressources suffisante est assurée pour maintenir la disponibilité.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : une capacité de ressources suffisante est assurée pour maintenir la disponibilité ?"
+        }
       ]
     },
     {
@@ -43,8 +623,94 @@
       "name": "Détecter (Detect)",
       "weight": 1.3,
       "controls": [
-        { "id": "DE.AE", "name": "Analyse des événements", "description": "Les anomalies, indicateurs de compromission et autres événements potentiellement néfastes sont analysés.", "criticality": "high", "weight": 1.5 },
-        { "id": "DE.CM", "name": "Surveillance continue", "description": "Les actifs sont surveillés pour identifier les anomalies, indicateurs de compromission et autres événements potentiellement néfastes.", "criticality": "high", "weight": 1.5 }
+        {
+          "id": "DE.CM-01",
+          "name": "Surveillance des réseaux",
+          "description": "Surveillance continue — Les réseaux et services réseau sont surveillés pour détecter des événements potentiellement indésirables.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : les réseaux et services réseau sont surveillés pour détecter des événements potentiellement indésirables ?"
+        },
+        {
+          "id": "DE.CM-02",
+          "name": "Surveillance de l'environnement physique",
+          "description": "Surveillance continue — L'environnement physique est surveillé pour détecter des événements potentiellement indésirables.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : l'environnement physique est surveillé pour détecter des événements potentiellement indésirables ?"
+        },
+        {
+          "id": "DE.CM-03",
+          "name": "Surveillance de l'activité du personnel",
+          "description": "Surveillance continue — L'activité du personnel et l'usage des technologies sont surveillés pour détecter des événements potentiellement indésirables.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : l'activité du personnel et l'usage des technologies sont surveillés pour détecter des événements potentiellement indésirables ?"
+        },
+        {
+          "id": "DE.CM-06",
+          "name": "Surveillance des prestataires",
+          "description": "Surveillance continue — Les activités et services des prestataires externes sont surveillés pour détecter des événements potentiellement indésirables.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les activités et services des prestataires externes sont surveillés pour détecter des événements potentiellement indésirables ?"
+        },
+        {
+          "id": "DE.CM-09",
+          "name": "Surveillance du matériel et des logiciels",
+          "description": "Surveillance continue — Le matériel, les logiciels, les environnements d'exécution et leurs données sont surveillés pour détecter des événements potentiellement indésirables.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : le matériel, les logiciels, les environnements d'exécution et leurs données sont surveillés pour détecter des événements potentiellement indésirables ?"
+        },
+        {
+          "id": "DE.AE-02",
+          "name": "Analyse des événements",
+          "description": "Analyse des événements indésirables — Les événements potentiellement indésirables sont analysés pour mieux comprendre les activités associées.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : les événements potentiellement indésirables sont analysés pour mieux comprendre les activités associées ?"
+        },
+        {
+          "id": "DE.AE-03",
+          "name": "Corrélation des informations",
+          "description": "Analyse des événements indésirables — Les informations de plusieurs sources sont corrélées.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les informations de plusieurs sources sont corrélées ?"
+        },
+        {
+          "id": "DE.AE-04",
+          "name": "Impact et étendue estimés",
+          "description": "Analyse des événements indésirables — L'impact estimé et l'étendue des événements indésirables sont compris.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : l'impact estimé et l'étendue des événements indésirables sont compris ?"
+        },
+        {
+          "id": "DE.AE-06",
+          "name": "Information du personnel autorisé",
+          "description": "Analyse des événements indésirables — Les informations sur les événements indésirables sont fournies au personnel et aux outils autorisés.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les informations sur les événements indésirables sont fournies au personnel et aux outils autorisés ?"
+        },
+        {
+          "id": "DE.AE-07",
+          "name": "Renseignement intégré à l'analyse",
+          "description": "Analyse des événements indésirables — Le renseignement sur la menace et les informations contextuelles sont intégrés à l'analyse.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : le renseignement sur la menace et les informations contextuelles sont intégrés à l'analyse ?"
+        },
+        {
+          "id": "DE.AE-08",
+          "name": "Déclaration des incidents",
+          "description": "Analyse des événements indésirables — Un incident est déclaré lorsque les événements indésirables répondent aux critères d'incident définis.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : un incident est déclaré lorsque les événements indésirables répondent aux critères d'incident définis ?"
+        }
       ]
     },
     {
@@ -52,9 +718,110 @@
       "name": "Répondre (Respond)",
       "weight": 1.2,
       "controls": [
-        { "id": "RS.MA", "name": "Gestion des incidents", "description": "Les réponses aux incidents détectés sont gérées.", "criticality": "high", "weight": 1.5 },
-        { "id": "RS.AN", "name": "Analyse des incidents", "description": "Les investigations sont menées pour assurer une réponse efficace et soutenir la médico-légale.", "criticality": "high", "weight": 1.3 },
-        { "id": "RS.CO", "name": "Communication lors des incidents", "description": "Les activités de réponse sont coordonnées avec les parties prenantes internes et externes.", "criticality": "medium", "weight": 1.0 }
+        {
+          "id": "RS.MA-01",
+          "name": "Exécution du plan de réponse",
+          "description": "Gestion des incidents — Le plan de réponse aux incidents est exécuté en coordination avec les tiers concernés une fois l'incident déclaré.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : le plan de réponse aux incidents est exécuté en coordination avec les tiers concernés une fois l'incident déclaré ?"
+        },
+        {
+          "id": "RS.MA-02",
+          "name": "Qualification des signalements",
+          "description": "Gestion des incidents — Les signalements d'incident sont triés et validés.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les signalements d'incident sont triés et validés ?"
+        },
+        {
+          "id": "RS.MA-03",
+          "name": "Catégorisation et priorisation",
+          "description": "Gestion des incidents — Les incidents sont catégorisés et priorisés.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les incidents sont catégorisés et priorisés ?"
+        },
+        {
+          "id": "RS.MA-04",
+          "name": "Escalade des incidents",
+          "description": "Gestion des incidents — Les incidents sont escaladés ou remontés selon les besoins.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les incidents sont escaladés ou remontés selon les besoins ?"
+        },
+        {
+          "id": "RS.MA-05",
+          "name": "Critères de lancement de la reprise",
+          "description": "Gestion des incidents — Les critères de déclenchement de la reprise après incident sont appliqués.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les critères de déclenchement de la reprise après incident sont appliqués ?"
+        },
+        {
+          "id": "RS.AN-03",
+          "name": "Analyse et cause racine",
+          "description": "Analyse des incidents — Une analyse est menée pour établir ce qui s'est passé pendant l'incident et sa cause racine.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : une analyse est menée pour établir ce qui s'est passé pendant l'incident et sa cause racine ?"
+        },
+        {
+          "id": "RS.AN-06",
+          "name": "Traçabilité des investigations",
+          "description": "Analyse des incidents — Les actions menées pendant l'investigation sont enregistrées, et l'intégrité et la provenance des preuves sont préservées.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les actions menées pendant l'investigation sont enregistrées, et l'intégrité et la provenance des preuves sont préservées ?"
+        },
+        {
+          "id": "RS.AN-07",
+          "name": "Collecte des données d'incident",
+          "description": "Analyse des incidents — Les données et métadonnées de l'incident sont collectées, et leur intégrité et leur provenance sont préservées.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les données et métadonnées de l'incident sont collectées, et leur intégrité et leur provenance sont préservées ?"
+        },
+        {
+          "id": "RS.AN-08",
+          "name": "Ampleur de l'incident",
+          "description": "Analyse des incidents — L'ampleur de l'incident est estimée et validée.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : l'ampleur de l'incident est estimée et validée ?"
+        },
+        {
+          "id": "RS.CO-02",
+          "name": "Notification des parties prenantes",
+          "description": "Communication et rapports de réponse — Les parties prenantes internes et externes sont informées des incidents.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : les parties prenantes internes et externes sont informées des incidents ?"
+        },
+        {
+          "id": "RS.CO-03",
+          "name": "Partage d'information",
+          "description": "Communication et rapports de réponse — L'information est partagée avec les parties prenantes internes et externes désignées.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : l'information est partagée avec les parties prenantes internes et externes désignées ?"
+        },
+        {
+          "id": "RS.MI-01",
+          "name": "Confinement",
+          "description": "Atténuation des incidents — Les incidents sont contenus.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : les incidents sont contenus ?"
+        },
+        {
+          "id": "RS.MI-02",
+          "name": "Éradication",
+          "description": "Atténuation des incidents — Les incidents sont éradiqués.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : les incidents sont éradiqués ?"
+        }
       ]
     },
     {
@@ -62,8 +829,70 @@
       "name": "Récupérer (Recover)",
       "weight": 1.1,
       "controls": [
-        { "id": "RC.RP", "name": "Plan de récupération", "description": "Un plan de récupération est exécuté lors ou après un incident de cybersécurité.", "criticality": "critical", "weight": 2.0 },
-        { "id": "RC.CO", "name": "Communication lors de la récupération", "description": "Les activités de restauration sont coordonnées avec les parties internes et externes.", "criticality": "medium", "weight": 1.0 }
+        {
+          "id": "RC.RP-01",
+          "name": "Exécution du plan de reprise",
+          "description": "Exécution du plan de reprise — La partie reprise du plan de réponse aux incidents est exécutée une fois lancée à partir du processus de réponse.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : la partie reprise du plan de réponse aux incidents est exécutée une fois lancée à partir du processus de réponse ?"
+        },
+        {
+          "id": "RC.RP-02",
+          "name": "Actions de reprise",
+          "description": "Exécution du plan de reprise — Les actions de reprise sont sélectionnées, cadrées, priorisées et exécutées.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les actions de reprise sont sélectionnées, cadrées, priorisées et exécutées ?"
+        },
+        {
+          "id": "RC.RP-03",
+          "name": "Intégrité des sauvegardes avant restauration",
+          "description": "Exécution du plan de reprise — L'intégrité des sauvegardes et autres ressources de restauration est vérifiée avant leur utilisation.",
+          "criticality": "high",
+          "weight": 1.5,
+          "question": "Où en êtes-vous : l'intégrité des sauvegardes et autres ressources de restauration est vérifiée avant leur utilisation ?"
+        },
+        {
+          "id": "RC.RP-04",
+          "name": "Fonctions critiques après incident",
+          "description": "Exécution du plan de reprise — Les fonctions critiques de la mission et la gestion des risques cyber sont prises en compte pour établir les normes opérationnelles après incident.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les fonctions critiques de la mission et la gestion des risques cyber sont prises en compte pour établir les normes opérationnelles après incident ?"
+        },
+        {
+          "id": "RC.RP-05",
+          "name": "Intégrité des actifs restaurés",
+          "description": "Exécution du plan de reprise — L'intégrité des actifs restaurés est vérifiée, les systèmes et services sont rétablis et le retour à la normale est confirmé.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : l'intégrité des actifs restaurés est vérifiée, les systèmes et services sont rétablis et le retour à la normale est confirmé ?"
+        },
+        {
+          "id": "RC.RP-06",
+          "name": "Fin de la reprise",
+          "description": "Exécution du plan de reprise — La fin de la reprise est déclarée selon des critères définis et la documentation de l'incident est finalisée.",
+          "criticality": "low",
+          "weight": 0.7,
+          "question": "Où en êtes-vous : la fin de la reprise est déclarée selon des critères définis et la documentation de l'incident est finalisée ?"
+        },
+        {
+          "id": "RC.CO-03",
+          "name": "Communication sur la reprise",
+          "description": "Communication de la reprise — Les activités de reprise et l'avancement du rétablissement des capacités sont communiqués aux parties prenantes désignées.",
+          "criticality": "medium",
+          "weight": 1.0,
+          "question": "Où en êtes-vous : les activités de reprise et l'avancement du rétablissement des capacités sont communiqués aux parties prenantes désignées ?"
+        },
+        {
+          "id": "RC.CO-04",
+          "name": "Communication publique",
+          "description": "Communication de la reprise — Les mises à jour publiques sur la reprise sont partagées par des méthodes et messages approuvés.",
+          "criticality": "low",
+          "weight": 0.7,
+          "question": "Où en êtes-vous : les mises à jour publiques sur la reprise sont partagées par des méthodes et messages approuvés ?"
+        }
       ]
     }
   ]

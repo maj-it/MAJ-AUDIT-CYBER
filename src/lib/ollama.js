@@ -5,7 +5,7 @@
 //  - Secours hors-ligne : le rapport ne dépend jamais de l'IA
 // ─────────────────────────────────────────────────────────────
 
-const CONFIG_KEY = 'e4c_ai_config'
+const CONFIG_KEY = 'majaudit_ai_config'
 const DEFAULTS = {
   ollamaBase: import.meta.env.VITE_OLLAMA_BASE || (import.meta.env.DEV ? '/ollama' : 'http://localhost:11434'),
   ollamaModel: import.meta.env.VITE_OLLAMA_MODEL || 'qwen2.5-coder:7b',
@@ -214,10 +214,11 @@ export function buildOfflineActionPlan(referential, responses) {
   }))
 }
 
-export function buildOfflineAnalysis(referential, responses, domainScores = {}) {
+export function buildOfflineAnalysis(referential, responses, domainScores = {}, globalScore = null) {
   const idx = indexControls(referential)
   const scores = Object.entries(domainScores)
-  const avg = scores.length ? Math.round(scores.reduce((a, [, s]) => a + s, 0) / scores.length) : 0
+  // le score global officiel (pondéré) prime sur la moyenne simple des domaines : même chiffre partout
+  const avg = Number.isFinite(globalScore) ? Math.round(globalScore) : (scores.length ? Math.round(scores.reduce((a, [, s]) => a + s, 0) / scores.length) : 0)
   const nc = Object.entries(responses).filter(([id, v]) => idx[id] && isNonConform(v))
   const ncHigh = nc.filter(([id]) => idx[id].criticality === 'high')
   const sorted = [...scores].sort((a, b) => a[1] - b[1])
@@ -256,7 +257,7 @@ function offlineExplain(c) {
 // ── Fonctions appelées par l'interface ───────────────────────
 
 export async function analyzeAuditResponses(referential, responses, domainScores, ctx = {}) {
-  const offline = buildOfflineAnalysis(referential, responses, domainScores)
+  const offline = buildOfflineAnalysis(referential, responses, domainScores, ctx.globalScore)
   const idx = indexControls(referential)
   const lowDomains = Object.entries(domainScores).filter(([, s]) => s < 60).map(([d, s]) => `${d}: ${s}%`).join(', ')
   const nonConform = Object.entries(responses).filter(([id, v]) => idx[id] && isNonConform(v))
@@ -267,7 +268,7 @@ ${contextLine(ctx)}
 
 DOMAINES FAIBLES (< 60%) : ${lowDomains || 'Aucun'}
 CONTRÔLES NON CONFORMES : ${nonConform || 'Aucun'}
-SCORE GLOBAL : ${Object.values(domainScores).length ? Math.round(Object.values(domainScores).reduce((a, b) => a + b, 0) / Object.values(domainScores).length) : 0}%
+SCORE GLOBAL : ${Number.isFinite(ctx.globalScore) ? Math.round(ctx.globalScore) : (Object.values(domainScores).length ? Math.round(Object.values(domainScores).reduce((a, b) => a + b, 0) / Object.values(domainScores).length) : 0)}%
 
 Réponds UNIQUEMENT avec ce JSON (sans markdown) :
 {"resume":"2-3 phrases","points_forts":["..."],"faiblesses_critiques":["..."],"niveau_maturite":"Initial|Répétable|Défini|Géré|Optimisé","risque_global":"Critique|Élevé|Moyen|Faible","recommandations":[{"priorite":"P1","action":"...","delai":"...","impact":"..."}]}`

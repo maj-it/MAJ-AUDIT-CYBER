@@ -1,0 +1,654 @@
+{
+ "version": "1.0",
+ "status": "a-verifier",
+ "note": "Correspondance thématique établie par MAJ-IT (non officielle) : un thème regroupe les mesures qui traitent du même sujet dans chaque référentiel. À faire valider avant tout usage contractuel.",
+ "themes": [
+  {
+   "id": "gouv",
+   "name": "Gouvernance, politique et responsabilités",
+   "map": {
+    "anssi": [
+     "H.39",
+     "H.42"
+    ],
+    "iso27001": [
+     "C.5.1",
+     "C.5.2",
+     "C.5.3",
+     "A.5.1",
+     "A.5.2",
+     "A.5.4",
+     "A.5.35",
+     "A.5.36"
+    ],
+    "nis2": [
+     "N.2",
+     "N.3",
+     "N.5",
+     "N.6"
+    ],
+    "rgpd": [
+     "R.1",
+     "R.2",
+     "R.3",
+     "R.4"
+    ],
+    "nist": [
+     "GV.OC-01",
+     "GV.RR-01",
+     "GV.RR-02",
+     "GV.PO-01",
+     "GV.PO-02",
+     "GV.OV-01"
+    ]
+   }
+  },
+  {
+   "id": "risques",
+   "name": "Analyse et gestion des risques",
+   "map": {
+    "anssi": [
+     "H.41"
+    ],
+    "iso27001": [
+     "C.6.1.1",
+     "C.6.1.2",
+     "C.6.1.3",
+     "A.5.7"
+    ],
+    "nis2": [
+     "N.7"
+    ],
+    "rgpd": [
+     "R.50",
+     "R.51",
+     "R.52",
+     "R.53"
+    ],
+    "nist": [
+     "GV.RM-01",
+     "GV.RM-02",
+     "ID.RA-01",
+     "ID.RA-05",
+     "ID.RA-06"
+    ]
+   }
+  },
+  {
+   "id": "actifs",
+   "name": "Inventaire et connaissance des actifs",
+   "map": {
+    "anssi": [
+     "H.4",
+     "H.5",
+     "H.7"
+    ],
+    "iso27001": [
+     "A.5.9",
+     "A.5.10",
+     "A.5.11",
+     "A.5.12",
+     "A.5.13",
+     "A.7.9"
+    ],
+    "nis2": [
+     "N.8",
+     "N.34"
+    ],
+    "rgpd": [
+     "R.7",
+     "R.8",
+     "R.9",
+     "R.10"
+    ],
+    "nist": [
+     "ID.AM-01",
+     "ID.AM-02",
+     "ID.AM-03",
+     "ID.AM-05"
+    ]
+   }
+  },
+  {
+   "id": "sensib",
+   "name": "Sensibilisation et formation",
+   "map": {
+    "anssi": [
+     "H.1",
+     "H.2"
+    ],
+    "iso27001": [
+     "A.6.3",
+     "C.7.2",
+     "C.7.3"
+    ],
+    "nis2": [
+     "N.4",
+     "N.27",
+     "N.28"
+    ],
+    "rgpd": [
+     "R.5"
+    ],
+    "nist": [
+     "PR.AT-01",
+     "PR.AT-02"
+    ]
+   }
+  },
+  {
+   "id": "rh",
+   "name": "Arrivées, départs et personnel",
+   "map": {
+    "anssi": [
+     "H.6"
+    ],
+    "iso27001": [
+     "A.6.1",
+     "A.6.2",
+     "A.6.4",
+     "A.6.5",
+     "A.6.6"
+    ],
+    "nis2": [
+     "N.32"
+    ],
+    "rgpd": [
+     "R.33"
+    ],
+    "nist": [
+     "GV.RR-04"
+    ]
+   }
+  },
+  {
+   "id": "acces",
+   "name": "Contrôle d'accès et moindre privilège",
+   "map": {
+    "anssi": [
+     "H.8",
+     "H.9",
+     "H.29"
+    ],
+    "iso27001": [
+     "A.5.15",
+     "A.5.18",
+     "A.8.2",
+     "A.8.3"
+    ],
+    "nis2": [
+     "N.33"
+    ],
+    "rgpd": [
+     "R.38"
+    ],
+    "nist": [
+     "PR.AA-05",
+     "PR.AA-01",
+     "PR.AA-02"
+    ]
+   }
+  },
+  {
+   "id": "mdp",
+   "name": "Mots de passe et authentification forte",
+   "map": {
+    "anssi": [
+     "H.10",
+     "H.11",
+     "H.12",
+     "H.13"
+    ],
+    "iso27001": [
+     "A.5.16",
+     "A.5.17",
+     "A.8.5"
+    ],
+    "nis2": [
+     "N.35"
+    ],
+    "rgpd": [
+     "R.39"
+    ],
+    "nist": [
+     "PR.AA-03",
+     "PR.AA-01"
+    ]
+   }
+  },
+  {
+   "id": "postes",
+   "name": "Sécurité des postes et supports amovibles",
+   "map": {
+    "anssi": [
+     "H.14",
+     "H.15",
+     "H.16",
+     "H.17"
+    ],
+    "iso27001": [
+     "A.8.1",
+     "A.8.7",
+     "A.7.10"
+    ],
+    "nis2": [
+     "N.27"
+    ],
+    "rgpd": [
+     "R.42"
+    ],
+    "nist": [
+     "PR.PS-01",
+     "PR.PS-05"
+    ]
+   }
+  },
+  {
+   "id": "reseau",
+   "name": "Sécurité et cloisonnement des réseaux",
+   "map": {
+    "anssi": [
+     "H.19",
+     "H.20",
+     "H.21",
+     "H.22",
+     "H.23",
+     "H.25"
+    ],
+    "iso27001": [
+     "A.8.20",
+     "A.8.21",
+     "A.8.22",
+     "A.8.23"
+    ],
+    "nis2": [
+     "N.27"
+    ],
+    "rgpd": [
+     "R.42"
+    ],
+    "nist": [
+     "PR.IR-01",
+     "PR.IR-04"
+    ]
+   }
+  },
+  {
+   "id": "messagerie",
+   "name": "Messagerie et échanges sécurisés",
+   "map": {
+    "anssi": [
+     "H.24"
+    ],
+    "iso27001": [
+     "A.5.14",
+     "A.8.23"
+    ],
+    "nis2": [
+     "N.36"
+    ],
+    "rgpd": [],
+    "nist": [
+     "PR.DS-02"
+    ]
+   }
+  },
+  {
+   "id": "crypto",
+   "name": "Chiffrement et cryptographie",
+   "map": {
+    "anssi": [
+     "H.18",
+     "H.31"
+    ],
+    "iso27001": [
+     "A.8.24",
+     "A.8.12"
+    ],
+    "nis2": [
+     "N.29",
+     "N.30",
+     "N.31"
+    ],
+    "rgpd": [
+     "R.40"
+    ],
+    "nist": [
+     "PR.DS-01",
+     "PR.DS-02"
+    ]
+   }
+  },
+  {
+   "id": "physique",
+   "name": "Sécurité physique et locaux",
+   "map": {
+    "anssi": [
+     "H.26"
+    ],
+    "iso27001": [
+     "A.7.1",
+     "A.7.2",
+     "A.7.3",
+     "A.7.4",
+     "A.7.5"
+    ],
+    "nis2": [],
+    "rgpd": [
+     "R.42"
+    ],
+    "nist": [
+     "PR.IR-02"
+    ]
+   }
+  },
+  {
+   "id": "admin",
+   "name": "Administration sécurisée du SI",
+   "map": {
+    "anssi": [
+     "H.27",
+     "H.28"
+    ],
+    "iso27001": [
+     "A.8.2",
+     "A.8.9",
+     "A.8.18"
+    ],
+    "nis2": [
+     "N.33"
+    ],
+    "rgpd": [
+     "R.38"
+    ],
+    "nist": [
+     "PR.AA-05",
+     "PR.PS-01"
+    ]
+   }
+  },
+  {
+   "id": "nomade",
+   "name": "Nomadisme et terminaux mobiles",
+   "map": {
+    "anssi": [
+     "H.30",
+     "H.32",
+     "H.33"
+    ],
+    "iso27001": [
+     "A.6.7",
+     "A.7.9",
+     "A.8.1"
+    ],
+    "nis2": [
+     "N.27"
+    ],
+    "rgpd": [
+     "R.42"
+    ],
+    "nist": [
+     "PR.PS-01",
+     "PR.AA-03"
+    ]
+   }
+  },
+  {
+   "id": "maj",
+   "name": "Mises à jour et gestion des vulnérabilités",
+   "map": {
+    "anssi": [
+     "H.34",
+     "H.35"
+    ],
+    "iso27001": [
+     "A.8.8",
+     "A.8.9"
+    ],
+    "nis2": [
+     "N.20",
+     "N.21",
+     "N.23"
+    ],
+    "rgpd": [
+     "R.44"
+    ],
+    "nist": [
+     "ID.RA-01",
+     "PR.PS-02",
+     "ID.RA-08"
+    ]
+   }
+  },
+  {
+   "id": "journaux",
+   "name": "Journalisation et détection",
+   "map": {
+    "anssi": [
+     "H.36"
+    ],
+    "iso27001": [
+     "A.8.15",
+     "A.8.16"
+    ],
+    "nis2": [
+     "N.10"
+    ],
+    "rgpd": [
+     "R.43"
+    ],
+    "nist": [
+     "DE.CM-01",
+     "DE.CM-03",
+     "DE.AE-02",
+     "DE.CM-09"
+    ]
+   }
+  },
+  {
+   "id": "sauv",
+   "name": "Sauvegarde et capacité de reprise",
+   "map": {
+    "anssi": [
+     "H.37"
+    ],
+    "iso27001": [
+     "A.8.13"
+    ],
+    "nis2": [
+     "N.15"
+    ],
+    "rgpd": [
+     "R.41"
+    ],
+    "nist": [
+     "PR.DS-11",
+     "RC.RP-01"
+    ]
+   }
+  },
+  {
+   "id": "continuite",
+   "name": "Continuité d'activité et gestion de crise",
+   "map": {
+    "anssi": [],
+    "iso27001": [
+     "A.5.29",
+     "A.5.30",
+     "A.8.14"
+    ],
+    "nis2": [
+     "N.14",
+     "N.16",
+     "N.37"
+    ],
+    "rgpd": [
+     "R.41"
+    ],
+    "nist": [
+     "RC.RP-01",
+     "RC.RP-02",
+     "RC.RP-03",
+     "RC.CO-03"
+    ]
+   }
+  },
+  {
+   "id": "incidents",
+   "name": "Gestion et notification des incidents",
+   "map": {
+    "anssi": [
+     "H.40"
+    ],
+    "iso27001": [
+     "A.5.24",
+     "A.5.25",
+     "A.5.26",
+     "A.5.27",
+     "A.5.28",
+     "A.6.8"
+    ],
+    "nis2": [
+     "N.9",
+     "N.11",
+     "N.12",
+     "N.13"
+    ],
+    "rgpd": [
+     "R.45",
+     "R.46",
+     "R.47",
+     "R.48",
+     "R.49"
+    ],
+    "nist": [
+     "RS.MA-01",
+     "RS.MA-02",
+     "RS.CO-02",
+     "RS.AN-03",
+     "RS.MI-01"
+    ]
+   }
+  },
+  {
+   "id": "tiers",
+   "name": "Fournisseurs et sous-traitants",
+   "map": {
+    "anssi": [
+     "H.3"
+    ],
+    "iso27001": [
+     "A.5.19",
+     "A.5.20",
+     "A.5.21",
+     "A.5.22",
+     "A.5.23"
+    ],
+    "nis2": [
+     "N.17",
+     "N.18",
+     "N.19"
+    ],
+    "rgpd": [
+     "R.28",
+     "R.29",
+     "R.30",
+     "R.31",
+     "R.32"
+    ],
+    "nist": [
+     "GV.SC-01",
+     "GV.SC-03",
+     "GV.SC-05",
+     "GV.SC-07"
+    ]
+   }
+  },
+  {
+   "id": "audit",
+   "name": "Audits, tests et amélioration continue",
+   "map": {
+    "anssi": [
+     "H.38"
+    ],
+    "iso27001": [
+     "C.9.1",
+     "C.9.2",
+     "C.9.3",
+     "C.10.1",
+     "C.10.2",
+     "A.5.35",
+     "A.8.29"
+    ],
+    "nis2": [
+     "N.24",
+     "N.25",
+     "N.26"
+    ],
+    "rgpd": [
+     "R.44"
+    ],
+    "nist": [
+     "ID.IM-01",
+     "ID.IM-02",
+     "GV.OV-03"
+    ]
+   }
+  },
+  {
+   "id": "dev",
+   "name": "Développement et acquisition sécurisés",
+   "map": {
+    "anssi": [],
+    "iso27001": [
+     "A.8.25",
+     "A.8.26",
+     "A.8.27",
+     "A.8.28",
+     "A.8.29",
+     "A.8.30",
+     "A.8.31"
+    ],
+    "nis2": [
+     "N.22"
+    ],
+    "rgpd": [
+     "R.6"
+    ],
+    "nist": [
+     "PR.PS-06"
+    ]
+   }
+  },
+  {
+   "id": "juridique",
+   "name": "Conformité légale et protection des données",
+   "map": {
+    "anssi": [],
+    "iso27001": [
+     "A.5.31",
+     "A.5.32",
+     "A.5.33",
+     "A.5.34"
+    ],
+    "nis2": [
+     "N.1"
+    ],
+    "rgpd": [
+     "R.11",
+     "R.12",
+     "R.17",
+     "R.19",
+     "R.20",
+     "R.21",
+     "R.22",
+     "R.54",
+     "R.55"
+    ],
+    "nist": [
+     "GV.OC-03"
+    ]
+   }
+  }
+ ]
+}

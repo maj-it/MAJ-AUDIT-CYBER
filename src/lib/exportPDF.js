@@ -1,8 +1,9 @@
 import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
 import { getAuditor } from './auditor.js'
-import { approvedAudit } from './review.js'
+import { approvedAudit, companyLabel } from './review.js'
 import { buildOfflineAnalysis } from './ollama.js'
+import { crosswalkView, CROSSWALK_NOTE } from './crosswalk.js'
 import { getMaturityLevel, getScoreColor, computeAuditScore, normalizeDomainScores } from './scoring.js'
 
 function addLogo() {} // logo supprimé
@@ -39,10 +40,43 @@ function drawBar(doc, x, y, w, h, score, label) {
   doc.setTextColor(255, 255, 255)
   doc.setFontSize(7)
   doc.setFont('helvetica', 'normal')
-  doc.text(label.length > 22 ? label.slice(0, 22) + '…' : label, x, y - 1.5)
+  doc.text(label.length > 70 ? label.slice(0, 70) + '…' : label, x, y - 1.5)
   doc.setTextColor(...color)
   doc.setFont('helvetica', 'bold')
   doc.text(`${score}%`, x + w + 2, y + h - 0.5)
+}
+
+// Fond sombre + bande cyan sur chaque page ajoutée automatiquement par autoTable (sinon pages blanches)
+function paintPage(doc, W) {
+  doc.setFillColor(6, 13, 31)
+  doc.rect(0, 0, W, 297, 'F')
+  doc.setFillColor(0, 201, 212)
+  doc.rect(0, 0, 6, 297, 'F')
+}
+function tableDark(doc, W, opts) {
+  const start = doc.internal.getNumberOfPages()
+  autoTable(doc, {
+    ...opts,
+    margin: { left: 15, right: 15, top: 20, bottom: 14 },
+    willDrawPage: (d) => { if (d.pageNumber > start) paintPage(doc, W) }
+  })
+}
+
+const LEVEL_LABEL = { 0: 'Non implémenté', 1: 'Partiel', 2: 'Implémenté', 3: 'Optimisé' }
+const CRIT_LABEL = { high: 'Élevée', medium: 'Moyenne', low: 'Faible' }
+const CRIT_ORDER = { high: 0, medium: 1, low: 2 }
+
+// Écarts : contrôles non implémentés (0) ou partiels (1), criticité décroissante
+function buildFindings(referential, responses, notes) {
+  const rows = []
+  for (const d of referential.domains) {
+    for (const c of d.controls) {
+      const v = Number(responses?.[c.id])
+      if (responses?.[c.id] === undefined || Number.isNaN(v) || v > 1) continue
+      rows.push({ id: c.id, name: c.name, domain: d.name, crit: c.criticality || 'medium', level: v, note: (notes?.[c.id] || '').trim() })
+    }
+  }
+  return rows.sort((a, b) => (CRIT_ORDER[a.crit] - CRIT_ORDER[b.crit]) || (a.level - b.level))
 }
 
 export function exportAuditPDF(audit, referential, company) {
@@ -58,7 +92,11 @@ export function exportAuditPDF(audit, referential, company) {
   }
 
   domainScores = Object.fromEntries(Object.values(normalizeDomainScores(domainScores)).map(d => [d.name, d.score]))
-  if (!aiAnalysis?.resume) aiAnalysis = { ...buildOfflineAnalysis(referential, responses || {}, domainScores), ...(aiAnalysis || {}), resume: buildOfflineAnalysis(referential, responses || {}, domainScores).resume }
+  if (!aiAnalysis?.resume) {
+    // le score global passé en 4e argument garantit le même chiffre sur la couverture et dans le résumé
+    const offline = buildOfflineAnalysis(referential, responses || {}, domainScores, score)
+    aiAnalysis = { ...offline, ...(aiAnalysis || {}), resume: offline.resume }
+  }
   const auditor = getAuditor()
   const mission = audit.mission || {}
   const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
@@ -94,7 +132,7 @@ export function exportAuditPDF(audit, referential, company) {
   // Infos entreprise
   doc.setFontSize(11)
   doc.setTextColor(200, 220, 255)
-  const companyName = (company?.name || "N/A").slice(0, 40)
+  const companyName = companyLabel(company).slice(0, 60)
   doc.text(companyName, 45, 43)
   doc.setFontSize(9)
   doc.setTextColor(100, 130, 180)
@@ -153,6 +191,9 @@ export function exportAuditPDF(audit, referential, company) {
   // ── Résumé exécutif IA ──
   if (aiAnalysis?.resume) {
     doc.setFillColor(15, 32, 68)
+    // la police doit être réglée AVANT splitTextToSize, sinon les lignes sont coupées avec la mauvaise largeur
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(8.5)
     const resumeLines = doc.splitTextToSize(aiAnalysis.resume, W - 50)
     const resumeH = resumeLines.length * 5 + 14
     doc.roundedRect(15, y, W - 30, resumeH, 3, 3, 'F')
@@ -186,6 +227,15 @@ export function exportAuditPDF(audit, referential, company) {
     }
     y += 18
   }
+
+  // ── Méthode et limites (honnêteté sur la portée de l'évaluation) ──
+  doc.setTextColor(148, 163, 184)
+  doc.setFont('helvetica', 'normal')
+  doc.setFontSize(7.5)
+  doc.text(doc.splitTextToSize(
+    "Méthode : évaluation déclarative fondée sur un entretien et sur les réponses du client, notées de 0 (non implémenté) à 3 (optimisé). " +
+    "Elle ne constitue ni un test d'intrusion ni une certification, et les mesures n'ont pas toutes été vérifiées techniquement.",
+    W - 40), 20, Math.min(y + 4, 262))
 
   // ── PAGE 2 : SCORES PAR DOMAINE ──────────────────────────────
   doc.addPage()
@@ -222,7 +272,7 @@ export function exportAuditPDF(audit, referential, company) {
       getMaturityLevel(ds).level,
     ])
 
-    autoTable(doc, {
+    tableDark(doc, W, {
       startY: y,
       head: [['Domaine', 'Score', 'Maturité']],
       body: domainRows,
@@ -283,6 +333,105 @@ export function exportAuditPDF(audit, referential, company) {
     y += boxH + 12
   }
 
+  // ── CONSTATS DÉTAILLÉS : contrôles en écart ─────────────────
+  const findings = buildFindings(referential, responses, notes)
+  if (findings.length) {
+    doc.addPage()
+    paintPage(doc, W)
+    doc.setTextColor(0, 201, 212)
+    doc.setFontSize(14)
+    doc.setFont('helvetica', 'bold')
+    doc.text('CONSTATS DÉTAILLÉS', 15, 19)
+    doc.setFillColor(0, 201, 212)
+    doc.rect(15, 21, 100, 0.4, 'F')
+    doc.setTextColor(148, 163, 184)
+    doc.setFontSize(8)
+    doc.setFont('helvetica', 'normal')
+    doc.text(`${findings.length} contrôle(s) non implémenté(s) ou partiel(s), classés par criticité.`, 15, 26)
+
+    const levelColors = { 0: [239, 68, 68], 1: [234, 179, 8] }
+    tableDark(doc, W, {
+      startY: 30,
+      head: [['ID', 'Contrôle', 'Criticité', 'État', 'Constat / note']],
+      body: findings.map(f => [f.id, `${f.name}\n(${f.domain})`, CRIT_LABEL[f.crit] || f.crit, LEVEL_LABEL[f.level], f.note || '—']),
+      theme: 'grid',
+      headStyles: { fillColor: [10, 22, 40], textColor: [0, 201, 212], fontStyle: 'bold', fontSize: 8 },
+      bodyStyles: { textColor: [220, 230, 255], fontSize: 7.5, fillColor: [10, 18, 35] },
+      alternateRowStyles: { fillColor: [15, 28, 55] },
+      columnStyles: {
+        0: { cellWidth: 12, fontStyle: 'bold', textColor: [0, 201, 212] },
+        1: { cellWidth: 62 },
+        2: { cellWidth: 18, halign: 'center' },
+        3: { cellWidth: 24, halign: 'center', fontStyle: 'bold' },
+        4: { cellWidth: 'auto' }
+      },
+      didParseCell: (data) => {
+        if (data.section === 'body' && data.column.index === 3) {
+          const f = findings[data.row.index]
+          if (f && levelColors[f.level]) data.cell.styles.textColor = levelColors[f.level]
+        }
+      }
+    })
+  }
+
+  // ── PREUVES DU SCAN EXTERNE (uniquement celles validées par l'auditeur) ──
+  const proofs = Object.entries(audit.evidence || {}).filter(([, ev]) => ev.validated)
+  if (proofs.length) {
+    doc.addPage()
+    paintPage(doc, W)
+    doc.setTextColor(0, 201, 212); doc.setFontSize(14); doc.setFont('helvetica', 'bold')
+    doc.text('PREUVES DU SCAN EXTERNE', 15, 19)
+    doc.setFillColor(0, 201, 212); doc.rect(15, 21, 100, 0.4, 'F')
+    doc.setTextColor(148, 163, 184); doc.setFontSize(8); doc.setFont('helvetica', 'normal')
+    doc.text(`${proofs.length} contrôle(s) constaté(s) par analyse non intrusive, puis validé(s) par l'auditeur.`, 15, 26)
+    const ST = { ok: 'Conforme', warn: 'Alerte', fail: 'Échec' }
+    const nameOf = (id) => referential.domains.flatMap(d => d.controls).find(c => c.id === id)?.name || ''
+    tableDark(doc, W, {
+      startY: 30,
+      head: [['ID', 'Contrôle', 'Domaine scanné / date', 'Constats relevés']],
+      body: proofs.map(([id, ev]) => [id, nameOf(id), `${ev.domain}\n${new Date(ev.scannedAt).toLocaleDateString('fr-FR')}`,
+        ev.items.map(i => `${ST[i.status] || i.status} : ${i.title}${i.detail ? ' — ' + i.detail.slice(0, 120) : ''}`).join('\n')]),
+      theme: 'grid',
+      headStyles: { fillColor: [10, 22, 40], textColor: [0, 201, 212], fontStyle: 'bold', fontSize: 8 },
+      bodyStyles: { textColor: [220, 230, 255], fontSize: 7.5, fillColor: [10, 18, 35] },
+      alternateRowStyles: { fillColor: [15, 28, 55] },
+      columnStyles: { 0: { cellWidth: 12, fontStyle: 'bold', textColor: [0, 201, 212] }, 1: { cellWidth: 50 }, 2: { cellWidth: 32 }, 3: { cellWidth: 'auto' } }
+    })
+  }
+
+  // ── COUVERTURE DES AUTRES RÉFÉRENTIELS (estimation indicative) ──
+  const xw = crosswalkView(referential.id, responses)
+  if (xw.frameworks.some(f => f.estimated !== null)) {
+    doc.addPage()
+    paintPage(doc, W)
+    doc.setTextColor(0, 201, 212); doc.setFontSize(14); doc.setFont('helvetica', 'bold')
+    doc.text('COUVERTURE DES AUTRES RÉFÉRENTIELS', 15, 19)
+    doc.setFillColor(0, 201, 212); doc.rect(15, 21, 100, 0.4, 'F')
+    doc.setTextColor(148, 163, 184); doc.setFontSize(8); doc.setFont('helvetica', 'normal')
+    const intro = doc.splitTextToSize(`Estimation indicative, non certifiante : les réponses de cet audit sont projetées par thème sur les autres référentiels. ${CROSSWALK_NOTE}`, W - 30)
+    doc.text(intro, 15, 26)
+    tableDark(doc, W, {
+      startY: 26 + intro.length * 4 + 4,
+      head: [['Référentiel', 'Couverture estimée', 'Mesures couvertes par les réponses']],
+      body: xw.frameworks.map(f => [f.label + (f.key === xw.source ? ' (audité)' : ''), f.estimated === null ? '—' : f.estimated + ' %', `${f.covered} / ${f.controls}`]),
+      theme: 'grid',
+      headStyles: { fillColor: [10, 22, 40], textColor: [0, 201, 212], fontStyle: 'bold', fontSize: 8 },
+      bodyStyles: { textColor: [220, 230, 255], fontSize: 8, fillColor: [10, 18, 35] },
+      alternateRowStyles: { fillColor: [15, 28, 55] },
+      columnStyles: { 1: { halign: 'center', fontStyle: 'bold' }, 2: { halign: 'center' } }
+    })
+    tableDark(doc, W, {
+      startY: doc.lastAutoTable.finalY + 8,
+      head: [['Thème', 'Score']],
+      body: xw.themes.filter(t => t.score !== null).map(t => [t.name, t.score + ' %']),
+      theme: 'grid',
+      headStyles: { fillColor: [10, 22, 40], textColor: [0, 201, 212], fontStyle: 'bold', fontSize: 8 },
+      bodyStyles: { textColor: [220, 230, 255], fontSize: 7.5, fillColor: [10, 18, 35] },
+      alternateRowStyles: { fillColor: [15, 28, 55] },
+      columnStyles: { 1: { cellWidth: 20, halign: 'center', fontStyle: 'bold' } }
+    })
+  }
+
   // ── PAGE 3 : PLAN D'ACTIONS ──────────────────────────────────
   if (actionPlan?.length) {
     doc.addPage()
@@ -301,10 +450,10 @@ export function exportAuditPDF(audit, referential, company) {
 
     const priorityColors = { P1: [239,68,68], P2: [249,115,22], P3: [234,179,8] }
 
-    autoTable(doc, {
+    tableDark(doc, W, {
       startY: 28,
       head: [['ID', 'Contrôle', 'Action', 'Resp.', 'Prio.', 'Délai', 'Coût']],
-      body: actionPlan.map(a => [a.id, a.controle, a.action, a.responsable, a.priorite, a.delai, a.cout]),
+      body: actionPlan.map(a => [a.id, a.controle, a.action, a.responsable, a.priorite, a.echeance ? `${a.delai}\navant le ${new Date(a.echeance).toLocaleDateString('fr-FR')}` : a.delai, a.cout]),
       theme: 'grid',
       headStyles: { fillColor: [10, 22, 40], textColor: [0, 201, 212], fontStyle: 'bold', fontSize: 8 },
       bodyStyles: { textColor: [220, 230, 255], fontSize: 7.5, fillColor: [10, 18, 35] },
@@ -315,20 +464,15 @@ export function exportAuditPDF(audit, referential, company) {
         2: { cellWidth: 65 },
         3: { cellWidth: 20, halign: 'center' },
         4: { cellWidth: 12, halign: 'center' },
-        5: { cellWidth: 22, halign: 'center' },
-        6: { cellWidth: 18, halign: 'center' }
+        5: { cellWidth: 26, halign: 'center' },
+        6: { cellWidth: 16, halign: 'center' }
       },
-      didDrawCell: (data) => {
-        if (data.column.index === 4 && data.section === 'body') {
-          const p = data.cell.text[0]
-          const c = priorityColors[p]
-          if (c) {
-            doc.setFillColor(...c)
-            doc.setTextColor(255,255,255)
-          }
+      didParseCell: (data) => {
+        if (data.section === 'body' && data.column.index === 4) {
+          const c = priorityColors[data.cell.raw]
+          if (c) { data.cell.styles.fillColor = c; data.cell.styles.textColor = [255, 255, 255]; data.cell.styles.fontStyle = 'bold' }
         }
-      },
-      margin: { left: 15, right: 15 }
+      }
     })
   }
 
@@ -344,11 +488,12 @@ export function exportAuditPDF(audit, referential, company) {
     doc.setTextColor(0, 201, 212)
     doc.setFontSize(14)
     doc.setFont('helvetica', 'bold')
-    doc.text('RECOMMANDATIONS IA', 32, 19)
+    // « IA » seulement si l'analyse vient réellement d'un modèle et a été validée (approvedAudit retire le reste)
+    doc.text(String(aiAnalysis.source || '').startsWith('ia') ? 'RECOMMANDATIONS (ASSISTÉES PAR IA)' : 'RECOMMANDATIONS PRIORITAIRES', 32, 19)
     doc.setFillColor(0, 201, 212)
     doc.rect(32, 21, 100, 0.4, 'F')
 
-    autoTable(doc, {
+    tableDark(doc, W, {
       startY: 28,
       head: [['Priorité', 'Action recommandée', 'Délai', 'Impact attendu']],
       body: (aiAnalysis.recommandations || []).map(r => [r.priorite, r.action, r.delai, r.impact]),
@@ -356,8 +501,7 @@ export function exportAuditPDF(audit, referential, company) {
       headStyles: { fillColor: [10, 22, 40], textColor: [0, 201, 212], fontStyle: 'bold', fontSize: 9 },
       bodyStyles: { textColor: [220, 230, 255], fontSize: 8.5, fillColor: [10, 18, 35] },
       alternateRowStyles: { fillColor: [15, 28, 55] },
-      columnStyles: { 0: { cellWidth: 16, halign: 'center' }, 1: { cellWidth: 90 }, 2: { cellWidth: 25, halign: 'center' } },
-      margin: { left: 15, right: 15 }
+      columnStyles: { 0: { cellWidth: 16, halign: 'center' }, 1: { cellWidth: 90 }, 2: { cellWidth: 25, halign: 'center' } }
     })
   }
 

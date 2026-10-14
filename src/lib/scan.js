@@ -1,5 +1,5 @@
 // Client du scan externe (POST /api/scan) + application des constats au questionnaire
-const TOKEN_KEY = 'e4c_scan_token'
+const TOKEN_KEY = 'majaudit_scan_token'
 
 export const getScanToken = () => { try { return localStorage.getItem(TOKEN_KEY) || '' } catch { return '' } }
 export const setScanToken = (t) => { try { localStorage.setItem(TOKEN_KEY, t) } catch {} }
@@ -28,6 +28,25 @@ export function findingToRisk(f, domain) {
     probability: f.status === 'fail' ? 4 : 3,
     description: [f.detail, f.recommendation && `Recommandation : ${f.recommendation}`].filter(Boolean).join(' — ')
   }
+}
+
+// Constats → preuves par contrôle, à valider par l'auditeur (jamais prises en compte automatiquement)
+export function findingsToEvidence(findings, referential, scan) {
+  const map = findingsToResponses(findings, referential)
+  const out = {}
+  for (const [c, { value }] of Object.entries(map)) {
+    const items = findings
+      .filter(f => f.status !== 'info' && (f.controls || []).includes(c))
+      .map(f => ({ title: f.title, status: f.status, detail: String(f.detail || '').slice(0, 300) }))
+    out[c] = { source: 'scan', domain: scan?.domain || '', scannedAt: scan?.scannedAt || new Date().toISOString(), value, items, validated: false }
+  }
+  return out
+}
+
+export const evidenceNote = (ev) => {
+  const d = ev.scannedAt ? new Date(ev.scannedAt).toLocaleDateString('fr-FR') : ''
+  const bad = ev.items.filter(i => i.status !== 'ok').map(i => i.title)
+  return `Constaté par scan externe de ${ev.domain} le ${d} : ${bad.length ? bad.join(' ; ') : 'aucun écart détecté'}`
 }
 
 // Constats → valeurs du questionnaire (0 non implémenté, 1 partiel, 2 implémenté)
