@@ -46,6 +46,7 @@ export default function App() {
   const handleLogin = (u) => {
     if (cloudEnabled) return // géré par onAuthStateChange
     localStorage.setItem('cyberaudit_user', JSON.stringify(u))
+    if (u.demo) useAuditStore.getState().seedDemo()
     setUser(u)
   }
 

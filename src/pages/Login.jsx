@@ -10,6 +10,9 @@ const USERS = import.meta.env.DEV
     ]
   : []
 
+// Mode démo (VITE_DEMO_MODE=true) : accès sans base de données, données locales au navigateur, audit d'exemple fictif
+const DEMO = import.meta.env.VITE_DEMO_MODE === 'true'
+
 export default function Login({ onLogin }) {
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
@@ -64,7 +67,7 @@ export default function Login({ onLogin }) {
             <Lock size={14} className="text-cyber-400" /> Authentification
           </div>
 
-          <div className="space-y-4">
+          {(cloudEnabled || USERS.length > 0) && <div className="space-y-4">
             {cloudEnabled && signup && (
               <>
                 <div>
@@ -117,7 +120,7 @@ export default function Login({ onLogin }) {
                 <><ShieldCheck size={16} /> {cloudEnabled && signup ? 'Créer mon compte' : 'Se connecter'}</>
               )}
             </button>
-          </div>
+          </div>}
 
           {cloudEnabled && (
             <button className="mt-4 w-full text-xs text-slate-500 hover:text-cyber-400" onClick={() => { setSignup(!signup); setError(''); setInfo('') }}>
@@ -125,7 +128,15 @@ export default function Login({ onLogin }) {
             </button>
           )}
 
-          {!cloudEnabled && USERS.length === 0 && (
+          {!cloudEnabled && DEMO && (
+            <div className="mt-4">
+              <button className="btn-primary w-full py-2.5" onClick={() => onLogin({ login: 'demo', role: 'Invité', name: 'Invité démo', demo: true })}>
+                Accéder à la démo
+              </button>
+              <div className="mt-2 text-[11px] text-slate-500 text-center">Les données restent dans votre navigateur ; un audit d'exemple fictif est fourni.</div>
+            </div>
+          )}
+          {!cloudEnabled && !DEMO && USERS.length === 0 && (
             <div className="mt-4 text-xs text-slate-500 text-center">Aucun mode de connexion configuré (Supabase requis en production).</div>
           )}
           {!cloudEnabled && USERS.length > 0 && <div className="mt-5 pt-4 border-t border-navy-700">
