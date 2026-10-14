@@ -53,12 +53,16 @@ export async function handleAi(req, res, { requireToken = false } = {}) {
         body: JSON.stringify({
           model: process.env.ANTHROPIC_MODEL || 'claude-sonnet-5-5',
           max_tokens: 2048,
-          temperature: 0.3,
           ...(system ? { system } : {}),
           messages: merged
         })
       })
-      if (!r.ok) return send(res, 502, { error: `Anthropic a répondu ${r.status}.` })
+      if (!r.ok) {
+        // Message d'erreur Anthropic (sans donnée sensible) pour diagnostiquer : crédit insuffisant, modèle inconnu, clé invalide…
+        let detail = ''
+        try { detail = (await r.json())?.error?.message || '' } catch {}
+        return send(res, 502, { error: `Anthropic a répondu ${r.status}${detail ? ' : ' + String(detail).slice(0, 200) : ''}` })
+      }
       const data = await r.json()
       return send(res, 200, { text: (data.content || []).filter(c => c.type === 'text').map(c => c.text).join('') })
     }
