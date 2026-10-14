@@ -3,10 +3,11 @@ import autoTable from 'jspdf-autotable'
 import { getAuditor } from './auditor.js'
 import { approvedAudit, companyLabel } from './review.js'
 import { buildOfflineAnalysis } from './ollama.js'
+import { LOGO_PNG } from './logoData.js'
 import { crosswalkView, CROSSWALK_NOTE } from './crosswalk.js'
 import { getMaturityLevel, getScoreColor, computeAuditScore, normalizeDomainScores } from './scoring.js'
 
-function addLogo() {} // logo supprimé
+function addLogo(doc, x, y, w, h) { try { doc.addImage(LOGO_PNG, 'PNG', x, y, w, h) } catch {} }
 
 function colorFromScore(score) {
   if (score >= 80) return [0, 201, 212]
